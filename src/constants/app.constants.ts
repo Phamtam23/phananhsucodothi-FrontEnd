@@ -1,0 +1,140 @@
+export const API_CONFIG = {
+    BASE_URL: "http://localhost:8080/api/v1",
+    TIMEOUT: 30000,
+    ENDPOINTS: {
+        AUTH: {
+            LOGIN: "/auth/login",
+            LOGOUT: "/auth/logout",
+            REGISTER: "/auth/register",
+            FORGOT_PASSWORD: "/auth-service/v1/forgot-password",
+        },
+        USER: {
+            PROFILE: "/user-service/v1/profile",
+            UPDATE_PROFILE: "/user-service/v1/profile/update",
+        },
+        SUCO:{
+            GET_BY_ID: (id: number | string) => `/suco/${id}`, 
+            GET_ALL: "/suco",
+            CREATE: "/suco",
+        },
+        SHOWTIME:{
+            GET_BY_ID: (id: number | string) => `api/v1.0/showtime/${id}`, 
+            GET_BY_MOVIE: (id: number | string) => `api/v1.0/showtime/movie/${id}`,
+            GET_SEATS: (id: number | string) => `api/v1.0/showtime/${id}/seat`,
+        },
+        FOOD:{
+            GET_ALL: "/api/v1.0/foods",
+        },
+        VOUCHER:{
+            GET_ALL: "/api/v1.0/vouchers",
+        },
+        BOOKING :{
+            CREATE: "/api/v1.0/bookings",
+            CREATE_PAYMENT : (idbooking: number | string) => `/api/booking/${idbooking}/momo`,
+            GET_ALL: "/api/v1.0/bookings"
+        },
+        FILE :{
+            UPLOAD: "/file/upload"
+        }
+     
+    },
+} as const;
+
+export const TOKEN_CONFIG = {
+    ACCESS_TOKEN_EXPIRY: 15 * 60 * 1000, // 15 minutes in milliseconds
+    REFRESH_TOKEN_EXPIRY: 24 * 60 * 60 * 1000, // 1 day in milliseconds
+    REFRESH_INTERVAL: 14 * 60 * 1000, // 14 minutes - refresh before expiry
+    REFRESH_BUFFER: 60 * 1000, // 1 minute buffer before token expires
+} as const;
+
+export const STORAGE_KEYS = {
+    PROFILE: "profile",
+    USER_INFO: "user_info",
+    THEME: "theme",
+    LANGUAGE: "language",
+    REMEMBER_EMAIL: "remember_email",
+    TOKEN: "accessToken",
+} as const;
+
+export const ROUTES = {
+    AUTH: {
+        LOGIN: "/login",
+        REGISTER: "/register",
+        FORGOT_PASSWORD: "/auth/forgot-password",
+        RESET_PASSWORD: "/auth/reset-password",
+    },
+    MAIN: {
+        HOME: "/",
+        DASHBOARD: "/dashboard",
+        PROFILE: "/profile",
+        SETTINGS: "/settings",
+    },
+} as const;
+
+export const HTTP_HEADERS = {
+    CONTENT_TYPE: "Content-Type",
+    AUTHORIZATION: "Authorization",
+    NGROK_SKIP_WARNING: "ngrok-skip-browser-warning",
+} as const;
+
+export const HTTP_STATUS = {
+    OK: 200,
+    CREATED: 201,
+    BAD_REQUEST: 400,
+    UNAUTHORIZED: 401,
+    FORBIDDEN: 403,
+    NOT_FOUND: 404,
+    INTERNAL_SERVER_ERROR: 500,
+} as const;
+
+export const MESSAGES = {
+    AUTH: {
+        LOGIN_SUCCESS: "Đăng nhập thành công",
+        LOGIN_FAILED: "Đăng nhập thất bại",
+        LOGOUT_SUCCESS: "Đăng xuất thành công",
+        LOGOUT_FAILED: "Đăng xuất thất bại",
+        SESSION_EXPIRED: "Phiên đăng nhập đã hết hạn",
+        TOKEN_REFRESH_SUCCESS: "Làm mới token thành công",
+        TOKEN_REFRESH_FAILED: "Làm mới token thất bại",
+        FORGOT_PASSWORD_SUCCESS:
+            "Nếu email của bạn tồn tại trong hệ thống, bạn sẽ nhận được hướng dẫn đặt lại mật khẩu",
+        FORGOT_PASSWORD_FAILED: "Gửi email thất bại, vui lòng thử lại",
+    },
+    VALIDATION: {
+        EMAIL_REQUIRED: "Vui lòng nhập email",
+        EMAIL_INVALID: "Email không hợp lệ",
+        PASSWORD_REQUIRED: "Vui lòng nhập mật khẩu",
+        PASSWORD_MIN_LENGTH: "Mật khẩu tối thiểu 6 ký tự",
+    },
+    COMMON: {
+        NETWORK_ERROR: "Lỗi kết nối mạng, vui lòng thử lại",
+        SOMETHING_WENT_WRONG: "Có lỗi xảy ra, vui lòng thử lại sau",
+    },
+} as const;
+
+export const UI_CONFIG = {
+    ANIMATION_DURATION: 300, // milliseconds
+    DEBOUNCE_DELAY: 500, // milliseconds
+    NOTIFICATION_DURATION: 3, // seconds
+    MAX_FILE_SIZE: 5 * 1024 * 1024, // 5MB
+} as const;
+
+export const REGEX_PATTERNS = {
+    EMAIL: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+    PASSWORD: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/,
+    PHONE: /^(0|\+84)(3|5|7|8|9)[0-9]{8}$/,
+} as const;
+
+export const APP_META = {
+    NAME: "Project Management System",
+    VERSION: "1.0.0",
+    DESCRIPTION: "A modern project management application",
+} as const;
+
+export const NAV_ITEMS = [
+  { label: 'Trang chủ', path: '/' },
+  { label: 'Bản đồ', path: '/ban-do' },
+  { label: 'Danh sách phản ánh', path: '/danh-sach-phan-anh' },
+  { label: 'Lịch sử phản ánh', path: '/lich-su-phan-anh',requiresAuth: true }
+  
+];
