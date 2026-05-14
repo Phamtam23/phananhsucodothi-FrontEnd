@@ -2,7 +2,7 @@ import { useRef, useState, useCallback } from "react";
 import { useCreateSuco } from "../../../hooks/suco/useCreateSuco";
 import { useLocationSearch } from "../../../hooks/suco/uselocationsearch";
 import apiClient from "../../../services/apiClient";
-import "./createSuco.scss";
+import "./CreateSuco.scss";
 
 const BASE_URL = "http://localhost:8080/api/v1";
 

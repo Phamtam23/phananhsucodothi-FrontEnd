@@ -15,26 +15,52 @@ export const API_CONFIG = {
         SUCO:{
             GET_BY_ID: (id: number | string) => `/suco/${id}`, 
             GET_ALL: "/suco",
+            GET_ALL_BY_NGUOI_DAN: () => `/suco/nguoi-dan`,
             CREATE: "/suco",
         },
-        SHOWTIME:{
-            GET_BY_ID: (id: number | string) => `api/v1.0/showtime/${id}`, 
-            GET_BY_MOVIE: (id: number | string) => `api/v1.0/showtime/movie/${id}`,
-            GET_SEATS: (id: number | string) => `api/v1.0/showtime/${id}/seat`,
+        PHANCONG:{
+            GET_BY_ID: (id: number | string) => `/phancong/${id}`, 
+            GET_BY_SUCO_ID: (id: number | string) => `/phancong/su-co/${id}`,
+            CREATE: "/phancong",
+            GET_BY_DONVI_ID: (id: number | string) => `/phancong/don-vi/${id}`,
         },
-        FOOD:{
-            GET_ALL: "/api/v1.0/foods",
+        PHIEUKIEMDUYET:{
+            CREATE: "/phieu-kiem-duyet",
+            GET_BY_SUCO_ID: (id: number | string) => `/phieu-kiem-duyet/su-co/${id}`,
+            GET_BY_ID: (id: number | string) => `/phieu-kiem-duyet/${id}`,
         },
-        VOUCHER:{
-            GET_ALL: "/api/v1.0/vouchers",
+        CHITIEPHANCONG:{
+            CREATE: "/chi-tiet-phan-cong",
+            UPDATE: "/chi-tiet-phan-cong",
+            GET_BY_PHANCONG_ID: (id: number | string) => `/chi-tiet-phan-cong/phan-cong/${id}`,
+            GET_BY_ID: (id: number | string) => `/chi-tiet-phan-cong/${id}`,
+            GET_BY_NHANVIEN_ID: (id: number | string) => `/chi-tiet-phan-cong/nhan-vien/${id}`,
         },
-        BOOKING :{
-            CREATE: "/api/v1.0/bookings",
-            CREATE_PAYMENT : (idbooking: number | string) => `/api/booking/${idbooking}/momo`,
-            GET_ALL: "/api/v1.0/bookings"
+        KETQUAXULY :{
+            CREATE: "/ket-qua-xu-ly",
+            GET_BY_ID : (id: number | string) => `/ket-qua-xu-ly/${id}`,
+            UPDATE: "/ket-qua-xu-ly",
+            GET_BY_CHITIETPHANCONG_ID: (id: number | string) => `/ket-qua-xu-ly/chi-tiet-phan-cong/${id}`,
+
         },
-        FILE :{
-            UPLOAD: "/file/upload"
+        DANHGIA :{
+            CREATE: "/phieu-danh-gia",
+            GET_BY_KETQUAXULY_ID: (id: number | string) => `/phieu-danh-gia/ket-qua-xu-ly/${id}`,
+        },
+        PHIEUMOLAI :{
+            CREATE: "/phieu-mo-lai",
+            UPDATE: "/phieu-mo-lai",
+            GET_BY_CHITIETPHANCONG_ID: (id: number | string) => `/phieu-mo-lai/chi-tiet-phan-cong/${id}`,
+            GET_BY_ID: (id: number | string) => `/phieu-mo-lai/${id}`,
+        },
+        DONVIXULY :{
+            CREATE: "/mo",
+            UPDATE: "/phieu-mo-lai",
+            GET_BY_ID: (id: number | string) => `/don-vi-xu-ly/${id}`,
+            GET_ALL: "/don-vi-xu-ly",
+        },
+        FILE: {
+            UPLOAD: "/file/upload",
         }
      
     },
