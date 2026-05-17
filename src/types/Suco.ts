@@ -57,6 +57,8 @@ export interface SucoDetailResponse  {
   thoiGianTao: string;
   ngayDuKienHoanThanh: string; 
   medias: MediaResponse[];
+  daDanhGia: boolean;
+  canDanhGia: boolean;
 }
 
 

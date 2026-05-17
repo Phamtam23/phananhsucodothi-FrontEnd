@@ -1,6 +1,10 @@
 import {useListPhanCong} from "../../hooks/phancong/useListPhanCong"
 import KetQuaXuLyCard from "../KetQuaXuy/KetQuaXuLyCard"
 import "./ListPhanCong.scss"
+import PhieuDanhGia from "../DanhGia/PhieuDanhGia";
+import ListPhieuMoLai from "../MoLai/ListPhieuMoLai";
+import PhieuMoLaiForm from "../../components/MoLai/PhieuMoLaiForm";
+import { useState } from "react";
 type Props = {
     maSuCo: string;
 };
@@ -13,7 +17,9 @@ const TRANG_THAI_LABEL: Record<string, string> = {
 };
 const ListPhanXong = ({maSuCo}:Props) =>{
       const {loading, error, phanCongList } = useListPhanCong(maSuCo);
-    
+      const [selectedMoLai, setSelectedMoLai] = useState<string | null>(null);
+
+      const [reloadKey, setReloadKey] = useState(0);
        if (loading) return <p>Loading...</p>;
        if (error) return <p>{error}</p>;
 
@@ -38,10 +44,81 @@ const ListPhanXong = ({maSuCo}:Props) =>{
                     </span>
                 </div>
 
-                {pc.ketQuaXuLyDetailResponse
-                    ? <KetQuaXuLyCard ketQua={pc.ketQuaXuLyDetailResponse} />
-                    : <p className="no-ketqua">Chưa có kết quả xử lý</p>
+                {pc.ketQuaXuLyDetailResponse ? (
+            <>
+
+              <KetQuaXuLyCard
+                ketQua={
+                  pc.ketQuaXuLyDetailResponse
                 }
+              />
+
+              <PhieuDanhGia
+                maKetQuaXuLy={
+                  pc.ketQuaXuLyDetailResponse
+                    .maKetQuaXuLy
+                }
+                canDanhGia={pc.phieuTrangThaiResponse.canDanhGia}
+                daDanhGia={pc.phieuTrangThaiResponse.daDanhGia}
+              />
+
+            </>
+          ) : (
+            <p className="no-ketqua">
+              Chưa có kết quả xử lý
+            </p>
+          )}
+
+             <div className="PhieuMoLai">
+
+              <ListPhieuMoLai  key={reloadKey} maPhanCong={pc.maPhieuPhanCong}    />
+
+                        {pc.phieuTrangThaiResponse
+                            .canMoLai && (
+                            <>
+                                <button
+                                    className="btn-mo-lai"
+                                    onClick={() =>
+                                        setSelectedMoLai(
+                                            selectedMoLai ===
+                                            pc.maPhieuPhanCong
+                                                ? null
+                                                : pc.maPhieuPhanCong
+                                        )
+                                    }
+                                >
+                                    {
+                                        selectedMoLai ===
+                                        pc.maPhieuPhanCong
+                                            ? "Đóng"
+                                            : "Yêu cầu mở lại"
+                                    }
+                                </button>
+
+                                {selectedMoLai ===
+                                    pc.maPhieuPhanCong && (
+
+                                    <PhieuMoLaiForm
+                                        maKetQuaXuLy={
+                                            pc
+                                                .ketQuaXuLyDetailResponse
+                                                .maKetQuaXuLy
+                                        }
+                                        onSuccess={() => {
+
+                                            setSelectedMoLai(null);
+
+                                            setReloadKey(
+                                                prev => prev + 1
+                                            );
+                                        }}
+                                    />
+                                )}
+
+                            </>
+                        )}
+
+                    </div>
                 </div>
             ))}
             </div>

@@ -1,5 +1,6 @@
 import { useCreatePhanCong } from "../../hooks/phancong/useCreatePhanCong";
 import ListDonViXuLy from "../DonViXuLy/ListDonViXuLy";
+import "./CreatePhanCong.scss";
 
 type Props = {
   maSuCo: string;

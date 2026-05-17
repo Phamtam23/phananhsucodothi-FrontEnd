@@ -1,0 +1,21 @@
+.NhanVienDieuPhoiLayout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Sidebar */
+.NhanVienDieuPhoiLayout > .Sidebar,
+.NhanVienDieuPhoiLayout > aside,
+.NhanVienDieuPhoiLayout > nav {
+  width: 260px; // chỉnh theo sidebar của bạn
+  flex-shrink: 0;
+}
+
+/* Main content bên phải */
+.NhanVienDieuPhoiLayout main {
+  flex: 1;
+  padding: 20px;
+  background: #f5f6fa; // tuỳ chọn
+  overflow-y: auto;
+}

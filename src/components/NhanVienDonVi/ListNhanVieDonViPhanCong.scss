@@ -1,0 +1,28 @@
+.ListNhanVienDonVi ul {
+  list-style: none;
+  padding: 0;
+}
+
+.ListNhanVienDonVi li {
+  padding: 10px;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.ListNhanVienDonVi li.selected {
+  border-color: #1976d2;
+  background: #e3f2fd;
+}
+
+.nhanvien-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nhanvien-item img {
+  border-radius: 50%;
+  object-fit: cover;
+}

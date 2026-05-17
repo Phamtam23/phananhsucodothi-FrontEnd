@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useListDonViXuLy } from "../../hooks/donvixuly/useListDonViXuLy";
 import type { DonViXuLyResponse } from "../../types/DonViXuLy";
+import "./ListDonViXuLy.scss";
 
 type Props = {
     selectedDonViList: DonViXuLyResponse[];

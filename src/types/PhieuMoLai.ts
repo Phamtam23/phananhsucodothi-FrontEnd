@@ -20,4 +20,5 @@ export interface PhieuMoLaiResponse {
   lyDo: string;
   trangThaiMoLai: TrangThaiMoLai;
   maKetQuaXuLy: string;
+  thoiGianTao: string;
 }

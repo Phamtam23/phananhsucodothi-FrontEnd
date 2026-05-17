@@ -20,8 +20,34 @@ export interface UpdatePhieuPhanCongRequest {
   ghiChu?: string;
   lyDoTuChoi?: string;
 }
+export interface PhieuPhanCongResponse {
+  maPhieuPhanCong: string;
 
+  maSuCo: string;
 
+  maDonViXuLy: string;
+
+  maNhanVienDieuPhoi: string;
+
+  trangThai: TrangThaiPhanCong;
+
+  ghiChu: string;
+
+  lyDoTuChoi: string;
+
+  thoiGianTao: string;
+}
+
+export interface PhieuTrangThaiResponse {
+  
+  canDanhGia: boolean;
+
+  daDanhGia: boolean;
+
+  canMoLai: boolean;
+
+  daMoLai: boolean;
+}
 export interface PhieuPhanCongSCResponse {
   maPhieuPhanCong: string;
 
@@ -34,6 +60,8 @@ export interface PhieuPhanCongSCResponse {
   thoiGianTao: string; 
 
   maSuCo: string;
+
+  phieuTrangThaiResponse: PhieuTrangThaiResponse;
 
   ketQuaXuLyDetailResponse: KetQuaXuLyDetailResponse;
 }

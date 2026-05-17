@@ -1,0 +1,383 @@
+// ─────────────────────────────────────
+// KiemDuyetPage.scss
+// Thiết kế: bảng trắng, amber accent, badge pill
+// ─────────────────────────────────────
+
+// ── Palette ──────────────────────────
+$amber:          #f5a623;
+$amber-dark:     #d4891a;
+$amber-deeper:   #b87318;
+$amber-light:    #fef9ee;
+$amber-pill-bg:  #fdefc8;
+$amber-pill-text:#8a5a00;
+
+$green-pill-bg:  #d1fae5;
+$green-pill-text:#065f46;
+
+$red-pill-bg:    #fee2e2;
+$red-pill-text:  #991b1b;
+
+$white:          #ffffff;
+$bg-page:        #f5f6fa;
+
+$text-primary:   #18181b;
+$text-secondary: #71717a;
+$text-hint:      #a1a1aa;
+
+$border:         #e4e4e7;
+$border-hover:   #d4d4d8;
+
+$radius-sm:      6px;
+$radius-md:      8px;
+$radius-lg:      12px;
+
+// ─────────────────────────────────────
+// Page
+// ─────────────────────────────────────
+
+.kd-page {
+  padding: 1.5rem 2rem;
+  background: $bg-page;
+  min-height: 100vh;
+  font-family: "Inter", "Segoe UI", sans-serif;
+  color: $text-primary;
+  font-size: 0.875rem;
+}
+
+// ─────────────────────────────────────
+// Filter bar
+// ─────────────────────────────────────
+
+.kd-filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.kd-filter-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.kd-total-label {
+  font-size: 0.82rem;
+  color: $text-secondary;
+  white-space: nowrap;
+
+  strong {
+    color: $amber-dark;
+    font-weight: 700;
+  }
+}
+
+// Filter tabs
+.kd-filters {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: $white;
+  border: 1px solid $border;
+  border-radius: $radius-md;
+  padding: 3px;
+}
+
+.kd-filter-btn {
+  padding: 0.35rem 0.9rem;
+  border-radius: $radius-sm;
+  border: none;
+  background: transparent;
+  color: $text-secondary;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.12s ease;
+  white-space: nowrap;
+
+  &:hover:not(.kd-filter-btn--active) {
+    background: $bg-page;
+    color: $text-primary;
+  }
+
+  &--active {
+    background: $amber;
+    color: $white;
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba($amber-dark, 0.3);
+  }
+}
+
+// Search
+.kd-search-input {
+  height: 36px;
+  width: 280px;
+  padding: 0 0.85rem;
+  border: 1px solid $border;
+  border-radius: $radius-md;
+  background: $white;
+  font-size: 0.82rem;
+  color: $text-primary;
+  outline: none;
+  transition: border-color 0.12s;
+
+  &::placeholder {
+    color: $text-hint;
+  }
+
+  &:focus {
+    border-color: $amber;
+  }
+}
+
+// ─────────────────────────────────────
+// Table wrapper
+// ─────────────────────────────────────
+
+.kd-table-wrapper {
+  background: $white;
+  border-radius: $radius-lg;
+  border: 1px solid $border;
+  overflow: hidden;
+}
+
+// ─────────────────────────────────────
+// Table
+// ─────────────────────────────────────
+
+.kd-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.855rem;
+
+  // ── Thead ──
+  thead tr {
+    border-bottom: 1px solid $border;
+  }
+
+  thead th {
+    padding: 0.65rem 1rem;
+    text-align: left;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: $text-secondary;
+    background: $white;
+    white-space: nowrap;
+  }
+
+  // ── Tbody ──
+  tbody tr {
+    border-bottom: 1px solid $border;
+    transition: background 0.1s ease;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &.kd-row {
+      cursor: pointer;
+
+      &:hover {
+        background: #fafafa;
+      }
+
+      &:active {
+        background: $amber-light;
+      }
+    }
+
+    // Row highlight (first row / selected) — nền vàng cực nhạt
+    &.kd-row--highlight {
+      background: $amber-light;
+    }
+  }
+
+  tbody td {
+    padding: 0.9rem 1rem;
+    vertical-align: middle;
+    color: $text-primary;
+  }
+}
+
+// ─────────────────────────────────────
+// Cells
+// ─────────────────────────────────────
+
+// Mã sự cố — amber đậm, mono
+.kd-id-cell {
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: $amber-dark;
+  white-space: nowrap;
+}
+
+// Nội dung — truncate
+.kd-content-cell {
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: $text-primary;
+  font-weight: 500;
+}
+
+// Địa điểm — wrap, giới hạn width
+.kd-address-cell {
+  max-width: 320px;
+  line-height: 1.5;
+  color: $text-secondary;
+}
+
+// Mã người dân
+.kd-citizen-cell {
+  color: $text-hint;
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+
+// Ngày
+.kd-date-cell {
+  white-space: nowrap;
+  color: $text-secondary;
+  font-size: 0.82rem;
+}
+
+// ─────────────────────────────────────
+// Badge trạng thái
+// ─────────────────────────────────────
+
+.kd-badge {
+  display: inline-block;
+  padding: 0.28rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+
+  // Chờ tiếp nhận — vàng nhạt
+  &--cho-duyet {
+    background: $amber-pill-bg;
+    color: $amber-pill-text;
+  }
+
+  // Đã tiếp nhận — xanh nhạt
+  &--da-duyet {
+    background: $green-pill-bg;
+    color: $green-pill-text;
+  }
+
+  // Từ chối — đỏ nhạt
+  &--tu-choi {
+    background: $red-pill-bg;
+    color: $red-pill-text;
+  }
+}
+
+// ─────────────────────────────────────
+// State boxes (loading / error / empty)
+// ─────────────────────────────────────
+
+.kd-state-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 4rem 1rem;
+  color: $text-secondary;
+  font-size: 0.875rem;
+
+  &--error {
+    color: #b91c1c;
+  }
+}
+
+.kd-retry-btn {
+  padding: 0.4rem 1.1rem;
+  border-radius: $radius-sm;
+  border: 1px solid $border;
+  background: $white;
+  color: $text-primary;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: border-color 0.12s;
+
+  &:hover {
+    border-color: $amber;
+    color: $amber-dark;
+  }
+}
+
+// ─────────────────────────────────────
+// Spinner
+// ─────────────────────────────────────
+
+.kd-spinner {
+  display: block;
+  width: 28px;
+  height: 28px;
+  border: 3px solid $border;
+  border-top-color: $amber;
+  border-radius: 50%;
+  animation: kd-spin 0.7s linear infinite;
+}
+
+@keyframes kd-spin {
+  to { transform: rotate(360deg); }
+}
+
+// ─────────────────────────────────────
+// Pagination
+// ─────────────────────────────────────
+
+.kd-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin-top: 1.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.kd-page-btn {
+  min-width: 32px;
+  height: 32px;
+  padding: 0 8px;
+  border-radius: $radius-sm;
+  border: 1px solid $border;
+  background: $white;
+  color: $text-primary;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.12s ease;
+  line-height: 1;
+
+  &:hover:not(:disabled):not(.kd-page-btn--active) {
+    border-color: $amber;
+    color: $amber-dark;
+    background: $amber-light;
+  }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  &--active {
+    background: $amber;
+    border-color: $amber;
+    color: $white;
+    font-weight: 700;
+  }
+}

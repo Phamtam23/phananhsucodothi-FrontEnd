@@ -1,6 +1,6 @@
 export enum TrangThaiKiemDuyet {
   CHO_KIEM_DUYET = "CHO_KIEM_DUYET",
-  DA_DUYET = "DA_DUYET",
+  DUYET = "DUYET",
   TU_CHOI = "TU_CHOI",
 }
 

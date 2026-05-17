@@ -11,9 +11,14 @@ export const CreateSucoService = async (requestCreateSuco: CreateSucoRequest):Pr
     return res.data;
 }
 
-export const GetALLSuCoService = async ():Promise<ApiResponse<SucoSumaryResponse[]>> => {
+export const GetALLSuCoService = async (page: number,size: number):Promise<ApiResponse<PageResponse<SucoSumaryResponse>>> => {
 
-    const res = await apiClient.get(API_CONFIG.ENDPOINTS.SUCO.GET_ALL);
+    const res = await apiClient.get(API_CONFIG.ENDPOINTS.SUCO.GET_ALL(),{
+          params: {
+            page,
+            size,
+        },
+    });
     return res.data;
 }
 
@@ -30,5 +35,16 @@ export const GetALLByNguoiDanSuCoService = async (page:number,size:number):Promi
 
 export const GetSuCoByIdService = async (id:number|string):Promise<ApiResponse<SucoDetailResponse>> => {
     const res = await apiClient.get(API_CONFIG.ENDPOINTS.SUCO.GET_BY_ID(id));
+    return res.data;
+}
+
+export const GetSuCoByTrangThaiService = async (trangThai:string,page:number,size:number):Promise<ApiResponse<PageResponse<SucoSumaryResponse>>> => {
+
+    const res = await apiClient.get(API_CONFIG.ENDPOINTS.SUCO.GET_ALL_BY_TRANGTHAI(trangThai),{
+            params: {
+                page,
+                size
+            }
+    });
     return res.data;
 }

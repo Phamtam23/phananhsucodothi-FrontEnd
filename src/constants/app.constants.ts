@@ -14,9 +14,10 @@ export const API_CONFIG = {
         },
         SUCO:{
             GET_BY_ID: (id: number | string) => `/suco/${id}`, 
-            GET_ALL: "/suco",
+            GET_ALL:() => `/suco`,
             GET_ALL_BY_NGUOI_DAN: () => `/suco/nguoi-dan`,
             CREATE: "/suco",
+            GET_ALL_BY_TRANGTHAI: (trangThai: string) => `/suco/trang-thai/${trangThai}`,
         },
         PHANCONG:{
             GET_BY_ID: (id: number | string) => `/phancong/${id}`, 
@@ -61,6 +62,28 @@ export const API_CONFIG = {
         },
         FILE: {
             UPLOAD: "/file/upload",
+        },
+        NHANVIENDONVI: {
+            GET_ALL_BY_DONVI_PHANCONG: (maDonVi: string) => `/nhan-vien-don-vi/phan-cong/${maDonVi}`,
+            GET_ALL_BY_DONVI: (maDonVi: string) => `/nhan-vien-don-vi/don-vi/${maDonVi}`,
+        },
+        PHIEUPHANLOAI:{
+            CREATE: "/phieu-phan-loai",
+            GET_BY_SUCO_ID: (id: number | string) => `/phieu-phan-loai/su-co/${id}`,
+            DELETE: ( maSuCo: string, maLoai: string ) =>  `/phieu-phan-loai?maSuCo=${maSuCo}&maLoai=${maLoai}`,
+        },
+        LOAI:{
+            CREATE: "/loai",
+            UPDATE: "/loai",
+            GET_ALL: "/loai",
+            GET_BY_ID: (id: number | string) => `/loai/${id}`,
+        },
+        PHIEUCHIDAO:{
+            CREATE: "/phieu-chi-dao",
+            UPDATE: "/phieu-chi-dao",
+            GET_ALL_BY_PHANCONG_ID: (id: number | string) => `/phieu-chi-dao/phan-cong/${id}`,
+            GET_BY_ID: (id: number | string) => `/phieu-chi-dao/${id}`,
+            DELETE: (id: number | string) => `/phieu-chi-dao/${id}`
         }
      
     },

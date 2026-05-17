@@ -1,5 +1,6 @@
 import {useDetailSuco} from "../../hooks/suco/useDetailSuco"
 import "./DetailSuCo.scss"
+import { API_CONFIG } from "../../constants/app.constants";
 import { formatDate, formatDateTime } from '../../utils/Format';
 type Props = {
   maSuCo: string;
@@ -18,18 +19,21 @@ const DetailSuCo = ({maSuCo}:Props) =>{
     if (error) return <p>{error}</p>;
     if (!suco)   return null; 
     return (
+      <>
+      
+     
       <div className="suco-detail">
 
       <div className="detail-gallery">
         {suco.medias?.length > 0 ? (
           <>
             <div className="gallery__main">
-              <img src={suco.medias[0].url} alt={suco.noiDung} />
+              <img src={API_CONFIG.BASE_URL + suco.medias[0].url} alt={suco.noiDung} />
             </div>
             {suco.medias.length > 1 && (
               <div className="gallery__sub">
                 {suco.medias.slice(1, 3).map((m) => (
-                  <img key={m.url} src={m.url} alt="" />
+                  <img key={m.url} src={API_CONFIG.BASE_URL + m.url} alt="" />
                 ))}
               </div>
             )}
@@ -75,10 +79,19 @@ const DetailSuCo = ({maSuCo}:Props) =>{
             Hạn xử lý: {formatDate(suco.ngayDuKienHoanThanh)}
           </p>
         )}
-
-
       </div>
        </div>
+
+       { suco.canDanhGia && (
+        <div className="detail-evaluation">
+          <h2>Đánh giá sự cố</h2>
+          <p>Bạn có thể đánh giá chất lượng xử lý sự cố này.</p>
+          <button className="btn-evaluate">Đánh giá ngay</button>
+        </div>
+          
+          )}
+    </>
+
     )
 }
 

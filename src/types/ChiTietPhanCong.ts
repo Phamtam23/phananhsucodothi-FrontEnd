@@ -1,15 +1,14 @@
-export type TrangThaiChiTietPhanCong =
-  | "HOANTHANH"
-  | "DANGCHO";
+import type { NhanVienDonViResponse } from "./NhanVienDonVi";
+import type { PhieuPhanCongResponse } from "./PhieuPhanCong";
+export enum TrangThaiChiTietPhanCong {
+  HOANTHANH = "HOANTHANH",
+  DANGCHO = "DANGCHO",
+}
 
 export interface CreateChiTietPhanCongRequest {
   maPhieuPhanCong: string;
 
   maNhanVienXuLy: string;
-
-  trangThai: TrangThaiChiTietPhanCong;
-
-  thoiGianTao: string; 
 }
 
 export interface UpdateChiTietPhanCongRequest {
@@ -18,14 +17,14 @@ export interface UpdateChiTietPhanCongRequest {
   trangThai: TrangThaiChiTietPhanCong;
 }
 
-// export interface ChiTietPhanCongResponse {
-//   maChiTietPhanCong: string;
+export interface ChiTietPhanCongResponse {
+  maChiTietPhanCong: string;
 
-//   phieuPhanCong: PhieuPhanCongSCResponse;
+  phieuPhanCong: PhieuPhanCongResponse;
 
-//   nhanVienXuLy: NhanVienDonViResponse;
+  nhanVienXuLy: NhanVienDonViResponse;
 
-//   trangThai: TrangThaiChiTietPhanCong;
+  trangThai: TrangThaiChiTietPhanCong;
 
-//   thoiGianTao: string; // LocalDateTime
-// }
+  thoiGianTao: string; // LocalDateTime
+}
