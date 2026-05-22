@@ -1,0 +1,10 @@
+.TruongDonViLayout {
+    display: flex;
+    height: 100vh;
+    background-color: #f7f9fc;
+    
+    main {
+        flex: 1;
+        overflow-y: auto;
+    }
+}

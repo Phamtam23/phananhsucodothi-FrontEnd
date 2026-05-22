@@ -8,11 +8,12 @@ export interface CreatePhieuPhanCongRequest {
 }
 
 export enum TrangThaiPhanCong {
-  CHO_TIEP_NHAN = "CHO_TIEP_NHAN",
-  DA_TIEP_NHAN = "DA_TIEP_NHAN",
+  CHO_XAC_NHAN = "CHO_XAC_NHAN",
+  DA_XAC_NHAN = "DA_XAC_NHAN",
   TU_CHOI = "TU_CHOI",
   DANG_XU_LY = "DANG_XU_LY",
   HOAN_THANH = "HOAN_THANH",
+  CHO_DUYET_KET_QUA = "CHO_DUYET_KET_QUA",
 }
 
 export interface UpdatePhieuPhanCongRequest {

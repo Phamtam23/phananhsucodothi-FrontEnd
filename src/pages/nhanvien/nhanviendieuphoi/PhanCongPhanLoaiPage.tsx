@@ -59,7 +59,7 @@ const PhanCongPhanLoaiPage = () => {
 
         const res =
           await GetSuCoByTrangThaiService(
-            "CHO_TIEP_NHAN",
+            "DA_TIEP_NHAN",
             currentPage,
             PAGE_SIZE
           );

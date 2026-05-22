@@ -9,6 +9,7 @@ export const useListNhanVienDonVi = (maDonVi: string) => {
 
     useEffect(() => {
         const fetchNhanVienDonVi = async () => {
+            if (!maDonVi) return;
             setLoading(true); 
             try {
                 const res = await GetNhanVienDonViByDonViPhanCongService(maDonVi);

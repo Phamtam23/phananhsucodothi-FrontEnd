@@ -23,3 +23,17 @@ export const GetPhieuMoLaiByIdService = async (id:number|string):Promise<ApiResp
     const res = await apiClient.get(API_CONFIG.ENDPOINTS.PHIEUMOLAI.GET_BY_ID(id));
     return res.data;
 }
+
+export const GetAllPhieuMoLaiByDonViService = async (page: number = 0, size: number = 10): Promise<ApiResponse<any>> => {
+    const res = await apiClient.get(API_CONFIG.ENDPOINTS.PHIEUMOLAI.GET_ALL_BY_DONVI(page, size));
+    return res.data;
+}
+
+export const DuyetPhieuMoLaiService = async (maPhieu: string, isApproved: boolean, lyDoTuChoi?: string): Promise<ApiResponse<PhieuMoLaiResponse>> => {
+    const params = new URLSearchParams({ isApproved: String(isApproved) });
+    if (lyDoTuChoi) {
+        params.append("lyDoTuChoi", lyDoTuChoi);
+    }
+    const res = await apiClient.put(`${API_CONFIG.ENDPOINTS.PHIEUMOLAI.DUYET(maPhieu)}?${params.toString()}`);
+    return res.data;
+}

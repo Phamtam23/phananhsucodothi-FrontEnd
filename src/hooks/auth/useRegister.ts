@@ -23,6 +23,8 @@ export const useRegister = () => {
       ...form,
       [e.target.name]: e.target.value
     });
+
+    console.log(form);
   };
 
   const validate = () => {
@@ -61,7 +63,7 @@ export const useRegister = () => {
 
       const response = await RegisterService(form);
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         alert("Đăng ký thành công");
         navigate("/auth/login");
       } else {

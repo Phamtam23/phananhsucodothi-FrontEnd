@@ -1,51 +1,60 @@
+@use '../../styles/urban-tokens' as *;
+
+/* ── Header ── Urban Integrity (Glassmorphism) ── */
+
 .header {
-  background: var(--color-background-primary, #fff);
-  border-bottom: 0.5px solid rgba(0, 0, 0, 0.12);
+  @include glass-header;
   position: sticky;
   top: 0;
   z-index: 100;
+  // No hard border — use opacity shift
 
   &__inner {
-    max-width: 1100px;
+    max-width: 1160px;
     margin: 0 auto;
-    padding: 0 24px;
-    height: 56px;
+    padding: 0 28px;
+    height: 60px;
     display: flex;
     align-items: center;
     gap: 32px;
   }
 
   &__logo {
-    font-size: 15px;
-    font-weight: 500;
-    color: #1a1a1a;
+    font-family: $font-display;
+    font-size: 18px;
+    font-weight: 800;
+    color: $on-surface;
     text-decoration: none;
     white-space: nowrap;
+    letter-spacing: -0.5px;
   }
 
   &__nav {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 24px;
     flex: 1;
+    height: 100%;
 
     &-link {
+      font-family: $font-body;
       font-size: 14px;
-      color: #555;
+      font-weight: 500;
+      color: $on-surface-variant;
       text-decoration: none;
-      padding: 6px 12px;
-      border-radius: 8px;
-      transition: background 0.15s;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
       white-space: nowrap;
+      margin-bottom: -1px; // Align to border
 
-      &:hover {
-        background: #f5f5f5;
-        color: #1a1a1a;
-      }
-
-      &--active {
-        color: #1a1a1a;
-        font-weight: 500;
+      &:hover { color: $on-surface; }
+      &--active { 
+        color: $primary; 
+        font-weight: 600; 
+        border-bottom: 2px solid $primary; 
       }
     }
   }
@@ -54,63 +63,68 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    background: #f5f5f5;
-    border: 0.5px solid rgba(0, 0, 0, 0.12);
-    border-radius: 20px;
-    padding: 6px 14px;
+    // background: $surface-container-low;
+    border-radius: $radius-full;
+    padding: 8px 16px;
     font-size: 13px;
-    color: #888;
+    color: $on-surface-variant;
     cursor: pointer;
+    transition: background 0.2s;
+    border: $ghost-border;
+
+    &:hover { background: $surface; }
   }
 
   &__actions {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 12px;
     margin-left: auto;
   }
 
   &__btn-login {
+    font-family: $font-body;
     font-size: 14px;
-    color: #555;
+    color: $on-surface-variant;
     text-decoration: none;
-    padding: 8px 12px;
+    padding: 8px 14px;
+    border-radius: $radius-md;
+    transition: all 0.2s;
+    &:hover { background: $surface-container-low; color: $on-surface; }
   }
 
   &__btn-register {
-    background: #F5C518;
-    color: #1a1a1a;
-    border: none;
-    border-radius: 8px;
-    padding: 8px 18px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
+    background: $primary;
+    color: $on-primary;
+    font-family: $font-body;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 8px 20px;
     text-decoration: none;
-
+    border-radius: $radius-md;
+    box-shadow: $shadow-ambient;
+    transition: opacity 0.2s, transform 0.2s;
+    
     &:hover {
-      background: #e0b315;
+      opacity: 0.9;
+      transform: translateY(-1px);
     }
   }
 
-&__btn-profile {
-  font-size: 14px;
-  color: #555;
-  text-decoration: none;
-  padding: 8px 12px;
+  &__btn-profile {
+    font-family: $font-body;
+    font-size: 14px;
+    color: $on-surface-variant;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: $radius-md;
+    transition: all 0.2s;
+    &:hover { color: $on-surface; background: $surface-container-low; }
+  }
 
-  &:hover { color: #1a1a1a; }
-}
-
-&__btn-logout {
-  background: #fff;
-  color: #1a1a1a;
-  border: 0.5px solid rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
-  padding: 8px 16px;
-  font-size: 14px;
-  cursor: pointer;
-
-  &:hover { background: #f5f5f5; }
-}
+  &__btn-logout {
+    @include btn-secondary;
+    padding: 8px 16px;
+    font-size: 13px;
+  }
 }

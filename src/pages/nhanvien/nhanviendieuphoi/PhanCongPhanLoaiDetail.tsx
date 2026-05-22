@@ -5,7 +5,7 @@ import "./PhanCongPhanLoaiDetail.scss";
 
 import DetailSuCo from "../../../components/Suco/DetailSuCo";
 import ListLoai from "../../../components/PhanLoai/ListLoai";
-import ListPhanCong from "../../../components/PhanCong/ListPhanCong";
+import DanhSachPhanCong from "../../../components/PhanCong/DanhSachPhanCong";
 import CreatePhanCong from "../../../components/PhanCong/CreatePhanCong";
 
 import { useCreatePhanLoai } from "../../../hooks/phanloai/useCreatePhanLoai";
@@ -264,7 +264,7 @@ const PhanCongPhanLoaiDetail = () => {
 
             {/* ── Tab: DS Phân công ───────── */}
             {activeTab === "ds-phan-cong" && (
-              <ListPhanCong maSuCo={maSuCo} />
+              <DanhSachPhanCong maSuCo={maSuCo} />
             )}
           </div>
         </div>

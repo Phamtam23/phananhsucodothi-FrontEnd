@@ -12,6 +12,6 @@ export const LoginService = async (requestLogin: requestLogin):Promise<ApiRespon
 
 export const RegisterService = async (requestRegister: RegisterRequest):Promise<ApiResponse<AuthResponse>> => {
     
-    const res = await apiClient.post(API_CONFIG.ENDPOINTS.AUTH.REGISTER, { body: requestRegister });
+    const res = await apiClient.post(API_CONFIG.ENDPOINTS.AUTH.REGISTER, requestRegister );
     return res.data;
 }

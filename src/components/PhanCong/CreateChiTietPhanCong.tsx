@@ -3,6 +3,7 @@ import type { NhanVienDonViResponse } from "../../types/NhanVienDonVi";
 import { useCreateChiTietPhanCong } from "../../hooks/phancong/useCreateChiTietPhanCong";
 import ListNhanVienDonViPhanCong from "../NhanVienDonVi/ListNhanVienDonViPhanCong";
 import type {CreateChiTietPhanCongRequest} from "../../types/ChiTietPhanCong";
+import "./CreateChiTietPhanCong.scss";
 type Props = {
   maPhieuPhanCong: string;
   maDonVi: string;

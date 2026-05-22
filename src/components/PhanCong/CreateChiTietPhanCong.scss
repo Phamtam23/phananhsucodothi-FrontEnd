@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* ==============================
+   COMPONENT: CreateChiTietPhanCong
+   ============================== */
+
+.create-chi-tiet-phan-cong {
+  font-family: 'Inter', sans-serif;
+
+  h2 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #fef3c7;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 18px;
+      background: #f59e0b;
+      border-radius: 2px;
+    }
+  }
+
+  // Nút phân công
+  > button {
+    margin-top: 16px;
+    width: 100%;
+    padding: 11px 16px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #111827, #374151);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 2px 8px rgba(17, 24, 39, 0.2);
+
+    &:hover:not(:disabled) {
+      background: linear-gradient(135deg, #374151, #4b5563);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(17, 24, 39, 0.3);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+  }
+
+  // Trạng thái loading / error
+  p {
+    font-size: 14px;
+    color: #6b7280;
+    padding: 12px;
+    background: #f9fafb;
+    border-radius: 8px;
+    text-align: center;
+  }
+}

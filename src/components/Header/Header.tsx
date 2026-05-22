@@ -58,8 +58,9 @@ const Header = () => {
               <button
                 className="header__btn-logout"
                 onClick={() => {
+                  localStorage.removeItem('user');
                   localStorage.removeItem('accessToken');
-                  window.location.href = '/';
+                  window.location.href = '/login';
                 }}
               >
                 Đăng xuất

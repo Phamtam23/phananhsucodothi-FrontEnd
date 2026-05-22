@@ -1,0 +1,168 @@
+@use '../../styles/urban-tokens' as *;
+
+/* ── LichSuThucHienPage ── Urban Integrity ── */
+
+.trang-lich-su {
+  padding: 32px;
+  background: $surface;
+  min-height: 100vh;
+  font-family: $font-body;
+
+  &-header {
+    margin-bottom: 32px;
+
+    h1 {
+      font-family: $font-display;
+      font-size: 36px;
+      font-weight: 800;
+      color: $on-surface;
+      margin-bottom: 8px;
+      letter-spacing: -1px;
+    }
+
+    p { font-size: 14px; color: $on-surface-variant; max-width: 600px; line-height: 1.6; }
+  }
+
+  &-loading {
+    text-align: center;
+    padding: 80px;
+    color: $on-surface-variant;
+    font-size: 15px;
+    font-family: $font-display;
+  }
+
+  &-empty-state {
+    text-align: center;
+    padding: 72px 24px;
+    background: $surface-container-lowest;
+    border-radius: $radius-xl;
+    box-shadow: $shadow-ambient;
+
+    .bieu-tuong-trong { font-size: 52px; margin-bottom: 16px; }
+    p { color: $on-surface-variant; font-size: 14px; margin: 0; }
+  }
+
+  &-danh-sach {
+    display: flex;
+    flex-direction: column;
+    gap: $gap-card;
+  }
+
+  // Item card — uses tonal layering (no dividers)
+  &-item {
+    @include card;
+    position: relative;
+    transition: box-shadow 0.25s, transform 0.2s;
+
+    &:hover { box-shadow: $shadow-elevated; transform: translateY(-2px); }
+
+    // Accent bar for different states
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      border-radius: $radius-xl $radius-xl 0 0;
+    }
+
+    &.trang-thai-xong::before { background: $gradient-cta; }
+    &.trang-thai-dang::before { background: $tertiary; }
+    &.trang-thai-cho::before  { background: $secondary; }
+  }
+
+  &-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 10px;
+  }
+
+  &-item-title {
+    font-family: $font-display;
+    font-size: 16px;
+    font-weight: 700;
+    color: $on-surface;
+    margin-bottom: 5px;
+    line-height: 1.4;
+  }
+
+  &-item-id { font-size: 11px; color: $on-surface-variant; font-weight: 500; }
+
+  &-item-meta {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: $on-surface-variant;
+    margin-top: 14px;
+    padding-top: 12px;
+    // Use tonal shift instead of divider line
+    background: transparent;
+    border-top: none;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: $surface;
+      border-radius: 1px;
+    }
+  }
+
+  &-item-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    svg { color: $primary; flex-shrink: 0; }
+  }
+}
+
+// ── Status badges ──────────────────────────────────────────
+.badge-lich-su {
+  padding: 4px 12px;
+  border-radius: $radius-full;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+
+  &.xong { @include status-chip($secondary, $on-secondary-container); }
+  &.cho  { @include status-chip($surface, $on-surface-variant); }
+  &.dang { @include status-chip($tertiary, $on-tertiary-container); }
+  &.loi  { @include status-chip($error, $on-error-container); }
+}
+
+// ── Kết quả đã nộp ──────────────────────────────────────────
+.ket-qua-da-nop {
+  margin-top: 16px;
+  background: $surface-container-low;
+  border-radius: $radius-md;
+  padding: 16px 18px;
+  animation: ui-fade-in 0.2s ease;
+
+  &-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: $tertiary;
+    margin-bottom: 8px;
+  }
+
+  &-noi-dung { font-size: 14px; color: $on-surface; line-height: 1.6; }
+
+  &-ly-do-tu-choi {
+    margin-top: 12px;
+    padding: 10px 14px;
+    background: $error;
+    border-radius: $radius-sm;
+    font-size: 13px;
+    color: $on-error-container;
+    line-height: 1.5;
+  }
+}

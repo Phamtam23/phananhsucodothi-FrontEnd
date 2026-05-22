@@ -1,0 +1,425 @@
+@use '../../styles/urban-tokens' as *;
+
+/* ── XuLySuCoPage ── Urban Integrity Design System ─── */
+
+.trang-xu-ly {
+  padding: 32px;
+  background: $surface;
+  min-height: 100vh;
+  font-family: $font-body;
+
+  &-header {
+    margin-bottom: 32px;
+
+    h1 {
+      font-family: $font-display;
+      font-size: 36px;
+      font-weight: 800;
+      color: $on-surface;
+      margin-bottom: 8px;
+      letter-spacing: -1px;
+    }
+
+    p {
+      font-size: 14px;
+      color: $on-surface-variant;
+      max-width: 560px;
+      line-height: 1.6;
+    }
+  }
+
+  // ── Tabs ──
+  &-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 32px;
+    background: $surface-container-low;
+    border-radius: $radius-xl;
+    padding: 6px;
+    width: fit-content;
+  }
+
+  &-tab {
+    padding: 9px 20px;
+    background: transparent;
+    border: none;
+    font-family: $font-body;
+    font-size: 13px;
+    font-weight: 600;
+    color: $on-surface-variant;
+    border-radius: $radius-md;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &.active {
+      background: $surface-container-lowest;
+      color: $primary;
+      box-shadow: $shadow-ambient;
+    }
+
+    &:hover:not(.active) { color: $on-surface; }
+  }
+
+  &-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 8px;
+    border-radius: $radius-full;
+    font-size: 11px;
+    font-weight: 700;
+    background: $secondary;
+    color: $on-secondary-container;
+    margin-left: 6px;
+  }
+
+  // ── Grid ──
+  &-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: $gap-card;
+  }
+
+  // ── Card ──
+  &-card {
+    @include card;
+    position: relative;
+    transition: box-shadow 0.25s, transform 0.2s;
+
+    &:hover {
+      box-shadow: $shadow-elevated;
+      transform: translateY(-3px);
+    }
+
+    // Amber top-left accent corner (editorial touch)
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 48px; height: 4px;
+      background: $gradient-cta;
+      border-radius: $radius-xl $radius-sm 0 0;
+    }
+  }
+
+  &-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+
+  &-card-tags { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+  &-card-tag {
+    background: $tertiary;
+    color: $on-tertiary-container;
+    padding: 3px 10px;
+    border-radius: $radius-full;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  &-card-id {
+    color: $on-surface-variant;
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  &-card-time {
+    font-size: 11px;
+    color: $on-surface-variant;
+    white-space: nowrap;
+  }
+
+  &-card-title {
+    font-family: $font-display;
+    font-size: 17px;
+    font-weight: 700;
+    color: $on-surface;
+    margin-bottom: 14px;
+    line-height: 1.4;
+  }
+
+  &-card-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px 14px;
+    background: $surface-container-low;
+    border-radius: $radius-md;
+    margin-bottom: 16px;
+  }
+
+  &-card-meta-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 13px;
+    color: $on-surface-variant;
+    svg { color: $primary; flex-shrink: 0; margin-top: 1px; }
+  }
+
+  &-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 72px 24px;
+    color: $on-surface-variant;
+    font-size: 14px;
+    background: $surface-container-lowest;
+    border-radius: $radius-xl;
+    box-shadow: $shadow-ambient;
+  }
+
+  &-loading {
+    text-align: center;
+    padding: 80px;
+    color: $on-surface-variant;
+    font-size: 15px;
+    font-family: $font-display;
+  }
+}
+
+// ── Action buttons ──────────────────────────────────────────
+.nut-hanh-dong {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+
+  button {
+    flex: 1;
+    min-width: 110px;
+    padding: 10px 14px;
+    border-radius: $radius-xl;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.2s;
+    font-family: $font-body;
+    letter-spacing: 0.02em;
+
+    &:disabled { opacity: 0.55; cursor: not-allowed; transform: none !important; }
+    &:not(:disabled):active { transform: scale(0.97); }
+  }
+}
+
+.nut-bat-dau {
+  background: $surface;
+  color: $on-surface;
+  border: none;
+  &:hover:not(:disabled) { background: $surface-container-high; transform: translateY(-1px); }
+}
+
+.nut-nop-ket-qua {
+  @include btn-primary;
+  width: auto;
+  padding: 10px 14px;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+.nut-xem-chi-dao {
+  @include btn-secondary;
+  padding: 10px 14px;
+}
+
+// ── Status badge ──────────────────────────────────────────────
+.trang-thai-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: $radius-full;
+  display: inline-flex;
+  align-items: center;
+
+  &.cho  { @include status-chip($secondary, $on-secondary-container); }
+  &.dang { @include status-chip($tertiary, $on-tertiary-container); }
+  &.xong { @include status-chip(rgba(204, 237, 96, 0.6), $tertiary); }
+  &.loi  { @include status-chip($error, $on-error-container); }
+}
+
+// ── Modal – Chỉ đạo ──────────────────────────────────────────
+.modal-chi-dao-nen {
+  position: fixed;
+  inset: 0;
+  background: rgba(31, 27, 0, 0.55);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: ui-fade-in 0.18s ease;
+}
+
+.modal-chi-dao-hop {
+  background: $surface;
+  border-radius: $radius-xl * 1.5;
+  padding: 36px;
+  width: 92%;
+  max-width: 540px;
+  box-shadow: $shadow-elevated;
+  animation: ui-slide-up 0.22s ease;
+
+  h2 {
+    font-family: $font-display;
+    font-size: 22px;
+    font-weight: 800;
+    color: $on-surface;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid $surface;
+  }
+
+  .chi-dao-item {
+    background: $surface-container-low;
+    border-radius: $radius-md;
+    border-left: 4px solid $primary;
+    padding: 16px 18px;
+    margin-bottom: $gap-card * 0.5;
+
+    &-noi-dung { font-size: 14px; color: $on-surface; line-height: 1.6; margin-bottom: 8px; }
+    &-ngay { font-size: 11px; color: $on-surface-variant; font-weight: 500; }
+  }
+
+  .khong-co-chi-dao {
+    text-align: center;
+    padding: 32px;
+    color: $on-surface-variant;
+    font-size: 14px;
+  }
+
+  .nut-dong-modal {
+    @include btn-primary;
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    font-size: 14px;
+  }
+}
+
+// ── Modal – Kết quả ──────────────────────────────────────────
+.modal-ket-qua-nen {
+  position: fixed;
+  inset: 0;
+  background: rgba(31, 27, 0, 0.55);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: ui-fade-in 0.18s ease;
+}
+
+.modal-ket-qua-hop {
+  background: $surface;
+  border-radius: $radius-xl * 1.5;
+  padding: 36px;
+  width: 92%;
+  max-width: 580px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: $shadow-elevated;
+  animation: ui-slide-up 0.22s ease;
+
+  h2 {
+    font-family: $font-display;
+    font-size: 22px;
+    font-weight: 800;
+    color: $on-surface;
+    margin-bottom: 6px;
+  }
+
+  .ten-su-co {
+    font-size: 13px;
+    color: $on-surface-variant;
+    padding-bottom: 18px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid $surface;
+  }
+
+  label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: $on-surface-variant;
+    margin-bottom: 8px;
+  }
+
+  textarea {
+    @include input-field;
+    border-radius: $radius-md;
+    min-height: 110px;
+    resize: vertical;
+    line-height: 1.65;
+  }
+
+  .khu-vuc-anh {
+    margin: 18px 0 22px;
+
+    .danh-sach-anh { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+
+    .khung-anh {
+      position: relative;
+
+      img {
+        width: 78px; height: 78px;
+        border-radius: $radius-md;
+        object-fit: cover;
+        display: block;
+        box-shadow: $shadow-ambient;
+      }
+
+      .nut-xoa-anh {
+        position: absolute;
+        top: -8px; right: -8px;
+        background: $error;
+        color: $on-primary;
+        border: 2px solid $surface;
+        border-radius: $radius-full;
+        width: 22px; height: 22px;
+        font-size: 10px;
+        cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+        transition: background 0.2s, transform 0.2s;
+    
+      }
+    }
+
+    .them-anh-btn {
+      @include btn-secondary;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 16px;
+      margin-top: 10px;
+      font-size: 13px;
+      &:disabled { opacity: 0.55; cursor: not-allowed; }
+    }
+  }
+
+  .nhom-nut-modal {
+    display: flex;
+    gap: 12px;
+    button { flex: 1; padding: 12px; border-radius: $radius-xl; font-size: 14px; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s; font-family: $font-body; &:disabled { opacity: 0.55; cursor: not-allowed; } }
+  }
+
+  .nut-huy-modal {
+    @include btn-secondary;
+    border: $ghost-border;
+    padding: 12px;
+    border-radius: $radius-xl;
+  }
+
+  .nut-nop-modal {
+    @include btn-primary;
+    padding: 12px;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+  }
+}

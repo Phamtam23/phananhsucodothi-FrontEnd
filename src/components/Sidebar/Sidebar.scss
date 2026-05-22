@@ -1,19 +1,50 @@
-/* Sidebar.scss */
+@use '../../styles/urban-tokens' as *;
+
+/* ── Sidebar ── Urban Integrity ── */
 
 .sidebar {
-  width: 180px;
+  width: 200px;
   height: 100vh;
-  background: #f3f4f6;
+  background: $surface-container-lowest;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 16px 10px;
-  border-right: 1px solid #e5e7eb;
+  padding: 20px 12px;
+  box-shadow: $shadow-ambient;
+  // Glassmorphism — no hard border-right
+  position: relative;
+  z-index: 10;
+
+  // Logo / brand area at top
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 8px 20px;
+    border-bottom: 2px solid $surface;
+    margin-bottom: 12px;
+
+    &-name {
+      font-family: $font-display;
+      font-size: 13px;
+      font-weight: 800;
+      color: $on-surface;
+      line-height: 1.2;
+    }
+
+    &-dot {
+      width: 8px; height: 8px;
+      background: $gradient-cta;
+      border-radius: $radius-full;
+      flex-shrink: 0;
+    }
+  }
 
   &__menu {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
+    flex: 1;
   }
 
   &__item {
@@ -21,24 +52,25 @@
     align-items: center;
     gap: 10px;
     padding: 10px 12px;
-    border-radius: 8px;
-    color: #6b7280;
+    border-radius: $radius-md;
+    color: $on-surface-variant;
+    font-family: $font-body;
     font-size: 12px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.2s;
+    letter-spacing: 0.01em;
 
     &:hover {
-      background: #e5e7eb;
-    }
+    background: $surface-container-low;
+    color: $on-surface;
+  }
 
     &.active {
-      background: #f5f5f5;
-      color: #f59e0b;
+      background: $surface;
+      color: $primary;
 
-      .sidebar__icon {
-        color: #f59e0b;
-      }
+      .sidebar__icon { color: $primary; }
     }
   }
 
@@ -46,32 +78,24 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #6b7280;
+    color: $on-surface-variant;
+    flex-shrink: 0;
+    transition: color 0.2s;
   }
 
-  &__label {
-    white-space: nowrap;
-  }
+  &__label { white-space: nowrap; }
 
+  // Bottom CTA button
   &__button {
+    @include btn-primary;
     width: 100%;
-    border: none;
-    outline: none;
-    background: #facc15;
-    color: #111827;
-    padding: 12px;
-    border-radius: 8px;
+    padding: 11px 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 6px;
     font-size: 12px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: 0.2s;
-
-    &:hover {
-      background: #eab308;
-    }
+    border-radius: $radius-md;
+    box-shadow: $shadow-fab;
   }
 }

@@ -44,19 +44,23 @@ const CreateSuco = () => {
             ...prev.filter((url) => !blobPreviews.includes(url)),
             ...serverUrls,
           ]);
-          setMediaUrls([...(form.mediaUrls ?? []), ...serverUrls]);
+          setMediaUrls((prev) => [...prev, ...serverUrls]);
         }
       } catch (error) {
         alert("Upload ảnh thất bại, vui lòng thử lại");
         setPreviewUrls((prev) => prev.filter((url) => !blobPreviews.includes(url)));
+      } finally {
+        if (fileInputRef.current) {
+          fileInputRef.current.value = "";
+        }
       }
     },
-    [previewUrls, form.mediaUrls, setMediaUrls]
+    [setMediaUrls]
   );
 
   const removeImage = (index: number) => {
     setPreviewUrls((prev) => prev.filter((_, i) => i !== index));
-    setMediaUrls((form.mediaUrls ?? []).filter((_, i) => i !== index));
+    setMediaUrls((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleDrop = useCallback(

@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+.NhanVienXuLyLayout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f7f9fc;
+  font-family: 'Inter', sans-serif;
+
+  // Sidebar cố định bên trái (width 180px theo Sidebar.scss)
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 100;
+  }
+
+  main {
+    flex: 1;
+    margin-left: 180px;   // bằng đúng width sidebar
+    min-height: 100vh;
+    overflow-y: auto;
+  }
+}

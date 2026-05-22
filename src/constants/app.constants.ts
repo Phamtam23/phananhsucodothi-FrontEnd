@@ -23,7 +23,8 @@ export const API_CONFIG = {
             GET_BY_ID: (id: number | string) => `/phancong/${id}`, 
             GET_BY_SUCO_ID: (id: number | string) => `/phancong/su-co/${id}`,
             CREATE: "/phancong",
-            GET_BY_DONVI_ID: (id: number | string) => `/phancong/don-vi/${id}`,
+            GET_BY_DONVI: (page: number = 0, size: number = 10) => `/phancong/don-vi?page=${page}&size=${size}`,
+            UPDATE: (id: number | string) => `/phancong/${id}`,
         },
         PHIEUKIEMDUYET:{
             CREATE: "/phieu-kiem-duyet",
@@ -42,7 +43,7 @@ export const API_CONFIG = {
             GET_BY_ID : (id: number | string) => `/ket-qua-xu-ly/${id}`,
             UPDATE: "/ket-qua-xu-ly",
             GET_BY_CHITIETPHANCONG_ID: (id: number | string) => `/ket-qua-xu-ly/chi-tiet-phan-cong/${id}`,
-
+            DUYET: (id: number | string) => `/ket-qua-xu-ly/duyet/${id}`,
         },
         DANHGIA :{
             CREATE: "/phieu-danh-gia",
@@ -53,18 +54,31 @@ export const API_CONFIG = {
             UPDATE: "/phieu-mo-lai",
             GET_BY_CHITIETPHANCONG_ID: (id: number | string) => `/phieu-mo-lai/chi-tiet-phan-cong/${id}`,
             GET_BY_ID: (id: number | string) => `/phieu-mo-lai/${id}`,
+            GET_ALL_BY_DONVI: (page: number = 0, size: number = 10) => `/phieu-mo-lai/don-vi?page=${page}&size=${size}`,
+            DUYET: (id: number | string) => `/phieu-mo-lai/duyet/${id}`,
         },
         DONVIXULY :{
-            CREATE: "/mo",
-            UPDATE: "/phieu-mo-lai",
+            CREATE: "/don-vi-xu-ly",
+            UPDATE: (id: number | string) => `/don-vi-xu-ly/${id}`,
             GET_BY_ID: (id: number | string) => `/don-vi-xu-ly/${id}`,
             GET_ALL: "/don-vi-xu-ly",
         },
+        TAIKHOAN: {
+            GET_ALL: "/tai-khoan",
+            GET_BY_ID: (id: string) => `/tai-khoan/${id}`,
+            CREATE: "/tai-khoan",
+            UPDATE: (id: string) => `/tai-khoan/${id}`,
+            KHOA: (id: string) => `/tai-khoan/${id}/khoa`,
+            MO_KHOA: (id: string) => `/tai-khoan/${id}/mo-khoa`,
+        },
+        THONGKE: {
+            HE_THONG: "/thong-ke",
+        },
         FILE: {
-            UPLOAD: "/file/upload",
+            UPLOAD: "/files/upload",
         },
         NHANVIENDONVI: {
-            GET_ALL_BY_DONVI_PHANCONG: (maDonVi: string) => `/nhan-vien-don-vi/phan-cong/${maDonVi}`,
+            GET_ALL_BY_DONVI_PHANCONG: () => `/nhan-vien-don-vi/phan-cong`,
             GET_ALL_BY_DONVI: (maDonVi: string) => `/nhan-vien-don-vi/don-vi/${maDonVi}`,
         },
         PHIEUPHANLOAI:{
@@ -81,7 +95,7 @@ export const API_CONFIG = {
         PHIEUCHIDAO:{
             CREATE: "/phieu-chi-dao",
             UPDATE: "/phieu-chi-dao",
-            GET_ALL_BY_PHANCONG_ID: (id: number | string) => `/phieu-chi-dao/phan-cong/${id}`,
+            GET_ALL_BY_CHITIETPHANCONG_ID: (id: number | string) => `/phieu-chi-dao/chi-tiet-phan-cong/${id}`,
             GET_BY_ID: (id: number | string) => `/phieu-chi-dao/${id}`,
             DELETE: (id: number | string) => `/phieu-chi-dao/${id}`
         }

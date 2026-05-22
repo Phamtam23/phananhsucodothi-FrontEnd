@@ -1,0 +1,1217 @@
+@use '../../../styles/urban-tokens' as *;
+
+// ── Base Page Style ──────────────────────────────────────────────────────────
+.pacd {
+  min-height: 100vh;
+  background: $surface-dim;
+  font-family: $font-body;
+  color: $on-surface;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+// ── 1. Hero Header Banner ─────────────────────────────────────────────────────
+.pacd__hero {
+  height: 480px;
+  background-size: cover;
+  background-position: right center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 0 40px;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.05);
+
+  @media (max-width: 768px) {
+    height: 380px;
+    padding: 0 20px;
+    background-position: 75% center;
+  }
+
+  .pacd__hero-inner {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    animation: ui-slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+
+    .hero-slogan {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: hsl(38, 90%, 45%);
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      font-family: $font-display;
+      font-size: 48px;
+      font-weight: 800;
+      color: #08060d;
+      letter-spacing: -1.2px;
+      margin: 0;
+      line-height: 1.1;
+
+      @media (max-width: 768px) {
+        font-size: 36px;
+      }
+
+      .highlight {
+        color: $primary;
+        font-style: italic;
+        font-weight: 800;
+      }
+    }
+
+    .hero-desc {
+      font-size: 15px;
+      color: $on-surface-variant;
+      line-height: 1.65;
+      margin: 8px 0 0;
+      font-weight: 500;
+
+      @media (max-width: 480px) {
+        font-size: 13.5px;
+      }
+    }
+  }
+}
+
+// ── 2. Floating Filter Toolbar ────────────────────────────────────────────────
+.pacd__toolbar {
+  max-width: 1200px;
+  margin: -36px auto 0;
+  padding: 0 24px;
+  position: relative;
+  z-index: 40;
+  box-sizing: border-box;
+
+  @media (max-width: 992px) {
+    margin-top: -24px;
+    padding: 0 16px;
+  }
+
+  .pacd__toolbar-inner {
+    background: $surface;
+    border-radius: $radius-full;
+    border: 1px solid rgba(15, 23, 42, 0.06);
+    box-shadow: $shadow-elevated;
+    padding: 8px 12px 8px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    position: relative;
+
+    @media (max-width: 992px) {
+      border-radius: 20px;
+      padding: 16px;
+      gap: 12px;
+    }
+  }
+
+  // Search input
+  .pacd__search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: $surface-container;
+    border-radius: $radius-full;
+    padding: 8px 16px;
+    flex: 1;
+    min-width: 220px;
+    color: $on-surface-variant;
+    border: 1px solid transparent;
+    transition: all 0.25s ease;
+
+    &:focus-within {
+      background: $surface;
+      border-color: $primary;
+      box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.15);
+    }
+
+    input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-family: $font-body;
+      font-size: 13px;
+      color: $on-surface;
+      width: 100%;
+      font-weight: 500;
+
+      &::placeholder {
+        color: $on-surface-variant;
+        opacity: 0.65;
+      }
+    }
+  }
+
+  // Category Tabs
+  .pacd__loai-tabs {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: $surface-container;
+    border-radius: $radius-full;
+    padding: 3px;
+    border: 1px solid rgba(15, 23, 42, 0.03);
+
+    @media (max-width: 768px) {
+      width: 100%;
+      overflow-x: auto;
+      &::-webkit-scrollbar { display: none; }
+    }
+  }
+
+  .pacd__loai-tab {
+    font-family: $font-body;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 8px 16px;
+    border: none;
+    border-radius: $radius-full;
+    cursor: pointer;
+    color: $on-surface-variant;
+    background: transparent;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+
+    &.active {
+      background: $primary;
+      color: #000;
+      box-shadow: 0 3px 10px rgba(255, 193, 7, 0.35);
+    }
+
+    &:hover:not(.active) {
+      background: rgba(15, 23, 42, 0.05);
+      color: $on-surface;
+    }
+  }
+
+  // Status select dropdown
+  .pacd__tt-select {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: $surface-container;
+    border: 1px solid rgba(15, 23, 42, 0.04);
+    border-radius: $radius-full;
+    padding: 8px 16px;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: $on-surface;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+
+    &:hover {
+      border-color: $primary;
+      background: $surface;
+    }
+  }
+
+  .pacd__tt-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: $surface;
+    border: 1px solid $outline-variant;
+    border-radius: $radius-xl;
+    box-shadow: $shadow-elevated;
+    min-width: 180px;
+    z-index: 100;
+    overflow: hidden;
+    animation: ui-slide-up 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .pacd__tt-option {
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: $on-surface;
+    cursor: pointer;
+    transition: background 0.15s;
+
+    &:hover {
+      background: $surface-container-low;
+    }
+
+    &.active {
+      color: hsl(38, 90%, 45%);
+      background: hsl(38, 100%, 96.5%);
+      font-weight: 700;
+    }
+  }
+
+  // Display count info
+  .pacd__count {
+    font-size: 12px;
+    color: $on-surface-variant;
+    white-space: nowrap;
+
+    @media (max-width: 992px) {
+      width: 100%;
+      text-align: left;
+    }
+
+    strong {
+      color: $on-surface;
+      font-weight: 700;
+    }
+  }
+
+  // Floating Plus Button
+  .pacd__btn-add-floating {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: $primary;
+    color: #000;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(255, 193, 7, 0.4);
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    flex-shrink: 0;
+
+    @media (max-width: 992px) {
+      position: absolute;
+      right: 16px;
+      top: 16px;
+    }
+
+    &:hover {
+      transform: scale(1.08) rotate(90deg);
+      box-shadow: 0 6px 20px rgba(255, 193, 7, 0.55);
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+}
+
+// ── 3. Page Content Area ──────────────────────────────────────────────────────
+.pacd__content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    padding: 32px 16px 64px;
+  }
+}
+
+// ── 4. Standard Section Styles ───────────────────────────────────────────────
+.pacd__section {
+  margin-bottom: 56px;
+  animation: ui-fade-in 0.6s ease;
+
+  .pacd__section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 24px;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.05);
+    padding-bottom: 12px;
+
+    .pacd__section-title-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .pacd__section-subtitle {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: hsl(38, 90%, 45%);
+      text-transform: uppercase;
+    }
+
+    .pacd__section-title {
+      font-family: $font-display;
+      font-size: 24px;
+      font-weight: 800;
+      color: $on-surface;
+      margin: 0;
+      letter-spacing: -0.5px;
+    }
+
+    .pacd__btn-view-all {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: transparent;
+      border: none;
+      color: $on-surface-variant;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        color: $primary;
+        transform: translateX(2px);
+      }
+    }
+
+    .pacd__slider-arrows {
+      display: flex;
+      gap: 8px;
+
+      .arrow-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: $surface;
+        border: 1px solid $outline;
+        color: $on-surface;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background: $surface-container-low;
+          border-color: $outline-variant;
+        }
+      }
+    }
+  }
+}
+
+// ── 5. Tiêu điểm Section Grid (Featured) ──────────────────────────────────────
+.pacd__featured-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: stretch;
+
+  @media (max-width: 992px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Left Card: Large Tall Card
+.featured-card-tall {
+  @include card;
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 420px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-elevated;
+    border-color: rgba(255, 193, 7, 0.25);
+
+    .card-image-wrap img {
+      transform: scale(1.03);
+    }
+  }
+
+  .card-image-wrap {
+    height: 300px;
+    position: relative;
+    overflow: hidden;
+    background: $surface-container;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .card-image-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $on-surface-variant;
+      opacity: 0.35;
+      background: linear-gradient(135deg, $surface-container 0%, $surface-container-high 100%);
+    }
+  }
+
+  .card-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+
+    .card-title {
+      font-family: $font-display;
+      font-size: 18px;
+      font-weight: 800;
+      color: $on-surface;
+      margin: 0;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-footer-info {
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+
+      .interest-count {
+        font-size: 12px;
+        font-weight: 700;
+        color: hsl(38, 90%, 40%);
+        background: hsl(38, 100%, 94.5%);
+        padding: 4px 10px;
+        border-radius: $radius-full;
+      }
+    }
+  }
+}
+
+// Right column layout
+.featured-right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+// Wide card row style
+.featured-card-wide {
+  @include card;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: $shadow-elevated;
+    border-color: rgba(255, 193, 7, 0.25);
+  }
+
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .card-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .card-title {
+    font-family: $font-display;
+    font-size: 16px;
+    font-weight: 800;
+    color: $on-surface;
+    margin: 0;
+    line-height: 1.35;
+  }
+
+  .card-desc {
+    font-size: 13px;
+    color: $on-surface-variant;
+    line-height: 1.55;
+    margin: 2px 0 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card-footer-row {
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+
+    .card-distance {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: $on-surface-variant;
+      background: $surface-container;
+      padding: 3px 8px;
+      border-radius: $radius-sm;
+    }
+  }
+}
+
+// Bottom nested card row
+.featured-bottom-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+
+  @media (max-width: 576px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Small nested card style
+.featured-card-small {
+  @include card;
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.25s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: $shadow-elevated;
+
+    .card-image-wrap img {
+      transform: scale(1.03);
+    }
+  }
+
+  .card-image-wrap {
+    height: 110px;
+    position: relative;
+    overflow: hidden;
+    background: $surface-container;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .card-image-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $on-surface-variant;
+      opacity: 0.3;
+    }
+  }
+
+  .card-content {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: space-between;
+    flex: 1;
+
+    .card-title {
+      font-family: $font-display;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: $on-surface;
+      margin: 0;
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-distance {
+      font-size: 11px;
+      font-weight: 600;
+      color: $on-surface-variant;
+    }
+  }
+}
+
+// Yellow CTA feedback card
+.featured-card-cta {
+  background: $primary;
+  border-radius: $radius-xl;
+  padding: 20px;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 18px rgba(255, 193, 7, 0.2);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  border: 1px solid transparent;
+
+  &::before {
+    content: "";
+    position: absolute;
+    right: -20px;
+    top: -20px;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(255, 193, 7, 0.35);
+
+    .cta-arrow {
+      transform: translateX(4px);
+    }
+  }
+
+  .cta-label {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: rgba(0, 0, 0, 0.45);
+    text-transform: uppercase;
+    z-index: 2;
+  }
+
+  .cta-title {
+    font-family: $font-display;
+    font-size: 18px;
+    font-weight: 800;
+    color: #000;
+    margin: 8px 0 4px;
+    z-index: 2;
+  }
+
+  .cta-desc {
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.7);
+    line-height: 1.45;
+    margin: 0 0 16px;
+    font-weight: 600;
+    z-index: 2;
+  }
+
+  .cta-arrow {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #000;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+    align-self: flex-start;
+    z-index: 2;
+
+    svg {
+      display: block;
+    }
+  }
+}
+
+// ── 6. Mới cập nhật Section Grid (Realtime) ──────────────────────────────────
+.pacd__realtime-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.realtime-card {
+  @include card;
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.25s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-elevated;
+
+    .card-image-wrap img {
+      transform: scale(1.03);
+    }
+  }
+
+  .card-image-wrap {
+    height: 160px;
+    position: relative;
+    overflow: hidden;
+    background: $surface-container;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .card-image-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $on-surface-variant;
+      opacity: 0.35;
+      background: linear-gradient(135deg, $surface-container 0%, $surface-container-high 100%);
+    }
+  }
+
+  .card-body {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+
+    .card-subtitle {
+      font-size: 10px;
+      font-weight: 700;
+      color: $on-surface-variant;
+      letter-spacing: 0.02em;
+    }
+
+    .card-title {
+      font-family: $font-display;
+      font-size: 14.5px;
+      font-weight: 800;
+      color: $on-surface;
+      margin: 2px 0 4px;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-desc {
+      font-size: 12.5px;
+      color: $on-surface-variant;
+      line-height: 1.5;
+      margin: 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  }
+}
+
+// ── 7. Overlaid Badges styling ────────────────────────────────────────────────
+.card-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-family: $font-body;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: $radius-full;
+  color: #fff;
+  z-index: 5;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+
+  &.badge-infrastructure {
+    background: rgba(37, 99, 235, 0.9);
+  }
+
+  &.badge-environment {
+    background: rgba(22, 163, 74, 0.9);
+  }
+
+  &.badge-order {
+    background: rgba(234, 179, 8, 0.95);
+    color: #1a1a00;
+  }
+
+  &.badge-landscape {
+    background: rgba(124, 58, 237, 0.9);
+  }
+}
+
+.status-badge {
+  font-family: $font-body;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: $radius-full;
+  display: inline-flex;
+  align-items: center;
+
+  &.badge--cho {
+    background: hsl(38, 100%, 93%);
+    color: hsl(38, 90%, 35%);
+  }
+
+  &.badge--tiep {
+    background: hsl(200, 100%, 93%);
+    color: hsl(200, 95%, 35%);
+  }
+
+  &.badge--dang {
+    background: hsl(250, 100%, 94%);
+    color: hsl(250, 90%, 40%);
+  }
+
+  &.badge--xong {
+    background: hsl(142, 70%, 92%);
+    color: hsl(142, 80%, 25%);
+  }
+
+  &.badge--dong {
+    background: #f1f5f9;
+    color: #475569;
+  }
+
+  &.badge--tuchoi {
+    background: hsl(0, 100%, 94%);
+    color: hsl(0, 90%, 40%);
+  }
+}
+
+// ── 8. CTA Widgets bottom bar (Heat map, new report, process guide) ───────────
+.pacd__cta-widgets {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 32px;
+  border-top: 1px solid rgba(15, 23, 42, 0.05);
+  padding-top: 48px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cta-widget-card {
+  @include card;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 180px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-elevated;
+  }
+
+  .widget-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+
+    h3 {
+      font-family: $font-display;
+      font-size: 16px;
+      font-weight: 800;
+      color: $on-surface;
+      margin: 0;
+    }
+
+    .widget-icon-box {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: $surface-container;
+      color: $on-surface-variant;
+    }
+  }
+
+  p {
+    font-size: 12.5px;
+    color: $on-surface-variant;
+    line-height: 1.55;
+    margin: 12px 0 18px;
+  }
+
+  button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: $font-body;
+    font-size: 12.5px;
+    font-weight: 700;
+    padding: 10px 18px;
+    border-radius: $radius-md;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: fit-content;
+    box-sizing: border-box;
+
+    svg {
+      transition: transform 0.2s ease;
+    }
+
+    &:hover svg {
+      transform: translateX(3px);
+    }
+  }
+
+  .widget-btn-primary {
+    background: #000;
+    color: #fff;
+    border: none;
+
+    &:hover {
+      background: #222;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    }
+  }
+
+  .widget-btn-secondary {
+    background: $surface;
+    color: $on-surface;
+    border: 1px solid $outline;
+
+    &:hover {
+      background: $surface-container-low;
+      border-color: $outline-variant;
+    }
+  }
+
+  &.widget--create {
+    border-left: 3px solid $primary;
+    .widget-icon-box {
+      background: hsl(38, 100%, 93%);
+      color: hsl(38, 90%, 40%);
+    }
+  }
+
+  &.widget--map {
+    border-left: 3px solid #3b82f6;
+    .widget-icon-box {
+      background: hsl(210, 100%, 93%);
+      color: hsl(210, 90%, 40%);
+    }
+  }
+
+  &.widget--guide {
+    border-left: 3px solid #64748b;
+    .widget-icon-box {
+      background: #f1f5f9;
+      color: #64748b;
+    }
+  }
+}
+
+// ── 9. Load more button ────────────────────────────────────────────────────────
+.pacd__load-more {
+  text-align: center;
+  margin-top: 36px;
+  width: 100%;
+
+  .pacd__btn-load {
+    @include btn-secondary;
+    padding: 12px 36px;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: $radius-full;
+    box-shadow: $shadow-ambient;
+
+    &:hover {
+      box-shadow: $shadow-elevated;
+      transform: translateY(-1px);
+    }
+  }
+}
+
+.pacd__loading-more {
+  text-align: center;
+  padding: 24px;
+  font-size: 13px;
+  color: $on-surface-variant;
+  font-weight: 500;
+}
+
+// ── 10. Premium Footer ────────────────────────────────────────────────────────
+.pacd__footer {
+  background: #0f172a;
+  color: #94a3b8;
+  padding: 64px 40px 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+
+  @media (max-width: 768px) {
+    padding: 48px 20px 24px;
+  }
+
+  .footer-columns {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1.2fr 1.2fr 1.6fr;
+    gap: 40px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 48px;
+
+    @media (max-width: 992px) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+
+    @media (max-width: 576px) {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+  }
+
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    h3 {
+      font-family: $font-display;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: #fff;
+      margin: 0;
+      text-transform: uppercase;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      li {
+        font-size: 13px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-weight: 500;
+        width: fit-content;
+
+        &:hover {
+          color: $primary;
+          transform: translateX(3px);
+        }
+      }
+    }
+
+    &.col-brand {
+      gap: 12px;
+
+      .footer-logo {
+        font-family: $font-display;
+        font-size: 20px;
+        font-weight: 800;
+        color: #fff;
+        margin: 0;
+        letter-spacing: -0.5px;
+      }
+
+      .footer-brand-desc {
+        font-size: 13px;
+        line-height: 1.65;
+        margin: 0;
+        max-width: 280px;
+      }
+    }
+
+    &.col-connect {
+      .social-links {
+        display: flex;
+        gap: 10px;
+
+        a {
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.04);
+          border: 1px solid rgba(255, 255, 255, 0.05);
+          color: #cbd5e1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.25s ease;
+
+          &:hover {
+            background: $primary;
+            color: #000;
+            transform: translateY(-2px);
+            border-color: transparent;
+          }
+        }
+      }
+    }
+  }
+
+  .footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .copyright {
+      font-size: 11px;
+      font-weight: 600;
+      color: #64748b;
+      margin: 0;
+    }
+
+    .footer-policy-links {
+      display: flex;
+      gap: 18px;
+      font-size: 11px;
+      font-weight: 800;
+      color: #64748b;
+      letter-spacing: 0.05em;
+
+      span {
+        cursor: pointer;
+        transition: color 0.15s;
+
+        &:hover {
+          color: $primary;
+        }
+      }
+    }
+  }
+}

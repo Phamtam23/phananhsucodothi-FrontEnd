@@ -1,98 +1,97 @@
-import {useDetailSuco} from "../../hooks/suco/useDetailSuco"
-import "./DetailSuCo.scss"
+import { useState } from "react";
+import { useDetailSuco } from "../../hooks/suco/useDetailSuco";
+import "./DetailSuCo.scss";
 import { API_CONFIG } from "../../constants/app.constants";
-import { formatDate, formatDateTime } from '../../utils/Format';
+
 type Props = {
   maSuCo: string;
 };
 
-const TRANG_THAI_LABEL: Record<string, string> = {
-  CHO_TIEP_NHAN: 'Chờ tiếp nhận',
-  DA_TIEP_NHAN:  'Đã tiếp nhận',
-  DANG_XU_LY:    'Đang xử lý',
-  DA_HOAN_THANH: 'Đã hoàn thành',
-  LA_SPAM:       'Spam',
-};
-const DetailSuCo = ({maSuCo}:Props) =>{
-    const {loading,error,suco} = useDetailSuco(maSuCo)
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>{error}</p>;
-    if (!suco)   return null; 
-    return (
-      <>
-      
-     
-      <div className="suco-detail">
+const DetailSuCo = ({ maSuCo }: Props) => {
+  const { loading, error, suco } = useDetailSuco(maSuCo);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
-      <div className="detail-gallery">
-        {suco.medias?.length > 0 ? (
-          <>
-            <div className="gallery__main">
-              <img src={API_CONFIG.BASE_URL + suco.medias[0].url} alt={suco.noiDung} />
-            </div>
-            {suco.medias.length > 1 && (
-              <div className="gallery__sub">
-                {suco.medias.slice(1, 3).map((m) => (
-                  <img key={m.url} src={API_CONFIG.BASE_URL + m.url} alt="" />
-                ))}
-              </div>
-            )}
-          </>
-        ) : (
-          <div className="gallery__placeholder" />
-        )}
+  if (loading) return <div className="suco-loading">Đang tải chi tiết sự cố...</div>;
+  if (error) return <div className="suco-error">{error}</div>;
+  if (!suco) return null;
+
+  const nextSlide = () => {
+    if (!suco.medias || suco.medias.length === 0) return;
+    setCurrentSlide((prev) => (prev + 1) % suco.medias.length);
+  };
+
+  const prevSlide = () => {
+    if (!suco.medias || suco.medias.length === 0) return;
+    setCurrentSlide((prev) => (prev - 1 + suco.medias.length) % suco.medias.length);
+  };
+
+  return (
+    <div className="suco-detail-card">
+      <div className="suco-detail-card__header">
+        <i className="ti ti-notes icon-phieu" aria-hidden="true" />
+        <h2>Nội dung phản ánh từ Công dân</h2>
       </div>
 
-      <div className="detail-body">
-
-        {/* 
-        {suco.?.length > 0 && (
-          <div className="detail-tags">
-            {suco.loaiSuCo.map((l) => (
-              <span key={l.maLoai} className="tag-loai">
-                <i className="ti ti-building-community" aria-hidden="true" />
-                {l.tenLoai}
-              </span>
-            ))}
-          </div>
-        )} */}
-
-        <h1 className="detail-title">{suco.noiDung}</h1>
-
-        <div className="detail-meta-row">
-          <span className={`badge-status badge-status--${suco.trangThai.toLowerCase()}`}>
-            {TRANG_THAI_LABEL[suco.trangThai]}
-          </span>
-          <span className="detail-date">{formatDateTime(suco.thoiGianTao)}</span>
-        </div>
-
-        <div className="detail-info-row">
-          <i className="ti ti-map-pin" aria-hidden="true" />
-          <span>{suco.diaDiem}</span>
-        </div>
-
-        <p className="detail-body-text">{suco.noiDung}</p>
-
-        {suco.ngayDuKienHoanThanh && (
-          <p className="detail-deadline">
-            <i className="ti ti-alarm" aria-hidden="true" />
-            Hạn xử lý: {formatDate(suco.ngayDuKienHoanThanh)}
+      <div className="suco-detail-card__body">
+        <div className="report-text-container">
+          <p className="report-text">
+            &ldquo;{suco.tieuDe || "Không có tiêu đề phản ánh."}&rdquo;
           </p>
-        )}
-      </div>
-       </div>
-
-       { suco.canDanhGia && (
-        <div className="detail-evaluation">
-          <h2>Đánh giá sự cố</h2>
-          <p>Bạn có thể đánh giá chất lượng xử lý sự cố này.</p>
-          <button className="btn-evaluate">Đánh giá ngay</button>
         </div>
-          
-          )}
-    </>
+        <div className="report-text-container">
+          <p className="report-text">
+            &ldquo;{suco.noiDung || "Không có nội dung mô tả phản ánh."}&rdquo;
+          </p>
+        </div>
 
-    )
-}
+        <div className="suco-slideshow">
+          {suco.medias && suco.medias.length > 0 ? (
+            <div className="slideshow-container">
+              <div className="slideshow-wrapper">
+                <img
+                  src={API_CONFIG.BASE_URL + suco.medias[currentSlide].url}
+                  alt={`Minh chứng phản ánh ${currentSlide + 1}`}
+                  className="slide-image"
+                />
+
+                {suco.medias.length > 1 && (
+                  <>
+                    <button className="slide-arrow prev-arrow" onClick={prevSlide}>
+                      &#10094;
+                    </button>
+                    <button className="slide-arrow next-arrow" onClick={nextSlide}>
+                      &#10095;
+                    </button>
+
+                    <span className="slide-badge">
+                      {currentSlide + 1} / {suco.medias.length}
+                    </span>
+                  </>
+                )}
+              </div>
+
+              {suco.medias.length > 1 && (
+                <div className="slide-dots">
+                  {suco.medias.map((_, index) => (
+                    <span
+                      key={index}
+                      className={`slide-dot ${currentSlide === index ? 'active' : ''}`}
+                      onClick={() => setCurrentSlide(index)}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="slideshow-placeholder">
+              <i className="ti ti-image" aria-hidden="true" />
+              <span>Không có hình ảnh đính kèm</span>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default DetailSuCo;

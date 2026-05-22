@@ -1,0 +1,101 @@
+@use '../../styles/urban-tokens' as *;
+
+.quan-ly-don-vi {
+  animation: ui-fade-in 0.3s ease;
+
+  &__tieu-de {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+
+    h1 {
+      font-family: $font-display;
+      font-size: 22px;
+      font-weight: 800;
+      color: $on-surface;
+      letter-spacing: -0.4px;
+    }
+
+    p {
+      font-family: $font-body;
+      font-size: 13px;
+      color: $on-surface-variant;
+      margin-top: 2px;
+    }
+  }
+
+  &__btn-them {
+    @include btn-primary;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 20px;
+  }
+
+  &__bang {
+    @include card;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  &__bang-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th {
+      font-family: $font-body;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: $on-surface-variant;
+      background: $surface-container-low;
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid $outline-variant;
+    }
+
+    td {
+      font-family: $font-body;
+      font-size: 14px;
+      color: $on-surface;
+      padding: 14px 16px;
+      border-bottom: 1px solid $outline-variant;
+      vertical-align: middle;
+    }
+
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: $surface-dim; }
+  }
+
+  &__trang-thai-hoat-dong {
+    @include status-chip(#dcfce7, #15803d);
+  }
+
+  &__trang-thai-ngung {
+    @include status-chip(#fee2e2, #dc2626);
+  }
+
+  &__hanh-dong {
+    display: flex;
+    gap: 8px;
+  }
+
+  &__btn-sua {
+    @include btn-secondary;
+    padding: 6px 12px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  &__trong {
+    text-align: center;
+    padding: 48px 16px;
+    color: $on-surface-variant;
+    font-family: $font-body;
+    font-size: 14px;
+  }
+}

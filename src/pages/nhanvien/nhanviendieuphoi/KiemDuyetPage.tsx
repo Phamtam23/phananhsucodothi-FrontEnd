@@ -1,45 +1,26 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Search, MapPin, Calendar, ListFilter, MoreHorizontal, CheckCircle2 } from "lucide-react";
 import "./KiemDuyetPage.scss";
-
-import {
-  GetALLSuCoService,
-  GetSuCoByTrangThaiService,
-} from "../../../services/SucoService";
-
+import { GetALLSuCoService, GetSuCoByTrangThaiService } from "../../../services/SucoService";
 import type { SucoSumaryResponse } from "../../../types/Suco";
 import type { PageResponse } from "../../../types/Page";
+// import {BASE_URL} from "../../../constants/app.constants";
+
+const PAGE_SIZE = 10;
+
 // ─────────────────────────────────────────────────────────────
 // Types
 // ─────────────────────────────────────────────────────────────
 
-type TrangThaiFilter =
-  | "tat_ca"
-  | "CHO_TIEP_NHAN"
-  | "DA_TIEP_NHAN"
-  | "TU_CHOI";
+type TrangThaiFilter = "tat_ca" | "CHO_TIEP_NHAN" | "DA_TIEP_NHAN" | "TU_CHOI";
 
-const TRANG_THAI_FILTERS: TrangThaiFilter[] = [
-  "tat_ca",
-  "CHO_TIEP_NHAN",
-  "DA_TIEP_NHAN",
-  "TU_CHOI",
+const TRANG_THAI_FILTERS: { value: TrangThaiFilter; label: string }[] = [
+  { value: "tat_ca", label: "Tất cả trạng thái" },
+  { value: "CHO_TIEP_NHAN", label: "Chờ tiếp nhận" },
+  { value: "DA_TIEP_NHAN", label: "Đã tiếp nhận" },
+  { value: "TU_CHOI", label: "Từ chối" },
 ];
-
-const trangThaiLabel: Record<string, string> = {
-  tat_ca: "Tất cả",
-  CHO_TIEP_NHAN: "Chờ tiếp nhận",
-  DA_TIEP_NHAN: "Đã tiếp nhận",
-  TU_CHOI: "Từ chối",
-};
-
-const trangThaiBadgeClass: Record<string, string> = {
-  CHO_TIEP_NHAN: "kd-badge--cho-duyet",
-  DA_TIEP_NHAN: "kd-badge--da-duyet",
-  TU_CHOI: "kd-badge--tu-choi",
-};
-
-const PAGE_SIZE = 10;
 
 // ─────────────────────────────────────────────────────────────
 // Helpers
@@ -47,12 +28,37 @@ const PAGE_SIZE = 10;
 
 const formatDate = (iso?: string) => {
   if (!iso) return "--";
-
   return new Date(iso).toLocaleDateString("vi-VN", {
     day: "2-digit",
     month: "2-digit",
     year: "numeric",
   });
+};
+
+const formatTime = (iso?: string) => {
+  if (!iso) return "--";
+  return new Date(iso).toLocaleTimeString("vi-VN", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+};
+
+const getInitials = (name?: string) => {
+  if (!name) return "??";
+  const parts = name.split(" ");
+  if (parts.length >= 2) {
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  }
+  return name.substring(0, 2).toUpperCase();
+};
+
+const getReliability = (diemSpam: number | undefined) => {
+  const spam = diemSpam ?? 0;
+  const score = Math.max(0, 100 - spam);
+
+  if (score >= 80) return { score, text: "Tin cậy tuyệt đối", color: "green", bg: "#10b981" };
+  if (score >= 50) return { score, text: "Tin cậy cao", color: "orange", bg: "#f59e0b" };
+  return { score, text: "Spam khả nghi", color: "red", bg: "#ef4444" };
 };
 
 // ─────────────────────────────────────────────────────────────
@@ -63,26 +69,19 @@ const KiemDuyetPage = () => {
   const navigate = useNavigate();
 
   const [data, setData] = useState<SucoSumaryResponse[]>([]);
-
   const [totalElements, setTotalElements] = useState(0);
-
   const [totalPages, setTotalPages] = useState(1);
-
   const [currentPage, setCurrentPage] = useState(0);
 
-  const [activeFilter, setActiveFilter] =
-    useState<TrangThaiFilter>("tat_ca");
+  const [activeFilter, setActiveFilter] = useState<TrangThaiFilter>("tat_ca");
 
-  const [search, setSearch] = useState("");
+  const [searchCode, setSearchCode] = useState("");
+  const [searchLocation, setSearchLocation] = useState("");
 
   const [loading, setLoading] = useState(false);
-
   const [error, setError] = useState<string | null>(null);
 
-  // ─────────────────────────────────────────────
   // Load data
-  // ─────────────────────────────────────────────
-
   useEffect(() => {
     let cancelled = false;
 
@@ -91,61 +90,22 @@ const KiemDuyetPage = () => {
         setLoading(true);
         setError(null);
 
-        let page: PageResponse<SucoSumaryResponse>;
-
-        // ─────────────────────────────
-        // Tất cả
-        // ─────────────────────────────
-
+        let res;
         if (activeFilter === "tat_ca") {
-          const res = await GetALLSuCoService(
-            currentPage,
-            PAGE_SIZE
-          );
-
-          if (cancelled) return;
-
-          page = res.data;
+          res = await GetALLSuCoService(currentPage, PAGE_SIZE);
+        } else {
+          res = await GetSuCoByTrangThaiService(activeFilter, currentPage, PAGE_SIZE);
         }
 
-        // ─────────────────────────────
-        // Theo trạng thái
-        // ─────────────────────────────
-
-        else {
-          const res =
-            await GetSuCoByTrangThaiService(
-              activeFilter,
-              currentPage,
-              PAGE_SIZE
-            );
-
-          if (cancelled) return;
-
-          page = res.data;
-        }
-
-        // ─────────────────────────────
-        // Update state
-        // ─────────────────────────────
-
-        setData(page.content ?? []);
-
-        setTotalElements(
-          page.pagination?.totalElements ?? 0
-        );
-
-        setTotalPages(
-          page.pagination?.totalPages ?? 1
-        );
-      } catch (e: any) {
         if (cancelled) return;
 
-        setError(
-          e?.response?.data?.message ||
-            e?.message ||
-            "Không thể tải dữ liệu"
-        );
+        const page: PageResponse<SucoSumaryResponse> = res.data;
+        setData(page.content ?? []);
+        setTotalElements(page.pagination?.totalElements ?? 0);
+        setTotalPages(page.pagination?.totalPages ?? 1);
+      } catch (e: any) {
+        if (cancelled) return;
+        setError(e?.response?.data?.message || e?.message || "Không thể tải dữ liệu");
       } finally {
         if (!cancelled) {
           setLoading(false);
@@ -158,117 +118,115 @@ const KiemDuyetPage = () => {
     return () => {
       cancelled = true;
     };
-  }, [activeFilter, currentPage]);
-
-  // ─────────────────────────────────────────────
-  // Change filter
-  // ─────────────────────────────────────────────
-
-  const handleFilterChange = (
-    filter: TrangThaiFilter
-  ) => {
-    if (filter === activeFilter) return;
-
-    setCurrentPage(0);
-
-    setActiveFilter(filter);
-  };
-
-  // ─────────────────────────────────────────────
-  // Navigate detail
-  // ─────────────────────────────────────────────
+  }, [currentPage, activeFilter]);
 
   const handleRowClick = (maSuCo: string) => {
-    navigate(`/${maSuCo}`);
+    navigate(`/nhanvien/kiem-duyet/${maSuCo}`);
   };
 
-  // ─────────────────────────────────────────────
-  // Search local
-  // ─────────────────────────────────────────────
-
-  const filtered = search.trim()
-    ? data.filter((item) => {
-        const keyword = search.toLowerCase();
-
-        return (
-          (item.maSuCo ?? "")
-            .toLowerCase()
-            .includes(keyword) ||
-          (item.diaDiem ?? "")
-            .toLowerCase()
-            .includes(keyword) ||
-          (item.noiDung ?? "")
-            .toLowerCase()
-            .includes(keyword)
-        );
-      })
-    : data;
-
-  // ─────────────────────────────────────────────
-  // Render
-  // ─────────────────────────────────────────────
+  const filteredData = data.filter(item => {
+    const codeMatch = !searchCode || (item.maSuCo && item.maSuCo.toLowerCase().includes(searchCode.toLowerCase()));
+    const locMatch = !searchLocation || (item.diaDiem && item.diaDiem.toLowerCase().includes(searchLocation.toLowerCase()));
+    return codeMatch && locMatch;
+  });
 
   return (
     <div className="kd-page">
-      {/* Header */}
-      <div className="kd-filter-bar">
-        <div className="kd-filter-left">
-          <span className="kd-total-label">
-            Tổng:
-            <strong> {totalElements} </strong>
-            sự cố
-          </span>
-
-          <div className="kd-filters">
-            {TRANG_THAI_FILTERS.map((f) => (
-              <button
-                key={f}
-                className={`kd-filter-btn ${
-                  activeFilter === f
-                    ? "kd-filter-btn--active"
-                    : ""
-                }`}
-                onClick={() =>
-                  handleFilterChange(f)
-                }
-              >
-                {trangThaiLabel[f]}
-              </button>
-            ))}
+      {/* Summary Cards */}
+      <div className="kd-summary-cards">
+        <div className="kd-card">
+          <div className="kd-card-content">
+            <span className="kd-card-title">Tổng sự cố</span>
+            <div className="kd-card-value">
+              1,284
+              <span className="kd-badge-tag">+12%</span>
+            </div>
           </div>
         </div>
 
-        <input
-          className="kd-search-input"
-          placeholder="Tìm theo mã, địa điểm, nội dung..."
-          value={search}
-          onChange={(e) =>
-            setSearch(e.target.value)
-          }
-        />
+        <div className="kd-card">
+          <div className="kd-card-content">
+            <span className="kd-card-title">Chờ duyệt</span>
+            <div className="kd-card-value">42</div>
+          </div>
+          <div className="kd-card-icon orange">
+            <MoreHorizontal size={24} />
+          </div>
+        </div>
+
+        <div className="kd-card">
+          <div className="kd-card-content">
+            <span className="kd-card-title">Đã xử lý</span>
+            <div className="kd-card-value">1,120</div>
+          </div>
+          <div className="kd-card-icon black">
+            <CheckCircle2 size={24} />
+          </div>
+        </div>
       </div>
 
-      {/* Table */}
+      {/* Table Wrapper */}
       <div className="kd-table-wrapper">
+        {/* Filter Bar */}
+        <div style={{ padding: '1.5rem 1.5rem 0.5rem 1.5rem' }}>
+          <div className="kd-filter-bar">
+            <div className="kd-filter-input-wrap">
+              <Search />
+              <input
+                placeholder="Mã sự cố..."
+                value={searchCode}
+                onChange={(e) => setSearchCode(e.target.value)}
+              />
+            </div>
+
+            <div className="kd-filter-input-wrap">
+              <MapPin />
+              <input
+                placeholder="Vị trí/Quận..."
+                value={searchLocation}
+                onChange={(e) => setSearchLocation(e.target.value)}
+              />
+            </div>
+
+            <div className="kd-filter-input-wrap">
+              <Calendar />
+              <input
+                placeholder="Khoảng ngày..."
+                readOnly
+              />
+            </div>
+
+            <div className="kd-filter-input-wrap">
+              <ListFilter />
+              <select
+                className="kd-filter-select"
+                value={activeFilter}
+                onChange={(e) => {
+                  setActiveFilter(e.target.value as TrangThaiFilter);
+                  setCurrentPage(0);
+                }}
+              >
+                {TRANG_THAI_FILTERS.map((f) => (
+                  <option key={f.value} value={f.value}>
+                    {f.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        {/* Table Content */}
         {loading ? (
           <div className="kd-state-box">
-            <span className="kd-spinner" />
+            <div className="kd-spinner" />
             <p>Đang tải dữ liệu...</p>
           </div>
         ) : error ? (
-          <div className="kd-state-box kd-state-box--error">
+          <div className="kd-state-box error">
             <p>{error}</p>
-
-            <button
-              className="kd-retry-btn"
-              onClick={() =>
-                setCurrentPage((p) => p)
-              }
-            >
-              Thử lại
-            </button>
           </div>
-        ) : filtered.length === 0 ? (
+        ) : filteredData.length === 0 ? (
           <div className="kd-state-box">
             <p>Không có sự cố nào.</p>
           </div>
@@ -277,142 +235,130 @@ const KiemDuyetPage = () => {
             <thead>
               <tr>
                 <th>Mã sự cố</th>
-                <th>Nội dung</th>
+                <th>Tiêu đề</th>
                 <th>Địa điểm</th>
-                <th>Mã người dân</th>
+                <th>Độ tin cậy</th>
+                <th>Người dân</th>
                 <th>Ngày tạo</th>
-                <th>Dự kiến hoàn thành</th>
-                <th>Trạng thái</th>
               </tr>
             </thead>
-
             <tbody>
-              {filtered.map((item) => (
-                <tr
-                  key={item.maSuCo}
-                  className="kd-row"
-                  onClick={() =>
-                    handleRowClick(item.maSuCo)
-                  }
-                >
-                  <td className="kd-id-cell">
-                    {item.maSuCo ?? "--"}
-                  </td>
+              {filteredData.map((item) => {
+                const rel = getReliability(item.diemSpam);
+                return (
+                  <tr key={item.maSuCo} onClick={() => handleRowClick(item.maSuCo)} style={{ cursor: 'pointer' }}>
+                    <td className="kd-id-cell">
+                      {item.maSuCo?.startsWith('SC-') || item.maSuCo?.startsWith('#') ? item.maSuCo : `#SC-${item.maSuCo || '---'}`}
+                    </td>
 
-                  <td className="kd-content-cell">
-                    {item.noiDung ?? "--"}
-                  </td>
+                    <td>
+                      <div className="kd-content-cell">
+                        {item.thumbnail ? (
+                          <img src={item.thumbnail} alt="Thumbnail" className="kd-thumbnail" />
+                        ) : (
+                          <div className="kd-thumbnail" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <span style={{ color: '#9ca3af', fontSize: '10px' }}>No img</span>
+                          </div>
+                        )}
+                        <div className="kd-text">
+                          <p>{item.tieuDe || item.noiDung || "Không có nội dung"}</p>
+                        </div>
+                      </div>
+                    </td>
 
-                  <td>
-                    {item.diaDiem ?? "--"}
-                  </td>
+                    <td>
+                      <div className="kd-address-cell">
+                        <MapPin />
+                        <span>{item.diaDiem || "Chưa xác định"}</span>
+                      </div>
+                    </td>
 
-                  <td className="kd-citizen-cell">
-                    {item.maNguoiDan ?? "--"}
-                  </td>
+                    <td>
+                      <div className="kd-reliability-cell">
+                        <div className="kd-progress-wrap">
+                          <div className="kd-progress-bg">
+                            <div className="kd-progress-fill" style={{ width: `${rel.score}%`, backgroundColor: rel.bg }}></div>
+                          </div>
+                          <span className={`kd-progress-text ${rel.color}`}>
+                            {rel.score}% - {item.lyDoSpam}
+                          </span>
+                        </div>
+                      </div>
+                    </td>
 
-                  <td className="kd-date-cell">
-                    {formatDate(
-                      item.thoiGianTao
-                    )}
-                  </td>
+                    <td>
+                      <div className="kd-citizen-cell">
+                        <div className="kd-avatar">
+                          {getInitials(item.maNguoiDan)}
+                        </div>
+                        <span className="kd-name">{item.maNguoiDan || "Ẩn danh"}</span>
+                      </div>
+                    </td>
 
-                  <td className="kd-date-cell">
-                    {formatDate(
-                      item.ngayDuKienHoanThanh
-                    )}
-                  </td>
-
-                  <td>
-                    <span
-                      className={`kd-badge ${
-                        trangThaiBadgeClass[
-                          item.trangThai
-                        ] ?? ""
-                      }`}
-                    >
-                      {trangThaiLabel[
-                        item.trangThai
-                      ] ?? item.trangThai}
-                    </span>
-                  </td>
-                </tr>
-              ))}
+                    <td>
+                      <div className="kd-date-cell">
+                        <div className="kd-date">{formatDate(item.thoiGianTao)}</div>
+                        <div className="kd-time">{formatTime(item.thoiGianTao)}</div>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         )}
+
+        {/* Pagination */}
+        {!loading && (
+          <div className="kd-table-footer">
+            <span className="kd-showing-text">
+              Hiển thị {filteredData.length > 0 ? currentPage * PAGE_SIZE + 1 : 0} - {Math.min((currentPage + 1) * PAGE_SIZE, totalElements)} trong số {totalElements} sự cố
+            </span>
+
+            {totalPages > 1 && (
+              <div className="kd-pagination">
+                <button
+                  disabled={currentPage === 0}
+                  onClick={() => setCurrentPage(p => p - 1)}
+                >
+                  &lt;
+                </button>
+
+                {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => {
+                  let pageNum = i;
+                  if (currentPage > 2 && totalPages > 5) {
+                    pageNum = currentPage - 2 + i;
+                    if (pageNum >= totalPages) pageNum = totalPages - (5 - i);
+                  }
+                  return (
+                    <button
+                      key={pageNum}
+                      className={currentPage === pageNum ? "active" : ""}
+                      onClick={() => setCurrentPage(pageNum)}
+                    >
+                      {pageNum + 1}
+                    </button>
+                  );
+                })}
+
+                {totalPages > 5 && currentPage < totalPages - 3 && (
+                  <>
+                    <button disabled>...</button>
+                    <button onClick={() => setCurrentPage(totalPages - 1)}>{totalPages}</button>
+                  </>
+                )}
+
+                <button
+                  disabled={currentPage === totalPages - 1}
+                  onClick={() => setCurrentPage(p => p + 1)}
+                >
+                  &gt;
+                </button>
+              </div>
+            )}
+          </div>
+        )}
       </div>
-
-      {/* Pagination */}
-      {!loading && totalPages > 1 && (
-        <div className="kd-pagination">
-          {/* First */}
-          <button
-            className="kd-page-btn"
-            disabled={currentPage === 0}
-            onClick={() => setCurrentPage(0)}
-          >
-            «
-          </button>
-
-          {/* Prev */}
-          <button
-            className="kd-page-btn"
-            disabled={currentPage === 0}
-            onClick={() =>
-              setCurrentPage((p) => p - 1)
-            }
-          >
-            ←
-          </button>
-
-          {/* Number */}
-          {Array.from(
-            { length: totalPages },
-            (_, i) => i
-          ).map((i) => (
-            <button
-              key={i}
-              className={`kd-page-btn ${
-                currentPage === i
-                  ? "kd-page-btn--active"
-                  : ""
-              }`}
-              onClick={() =>
-                setCurrentPage(i)
-              }
-            >
-              {i + 1}
-            </button>
-          ))}
-
-          {/* Next */}
-          <button
-            className="kd-page-btn"
-            disabled={
-              currentPage === totalPages - 1
-            }
-            onClick={() =>
-              setCurrentPage((p) => p + 1)
-            }
-          >
-            →
-          </button>
-
-          {/* Last */}
-          <button
-            className="kd-page-btn"
-            disabled={
-              currentPage === totalPages - 1
-            }
-            onClick={() =>
-              setCurrentPage(totalPages - 1)
-            }
-          >
-            »
-          </button>
-        </div>
-      )}
     </div>
   );
 };

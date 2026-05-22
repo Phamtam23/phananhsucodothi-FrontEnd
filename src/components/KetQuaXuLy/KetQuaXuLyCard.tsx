@@ -1,4 +1,6 @@
 import type { KetQuaXuLyDetailResponse } from "../../types/KetQuaXuLy";
+import { API_CONFIG } from "../../constants/app.constants";
+import "./KetQuaXuLyCard.scss";
 
 type Props = {
     ketQua: KetQuaXuLyDetailResponse;
@@ -7,7 +9,7 @@ type Props = {
 const KetQuaXuLyCard = ({ ketQua }: Props) => {
   return (
     <div className="ketqua-box">
-      <span className="ketqua-box__label">Kết quả xử lý</span>
+      <span className="ketqua-box__label">Kết quả xử lý của đơn vị</span>
       <div className="ketqua-box__content">
         <p className="ketqua-box__time">
           <i className="ti ti-clock" aria-hidden="true" />
@@ -17,7 +19,7 @@ const KetQuaXuLyCard = ({ ketQua }: Props) => {
         {ketQua.medias?.length > 0 && (
           <div className="media-list">
             {ketQua.medias.map((media) => (
-              <img key={media.url} src={media.url} alt="Kết quả xử lý" />
+              <img key={media.url} src={`${API_CONFIG.BASE_URL}${media.url}`} alt="Kết quả xử lý" />
             ))}
           </div>
         )}

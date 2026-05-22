@@ -1,8 +1,11 @@
 import type { NhanVienDonViResponse } from "./NhanVienDonVi";
 import type { PhieuPhanCongResponse } from "./PhieuPhanCong";
 export enum TrangThaiChiTietPhanCong {
-  HOANTHANH = "HOANTHANH",
-  DANGCHO = "DANGCHO",
+  DANG_CHO = "DANG_CHO",
+  DANG_XU_LY = "DANG_XU_LY",
+  CHO_DUYET = "CHO_DUYET",
+  HOAN_THANH = "HOAN_THANH",
+  TU_CHOI = "TU_CHOI",
 }
 
 export interface CreateChiTietPhanCongRequest {

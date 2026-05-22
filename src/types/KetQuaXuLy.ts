@@ -4,6 +4,9 @@ export interface KetQuaXuLyBaseResponse {
   maChiTietPhanCong: string;
   thoiGianNop: string; 
   noiDungThucHien: string;
+  trangThai: TrangThaiKetQua;
+  lyDoTuChoi?: string;
+  medias?: MediaResponse[];
 }
 
 export interface KetQuaXuLyDetailResponse
@@ -24,6 +27,8 @@ export enum TrangThaiKetQua {
   CHO_DUYET = "CHO_DUYET",
   DA_DUYET = "DA_DUYET",
   TU_CHOI = "TU_CHOI",
+  CONG_KHAI = "CONG_KHAI",
+  HOAN_THANH = "HOAN_THANH",
 }
 
 export interface UpdateKetQuaXuLyRequest {

@@ -1,0 +1,176 @@
+.danh-sach-phan-cong {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 1rem 0;
+  width: 100%;
+
+  .phan-cong-loading {
+    padding: 24px;
+    text-align: center;
+    color: var(--color-text-secondary, #667085);
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .phan-cong-error {
+    padding: 16px 20px;
+    border-radius: 8px;
+    background: hsl(0, 100%, 97%);
+    color: hsl(0, 80%, 45%);
+    border: 1px solid hsl(0, 100%, 90%);
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .phan-cong-trong {
+    padding: 30px;
+    text-align: center;
+    background: hsl(210, 20%, 98%);
+    border: 1px dashed rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    color: var(--color-text-secondary, #667085);
+    font-size: 14px;
+  }
+}
+
+.phan-cong-card {
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 14px;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  &__don-vi {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+}
+
+.don-vi-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: hsl(38, 100%, 93%);
+  color: hsl(38, 90%, 35%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
+  border: 1px solid hsl(38, 100%, 88%);
+}
+
+.don-vi-ten {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--color-text-primary, #1d2939);
+  margin: 0;
+}
+
+.don-vi-time {
+  font-size: 12px;
+  color: var(--color-text-secondary, #667085);
+  margin-top: 2px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 30px;
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+
+  &--cho_tiep_nhan {
+    background: hsl(38, 100%, 93%);
+    color: hsl(38, 90%, 35%);
+  }
+
+  &--da_tiep_nhan {
+    background: hsl(200, 100%, 93%);
+    color: hsl(200, 95%, 35%);
+  }
+
+  &--dang_xu_ly {
+    background: hsl(250, 100%, 94%);
+    color: hsl(250, 90%, 40%);
+  }
+
+  &--da_hoan_thanh {
+    background: hsl(140, 100%, 92%);
+    color: hsl(140, 90%, 30%);
+  }
+
+  &--la_spam {
+    background: hsl(0, 100%, 94%);
+    color: hsl(0, 90%, 40%);
+  }
+}
+
+.no-ketqua {
+  padding: 16px 20px;
+  font-size: 13.5px;
+  color: var(--color-text-secondary, #667085);
+  font-style: italic;
+  background: hsl(210, 20%, 99%);
+  margin: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.vung-mo-lai {
+  padding: 18px 20px;
+  background: hsl(210, 20%, 99.5%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.03);
+
+  .btn-mo-lai {
+    align-self: flex-start;
+    background: hsl(210, 80%, 48%);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(26, 115, 232, 0.15);
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: hsl(210, 80%, 40%);
+      box-shadow: 0 4px 12px rgba(26, 115, 232, 0.25);
+    }
+
+    &.danger-btn {
+      background: hsl(0, 80%, 50%);
+      box-shadow: 0 2px 6px rgba(220, 38, 38, 0.15);
+
+      &:hover {
+        background: hsl(0, 80%, 42%);
+        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+      }
+    }
+  }
+}

@@ -1,3 +1,5 @@
+@use '../../../styles/urban-tokens' as *;
+
 // ─────────────────────────────────────
 // PhanCongPage.scss
 // Theo thiết kế: stat cards + bảng trắng + amber accent
@@ -5,7 +7,7 @@
 
 // ── Palette ──────────────────────────
 $amber:         #f5a623;
-$amber-dark:    #d4891a;
+$amber:    #d4891a;
 $amber-deeper:  #b87318;
 $amber-light:   #fdf3e0;
 $amber-bg:      #f5a623; // card active
@@ -61,7 +63,7 @@ $radius-card:   12px;
   color: $text-secondary;
 
   strong {
-    color: $amber-dark;
+    color: $amber;
     font-weight: 700;
   }
 }
@@ -106,7 +108,7 @@ $radius-card:   12px;
   // Card vàng cam — active/highlight
   &--active {
     background: $amber;
-    border-color: $amber-dark;
+    border-color: $amber;
 
     .pc-stat-card__label {
       color: rgba($white, 0.8);
@@ -281,7 +283,7 @@ $radius-card:   12px;
     background: transparent;
     color: $text-secondary;
 
-    &:hover { color: $amber-dark; }
+    &:hover { color: $amber; }
   }
 
   &--delete {
@@ -370,7 +372,7 @@ $radius-card:   12px;
 
   &:hover:not(:disabled) {
     border-color: $amber;
-    color: $amber-dark;
+    color: $amber;
   }
 
   &:disabled {
@@ -392,8 +394,8 @@ $radius-card:   12px;
     font-weight: 700;
 
     &:hover {
-      background: $amber-dark;
-      border-color: $amber-dark;
+      background: $amber;
+      border-color: $amber;
       color: $white;
     }
   }

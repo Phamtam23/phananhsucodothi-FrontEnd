@@ -1,6 +1,6 @@
 export enum TrangThaiMoLai {
-  CHO_XU_LY = "CHO_XU_LY",
-  DA_XU_LY = "DA_XU_LY",
+  CHO_PHAN_HOI = "CHO_PHAN_HOI",
+  CHAP_NHAN = "CHAP_NHAN",
   TU_CHOI = "TU_CHOI",
 }
 
@@ -21,4 +21,8 @@ export interface PhieuMoLaiResponse {
   trangThaiMoLai: TrangThaiMoLai;
   maKetQuaXuLy: string;
   thoiGianTao: string;
+  lyDoTuChoi?: string;
+  maSuCo?: string;
+  noiDungSuCo?: string;
+  maPhieuPhanCong?: string;
 }

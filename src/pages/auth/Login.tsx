@@ -1,5 +1,6 @@
 import { useLogin } from "../../hooks/auth/useLogin";
 import { Link } from "react-router-dom";
+import "./Auth.scss";
 
 const Login = () => {
   const {

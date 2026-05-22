@@ -21,4 +21,20 @@ const UpdateKetQuaXuLyService = async (id: number | string, request: UpdateKetQu
 const GetKetQuaXuLyByChiTietPhanCongIdService = async (id:number|string):Promise<ApiResponse<KetQuaXuLySummaryResponse[]>> => {
     const res = await apiClient.get(API_CONFIG.ENDPOINTS.KETQUAXULY.GET_BY_CHITIETPHANCONG_ID(id));
     return res.data;
-}   
+}
+
+export const DuyetKetQuaXuLyService = async (maKetQua: string, isApproved: boolean, lyDoTuChoi?: string): Promise<ApiResponse<KetQuaXuLyDetailResponse>> => {
+    const params = new URLSearchParams({ isApproved: String(isApproved) });
+    if (lyDoTuChoi) {
+        params.append("lyDoTuChoi", lyDoTuChoi);
+    }
+    const res = await apiClient.put(`${API_CONFIG.ENDPOINTS.KETQUAXULY.DUYET(maKetQua)}?${params.toString()}`);
+    return res.data;
+}
+
+export {
+    CreateKetQuaXuLyService,
+    GetKetQuaXuLyByIdService,
+    UpdateKetQuaXuLyService,
+    GetKetQuaXuLyByChiTietPhanCongIdService,
+};

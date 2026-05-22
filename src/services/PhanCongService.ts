@@ -19,7 +19,12 @@ export const CreatePhanCongService = async (request: CreatePhieuPhanCongRequest)
     return res.data;
 }
 
-export const GetAllPhanCongByDonViIdService = async (id:number|string):Promise<ApiResponse<PhieuPhanCongSCResponse[]>> => {
-    const res = await apiClient.get(API_CONFIG.ENDPOINTS.PHANCONG.GET_BY_DONVI_ID(id));
+export const GetAllPhanCongByDonViIdService = async (page: number = 0, size: number = 10):Promise<ApiResponse<any>> => {
+    const res = await apiClient.get(API_CONFIG.ENDPOINTS.PHANCONG.GET_BY_DONVI(page, size));
+    return res.data;
+}
+
+export const UpdatePhanCongService = async (id: number | string, request: any):Promise<ApiResponse<any>> => {
+    const res = await apiClient.put(API_CONFIG.ENDPOINTS.PHANCONG.UPDATE(id), request);
     return res.data;
 }

@@ -1,11 +1,11 @@
 import type { MediaResponse } from "./Media";
 
 export interface CreateSucoRequest {
-    noiDung: string;
-    diaDiem: string;
-    kinhDo: number; 
-    viDo: number;
-    mediaUrls?: string[]; 
+  noiDung: string;
+  diaDiem: string;
+  kinhDo: number;
+  viDo: number;
+  mediaUrls?: string[];
 }
 
 export enum TrangThaiSuCo {
@@ -22,6 +22,9 @@ export interface LoaiSuCo {
 
 export interface SucoResponse {
   maSuCo: string;
+  diemSpam: number;
+  lyDoSpam: string;
+  tieuDe: string;
   maNguoiDan: string;
   kinhDo: number;
   viDo: number;
@@ -35,19 +38,26 @@ export interface SucoResponse {
 
 export interface SucoSumaryResponse {
   maSuCo: string;
+  diemSpam: number;
+  lyDoSpam: string;
+  tieuDe: string;
   maNguoiDan: string;
   kinhDo: number;
   viDo: number;
   diaDiem: string;
   noiDung: string;
   trangThai: string;
-  ngayDuKienHoanThanh: string; 
-  thoiGianTao: string; 
+  loaiSuCos: string[];
+  ngayDuKienHoanThanh: string;
+  thoiGianTao: string;
   thumbnail: string;
 }
 
-export interface SucoDetailResponse  {
+export interface SucoDetailResponse {
   maSuCo: string;
+  diemSpam: number;
+  lyDoSpam: string;
+  tieuDe: string;
   maNguoiDan: string;
   kinhDo: number;
   viDo: number;
@@ -55,10 +65,9 @@ export interface SucoDetailResponse  {
   noiDung: string;
   trangThai: string;
   thoiGianTao: string;
-  ngayDuKienHoanThanh: string; 
+  ngayDuKienHoanThanh: string;
   medias: MediaResponse[];
-  daDanhGia: boolean;
-  canDanhGia: boolean;
+  loaiSuCos: string[];
 }
 
 
