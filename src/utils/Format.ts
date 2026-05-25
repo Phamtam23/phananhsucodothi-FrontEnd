@@ -19,3 +19,12 @@ export const formatDateTime = (iso?: string | null): string => {
     minute: '2-digit',
   });
 };
+
+
+export const formatTime = (iso?: string) => {
+  if (!iso) return "--";
+  return new Date(iso).toLocaleTimeString("vi-VN", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+};

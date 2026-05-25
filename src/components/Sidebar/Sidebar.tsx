@@ -42,6 +42,11 @@ const Sidebar = () => {
         label: "PHÂN CÔNG PHÂN LOẠI",
         path: "/nhanvien/phan-cong/phan-loai",
       },
+       {
+        icon: <FileCheck size={18} />,
+        label: "LICH SỬ KIỂM DUYỆT",
+        path: "/nhanvien/lich-su/kiem-duyet",
+      },
     ];
   } else if (isTruongDonVi) {
     menuItems = [
