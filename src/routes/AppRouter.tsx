@@ -25,7 +25,8 @@ import QuanLyDonViPage from '../pages/admin/QuanLyDonViPage';
 import ThongKeHeThongPage from '../pages/admin/ThongKeHeThongPage';
 import PhanAnhCongDongPage from '../pages/nguoidung/suco/PhanAnhCongDongPage';
 import BanDoPage from '../pages/nguoidung/suco/BanDoPage';
-
+import DanhSachSuCo from '../pages/nguoidung/suco/DanhSachSuco';
+import Profile from '../pages/auth/Profile';
 export const AppRouter = () => {
 
     return (
@@ -33,26 +34,31 @@ export const AppRouter = () => {
             <Route element={<UserLayout />} >
                 <Route path="/" element={<PhanAnhCongDongPage />} />
                 <Route path="/ban-do" element={<BanDoPage />} />
+                <Route path="/danh-sach-phan-anh" element={<DanhSachSuCo />} />
                 <Route path="/suco/create" element={<CreateSuco />} />
                 <Route path="/suco/lich-su" element={<LichSuSuCo />} />
                 <Route path="/suco/detail/:maSuCo" element={<DetailSuCoPage />} />
+                <Route path="/profile" element={<Profile />} />
             </Route>
             <Route element={<NhanVienDieuPhoiLayout />} >
                 <Route path="/nhanvien/kiem-duyet" element={<KiemDuyetPage />} />
                 <Route path="/nhanvien/kiem-duyet/:maSuCo" element={<KiemDuyetDetailPage />} />
                 <Route path="/nhanvien/phan-cong/phan-loai" element={<PhanCongPhanLoaiPage />} />
                 <Route path="/nhanvien/phan-cong/:maSuCo" element={<PhanCongPhanLoaiDetail />} />
+                <Route path="/nhanvien/profile" element={<Profile />} />
             </Route>
             <Route element={<TruongDonViLayout />}>
                 <Route path="/truongdonvi/xac-minh" element={<XacMinhPhanAnhPage />} />
                 <Route path="/truongdonvi/phan-cong/:id" element={<PhanCongNhanSuPage />} />
                 <Route path="/truongdonvi/duyet-ket-qua/:id" element={<DuyetKetQuaDetailPage />} />
+                 <Route path="/truongdonvi/profile" element={<Profile />} />
             </Route>
             <Route element={<NhanVienXuLyLayout />}>
                 <Route path="/nhanvienxuly/xu-ly" element={<XuLySuCoPage />} />
                 <Route path="/nhanvienxuly/chi-dao" element={<XuLySuCoPage />} />
                 <Route path="/nhanvienxuly/dang-ket-qua" element={<DangKetQuaPage />} />
                 <Route path="/nhanvienxuly/lich-su" element={<LichSuThucHienPage />} />
+                <Route path="/nhanvienxuly/profile" element={<Profile />} />
             </Route>
             <Route element={<AdminLayout />}>
                 <Route path="/admin/tai-khoan" element={<QuanLyTaiKhoanPage />} />

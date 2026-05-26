@@ -7,57 +7,62 @@ export const API_CONFIG = {
             LOGOUT: "/auth/logout",
             REGISTER: "/auth/register",
             FORGOT_PASSWORD: "/auth-service/v1/forgot-password",
+            PROFILE: "/auth/profile",
+            UPDATE_PROFILE: "/auth/profile",
         },
         USER: {
-            PROFILE: "/user-service/v1/profile",
-            UPDATE_PROFILE: "/user-service/v1/profile/update",
+            PROFILE: "/auth/profile",
+            UPDATE_PROFILE: "/auth/profile",
         },
-        SUCO:{
-            GET_BY_ID: (id: number | string) => `/suco/${id}`, 
-            GET_ALL:() => `/suco`,
+        SUCO: {
+            GET_BY_ID: (id: number | string) => `/suco/${id}`,
+            GET_ALL: () => `/suco`,
             GET_ALL_BY_NGUOI_DAN: () => `/suco/nguoi-dan`,
             CREATE: "/suco",
             GET_ALL_BY_TRANGTHAI: (trangThai: string) => `/suco/trang-thai/${trangThai}`,
         },
-        PHANCONG:{
-            GET_BY_ID: (id: number | string) => `/phancong/${id}`, 
+        PHANCONG: {
+            GET_BY_ID: (id: number | string) => `/phancong/${id}`,
             GET_BY_SUCO_ID: (id: number | string) => `/phancong/su-co/${id}`,
             CREATE: "/phancong",
             GET_BY_DONVI: (page: number = 0, size: number = 10) => `/phancong/don-vi?page=${page}&size=${size}`,
             UPDATE: (id: number | string) => `/phancong/${id}`,
+            GET_BY_NHANVIEN:() => "/phancong/nhan-vien"
         },
-        PHIEUKIEMDUYET:{
+        PHIEUKIEMDUYET: {
             CREATE: "/phieu-kiem-duyet",
+            GET_BY_NHANVIEN : () =>"/phieu-kiem-duyet/nhan-vien",
             GET_BY_SUCO_ID: (id: number | string) => `/phieu-kiem-duyet/su-co/${id}`,
             GET_BY_ID: (id: number | string) => `/phieu-kiem-duyet/${id}`,
         },
-        CHITIEPHANCONG:{
+        CHITIEPHANCONG: {
             CREATE: "/chi-tiet-phan-cong",
             UPDATE: "/chi-tiet-phan-cong",
             GET_BY_PHANCONG_ID: (id: number | string) => `/chi-tiet-phan-cong/phan-cong/${id}`,
             GET_BY_ID: (id: number | string) => `/chi-tiet-phan-cong/${id}`,
-            GET_BY_NHANVIEN_ID: (id: number | string) => `/chi-tiet-phan-cong/nhan-vien/${id}`,
+            GET_BY_NHANVIEN_ID: () => `/chi-tiet-phan-cong/nhan-vien`,
         },
-        KETQUAXULY :{
+        KETQUAXULY: {
             CREATE: "/ket-qua-xu-ly",
-            GET_BY_ID : (id: number | string) => `/ket-qua-xu-ly/${id}`,
+            GET_BY_ID: (id: number | string) => `/ket-qua-xu-ly/${id}`,
             UPDATE: "/ket-qua-xu-ly",
             GET_BY_CHITIETPHANCONG_ID: (id: number | string) => `/ket-qua-xu-ly/chi-tiet-phan-cong/${id}`,
             DUYET: (id: number | string) => `/ket-qua-xu-ly/duyet/${id}`,
         },
-        DANHGIA :{
+        DANHGIA: {
             CREATE: "/phieu-danh-gia",
             GET_BY_KETQUAXULY_ID: (id: number | string) => `/phieu-danh-gia/ket-qua-xu-ly/${id}`,
         },
-        PHIEUMOLAI :{
+        PHIEUMOLAI: {
             CREATE: "/phieu-mo-lai",
             UPDATE: "/phieu-mo-lai",
+            GET_BY_PHANCONG_ID: (id: number | string) => `/phieu-mo-lai/phan-cong/${id}`,
             GET_BY_CHITIETPHANCONG_ID: (id: number | string) => `/phieu-mo-lai/chi-tiet-phan-cong/${id}`,
             GET_BY_ID: (id: number | string) => `/phieu-mo-lai/${id}`,
             GET_ALL_BY_DONVI: (page: number = 0, size: number = 10) => `/phieu-mo-lai/don-vi?page=${page}&size=${size}`,
             DUYET: (id: number | string) => `/phieu-mo-lai/duyet/${id}`,
         },
-        DONVIXULY :{
+        DONVIXULY: {
             CREATE: "/don-vi-xu-ly",
             UPDATE: (id: number | string) => `/don-vi-xu-ly/${id}`,
             GET_BY_ID: (id: number | string) => `/don-vi-xu-ly/${id}`,
@@ -81,25 +86,25 @@ export const API_CONFIG = {
             GET_ALL_BY_DONVI_PHANCONG: () => `/nhan-vien-don-vi/phan-cong`,
             GET_ALL_BY_DONVI: (maDonVi: string) => `/nhan-vien-don-vi/don-vi/${maDonVi}`,
         },
-        PHIEUPHANLOAI:{
+        PHIEUPHANLOAI: {
             CREATE: "/phieu-phan-loai",
             GET_BY_SUCO_ID: (id: number | string) => `/phieu-phan-loai/su-co/${id}`,
-            DELETE: ( maSuCo: string, maLoai: string ) =>  `/phieu-phan-loai?maSuCo=${maSuCo}&maLoai=${maLoai}`,
+            DELETE: (maSuCo: string, maLoai: string) => `/phieu-phan-loai?maSuCo=${maSuCo}&maLoai=${maLoai}`,
         },
-        LOAI:{
+        LOAI: {
             CREATE: "/loai",
             UPDATE: "/loai",
             GET_ALL: "/loai",
             GET_BY_ID: (id: number | string) => `/loai/${id}`,
         },
-        PHIEUCHIDAO:{
+        PHIEUCHIDAO: {
             CREATE: "/phieu-chi-dao",
             UPDATE: "/phieu-chi-dao",
             GET_ALL_BY_CHITIETPHANCONG_ID: (id: number | string) => `/phieu-chi-dao/chi-tiet-phan-cong/${id}`,
             GET_BY_ID: (id: number | string) => `/phieu-chi-dao/${id}`,
             DELETE: (id: number | string) => `/phieu-chi-dao/${id}`
         }
-     
+
     },
 } as const;
 
@@ -195,9 +200,9 @@ export const APP_META = {
 } as const;
 
 export const NAV_ITEMS = [
-  { label: 'Trang chủ', path: '/' },
-  { label: 'Bản đồ', path: '/ban-do' },
-  { label: 'Danh sách phản ánh', path: '/danh-sach-phan-anh' },
-  { label: 'Lịch sử phản ánh', path: '/lich-su-phan-anh',requiresAuth: true }
-  
+    { label: 'Trang chủ', path: '/' },
+    { label: 'Bản đồ', path: '/ban-do' },
+    { label: 'Danh sách phản ánh', path: '/danh-sach-phan-anh' },
+    { label: 'Lịch sử phản ánh', path: '/suco/lich-su', requiresAuth: true }
+
 ];

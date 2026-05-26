@@ -1,42 +1,55 @@
 @use '../../styles/urban-tokens' as *;
 
-/* ── Sidebar ── Urban Integrity ── */
-
 .sidebar {
-  width: 200px;
+  width: 240px;
   height: 100vh;
-  background: $surface-container-lowest;
+  background: #111111;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 20px 12px;
-  box-shadow: $shadow-ambient;
-  // Glassmorphism — no hard border-right
+  padding: 24px 0;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.1);
   position: relative;
   z-index: 10;
+  color: #a3a3a3;
+  font-family: 'Inter', sans-serif;
 
   // Logo / brand area at top
   &__brand {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 0 8px 20px;
-    border-bottom: 2px solid $surface;
-    margin-bottom: 12px;
+    gap: 12px;
+    padding: 0 24px 32px;
+    margin-bottom: 16px;
 
-    &-name {
-      font-family: $font-display;
-      font-size: 13px;
-      font-weight: 800;
-      color: $on-surface;
-      line-height: 1.2;
+    .brand-icon {
+      width: 36px;
+      height: 36px;
+      background: #eab308;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000;
     }
 
-    &-dot {
-      width: 8px; height: 8px;
-      background: $gradient-cta;
-      border-radius: $radius-full;
-      flex-shrink: 0;
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+
+      .brand-title {
+        font-size: 16px;
+        font-weight: 800;
+        color: #ffffff;
+        line-height: 1.2;
+      }
+
+      .brand-subtitle {
+        font-size: 10px;
+        font-weight: 700;
+        color: #eab308;
+        letter-spacing: 0.5px;
+      }
     }
   }
 
@@ -50,27 +63,26 @@
   &__item {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 10px 12px;
-    border-radius: $radius-md;
-    color: $on-surface-variant;
-    font-family: $font-body;
-    font-size: 12px;
-    font-weight: 600;
+    gap: 12px;
+    padding: 12px 24px;
+    color: #a3a3a3;
+    font-size: 14px;
+    font-weight: 500;
     cursor: pointer;
     transition: all 0.2s;
-    letter-spacing: 0.01em;
+    border-left: 3px solid transparent;
 
     &:hover {
-    background: $surface-container-low;
-    color: $on-surface;
-  }
+      background: rgba(255,255,255,0.05);
+      color: #ffffff;
+    }
 
     &.active {
-      background: $surface;
-      color: $primary;
+      background: rgba(234, 179, 8, 0.1);
+      color: #eab308;
+      border-left: 3px solid #eab308;
 
-      .sidebar__icon { color: $primary; }
+      .sidebar__icon { color: #eab308; }
     }
   }
 
@@ -78,24 +90,71 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: $on-surface-variant;
+    color: #a3a3a3;
     flex-shrink: 0;
     transition: color 0.2s;
   }
 
   &__label { white-space: nowrap; }
 
+  // Bottom Area
+  &__bottom {
+    padding: 0 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
   // Bottom CTA button
   &__button {
-    @include btn-primary;
     width: 100%;
-    padding: 11px 12px;
+    padding: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    font-size: 12px;
-    border-radius: $radius-md;
-    box-shadow: $shadow-fab;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 8px;
+    background: #eab308;
+    color: #000000;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-bottom: 16px;
+
+    &:hover {
+      background: #ca8a04;
+    }
+  }
+
+  .help-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #a3a3a3;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.2s;
+
+    &:hover {
+      color: #ffffff;
+    }
+  }
+
+  .logout-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #ef4444;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.2s;
+
+    &:hover {
+      color: #f87171;
+    }
   }
 }

@@ -1,11 +1,10 @@
+import { GetChiTietPhanCongByNhanVienIdService } from './../../services/ChiTietPhanCongService';
 import { useState, useCallback, useEffect } from "react";
-import { API_CONFIG } from "../../constants/app.constants";
-import apiClient from "../../services/apiClient";
-import type { ChiTietPhanCongResponse } from "../../types/ChiTietPhanCong";
+import type { ChiTietPhanCongLSResponse } from "../../types/ChiTietPhanCong";
 import type { PageResponse } from "../../types/Page";
 
-export const useChiTietPhanCongNhanVien = (page: number = 0, size: number = 20) => {
-    const [data, setData] = useState<PageResponse<ChiTietPhanCongResponse> | null>(null);
+export const useChiTietPhanCongNhanVien = (page: number = 0, size: number = 20, keyword?: string,tuNgay?: string,denNgay?: string) => {
+    const [data, setData] = useState<PageResponse<ChiTietPhanCongLSResponse> | null>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -13,11 +12,8 @@ export const useChiTietPhanCongNhanVien = (page: number = 0, size: number = 20) 
         setLoading(true);
         setError(null);
         try {
-            const res = await apiClient.get(
-                `${API_CONFIG.ENDPOINTS.CHITIEPHANCONG.CREATE}/nhan-vien?page=${page}&size=${size}`
-            );
-            setData(res.data?.data ?? null);
-            console.log("Fetched ChiTietPhanCongNhanVien:", res.data?.data);
+                       const res = await GetChiTietPhanCongByNhanVienIdService(page, size, keyword, tuNgay, denNgay)
+              setData(res.data ?? null);
         } catch (err: any) {
             setError(err.message || "Không thể tải dữ liệu phân công");
         } finally {

@@ -31,3 +31,19 @@ export interface ChiTietPhanCongResponse {
 
   thoiGianTao: string; // LocalDateTime
 }
+
+export interface ChiTietPhanCongLSResponse {
+  maChiTietPhanCong: string;
+
+  phieuPhanCong: PhieuPhanCongResponse;
+
+  nhanVienXuLy: NhanVienDonViResponse;
+
+  trangThai: TrangThaiChiTietPhanCong;
+
+  thoiGianTao: string; 
+
+  tieuDe: string,
+  diaDiem: string,
+  thumbnail:string
+}

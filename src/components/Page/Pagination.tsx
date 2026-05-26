@@ -19,7 +19,7 @@ const Pagination = ({
   onPageChange,
   showInfo = true,
 }: PaginationProps) => {
-  if (totalPages <= 1) return null;
+  if (totalPages <= 0) return null;
 
   const getPages = () => {
     const pages: number[] = [];

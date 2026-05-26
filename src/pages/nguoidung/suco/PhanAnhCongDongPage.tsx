@@ -1,32 +1,32 @@
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { 
-  MapPin, 
-  Building2, 
-  Clock, 
-  ChevronDown, 
-  Search, 
-  Plus, 
-  ArrowRight, 
-  ChevronRight, 
-  Globe, 
-  Share2, 
-  Mail 
+import {
+  MapPin,
+  Building2,
+  ChevronDown,
+  Search,
+  Plus,
+  ArrowRight,
+  ChevronRight,
+  Globe,
+  Share2,
+  Mail
 } from "lucide-react";
 import { GetALLSuCoService, GetSuCoByTrangThaiService } from "../../../services/SucoService";
 import type { SucoSumaryResponse } from "../../../types/Suco";
 import heroBg from "../../../assets/Header - Hero Section.png";
 import "./PhanAnhCongDong.scss";
+import { API_CONFIG } from "../../../constants/app.constants";
 
 // ── Trạng thái & Loại ─────────────────────────────────────────────────────────
 
 const TRANG_THAI_LABELS: Record<string, { label: string; cls: string }> = {
-  CHO_TIEP_NHAN:  { label: "Chờ tiếp nhận", cls: "badge--cho"   },
-  DA_TIEP_NHAN:   { label: "Đã tiếp nhận",  cls: "badge--tiep"  },
-  DANG_XU_LY:     { label: "Đang xử lý",    cls: "badge--dang"  },
-  DA_XU_LY_XONG:  { label: "Đã hoàn thành", cls: "badge--xong"  },
-  DA_DONG:        { label: "Đã đóng",        cls: "badge--dong"  },
-  TU_CHOI:        { label: "Từ chối",        cls: "badge--tuchoi"},
+  CHO_TIEP_NHAN: { label: "Chờ tiếp nhận", cls: "badge--cho" },
+  DA_TIEP_NHAN: { label: "Đã tiếp nhận", cls: "badge--tiep" },
+  DANG_XU_LY: { label: "Đang xử lý", cls: "badge--dang" },
+  DA_XU_LY_XONG: { label: "Đã hoàn thành", cls: "badge--xong" },
+  DA_DONG: { label: "Đã đóng", cls: "badge--dong" },
+  TU_CHOI: { label: "Từ chối", cls: "badge--tuchoi" },
 };
 
 const LOAI_FILTER = ["Tất cả", "Hạ tầng", "Môi trường", "An toàn"];
@@ -168,10 +168,10 @@ const PhanAnhCongDongPage = () => {
   const danhSachHienThi = danhSach.filter(sc => {
     const q = tuKhoa.toLowerCase();
     const matchesKeyword = !q || sc.noiDung?.toLowerCase().includes(q) || sc.diaDiem?.toLowerCase().includes(q);
-    
-    const matchesCategory = locLoai === "Tất cả" || 
+
+    const matchesCategory = locLoai === "Tất cả" ||
       (sc.loaiSuCos && sc.loaiSuCos.some(l => l.toLowerCase().includes(locLoai.toLowerCase().slice(0, 5))));
-      
+
     return matchesKeyword && matchesCategory;
   });
 
@@ -206,10 +206,10 @@ const PhanAnhCongDongPage = () => {
   return (
     <div className="pacd">
       {/* ── 1. Hero header ── */}
-      <div 
-        className="pacd__hero" 
-        style={{ 
-          backgroundImage: `linear-gradient(to right, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.85) 45%, rgba(255, 255, 255, 0) 100%), url(${heroBg})` 
+      <div
+        className="pacd__hero"
+        style={{
+          backgroundImage: `linear-gradient(to right, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.85) 45%, rgba(255, 255, 255, 0) 100%), url(${heroBg})`
         }}
       >
         <div className="pacd__hero-inner">
@@ -260,10 +260,10 @@ const PhanAnhCongDongPage = () => {
                   <div
                     key={o}
                     className={`pacd__tt-option ${locTrangThai === o ? "active" : ""}`}
-                    onClick={e => { 
-                      e.stopPropagation(); 
-                      setLocTrangThai(o); 
-                      setShowTrangThaiMenu(false); 
+                    onClick={e => {
+                      e.stopPropagation();
+                      setLocTrangThai(o);
+                      setShowTrangThaiMenu(false);
                     }}
                   >
                     {o}
@@ -279,9 +279,9 @@ const PhanAnhCongDongPage = () => {
           </div>
 
           {/* Floating Circle Add Button */}
-          <button 
-            className="pacd__btn-add-floating" 
-            onClick={() => navigate("/suco/create")} 
+          <button
+            className="pacd__btn-add-floating"
+            onClick={() => navigate("/suco/create")}
             title="Gửi phản ánh mới"
           >
             <Plus size={24} />
@@ -291,7 +291,7 @@ const PhanAnhCongDongPage = () => {
 
       {/* ── 3. Main Content Sections ── */}
       <div className="pacd__content">
-        
+
         {/* ── Section A: Tiêu điểm - Gần bạn nhất ── */}
         <section className="pacd__section pacd__featured-section">
           <div className="pacd__section-header">
@@ -309,7 +309,7 @@ const PhanAnhCongDongPage = () => {
             <div className="featured-card-tall" onClick={() => goDetail(card0.maSuCo)}>
               <div className="card-image-wrap">
                 {card0.thumbnail ? (
-                  <img src={card0.thumbnail} alt={card0.noiDung} />
+                  <img src={API_CONFIG.BASE_URL + card0.thumbnail} alt={card0.noiDung} />
                 ) : (
                   <div className="card-image-placeholder"><MapPin size={40} /></div>
                 )}
@@ -402,7 +402,7 @@ const PhanAnhCongDongPage = () => {
             <div className="realtime-card" onClick={() => goDetail(card3.maSuCo)}>
               <div className="card-image-wrap">
                 {card3.thumbnail ? (
-                  <img src={card3.thumbnail} alt={card3.noiDung} />
+                  <img src={API_CONFIG.BASE_URL + card3.thumbnail} alt={card3.noiDung} />
                 ) : (
                   <div className="card-image-placeholder"><MapPin size={28} /></div>
                 )}

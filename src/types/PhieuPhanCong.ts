@@ -68,4 +68,31 @@ export interface PhieuPhanCongSCResponse {
 }
 
 
+export interface PhieuPhanCongLSResponse {
+    maPhieuPhanCong: string;
+    trangThai: TrangThaiPhanCong;
+    thoiGianTao: string;
+    ghiChu: string | null;
+    lyDoTuChoi: string | null;
+    maSuCo: string;
+    tieuDe: string;
+    diaDiem: string;
+    thumbnail: string | null;
+    danhSachLoai: string[];
+}
+
+export interface PhieuPhanCongFilterRequest {
+    page?: number;
+    size?: number;
+    tuNgay?: string;
+    denNgay?: string;
+    maDonVi?: string;
+    maLoai?: string;
+}
+
+export const defaultPhieuPhanCongFilter: PhieuPhanCongFilterRequest = {
+    page: 0,
+    size: 10,
+};
+
 

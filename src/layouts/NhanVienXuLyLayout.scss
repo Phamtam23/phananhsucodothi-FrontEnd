@@ -3,10 +3,10 @@
 .NhanVienXuLyLayout {
   display: flex;
   min-height: 100vh;
-  background-color: #f7f9fc;
+  background-color: #f8fafc;
   font-family: 'Inter', sans-serif;
 
-  // Sidebar cố định bên trái (width 180px theo Sidebar.scss)
+  // Sidebar cố định bên trái
   .sidebar {
     position: fixed;
     top: 0;
@@ -17,8 +17,15 @@
 
   main {
     flex: 1;
-    margin-left: 180px;   // bằng đúng width sidebar
+    margin-left: 240px;   // bằng đúng width sidebar mới
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .main-content-wrapper {
+    flex: 1;
     overflow-y: auto;
   }
 }

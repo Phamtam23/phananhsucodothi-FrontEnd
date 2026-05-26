@@ -17,4 +17,7 @@ export interface PhieuKiemDuyetResponse {
   trangThai: TrangThaiKiemDuyet;
   lyDoTuChoi: string;
   thoiGianTao: string; 
+  tieuDe: string;
+  diaDiem: string;
+  thumbnail: string;
 }
