@@ -7,7 +7,7 @@ import { formatDate, formatTime } from "../../utils/Format";
 
 type Props = {
   data: SucoSumaryResponse[];
-  onRowClick: (maSuCo: string) => void;
+  onRowClick: (item: SucoSumaryResponse) => void;
 };
 
 const getReliability = (diemSpam: number | undefined) => {
@@ -61,7 +61,7 @@ const KiemDuyetTable = ({ data, onRowClick }:Props) => {
           return (
             <tr
               key={item.maSuCo}
-              onClick={() => onRowClick(item.maSuCo)}
+              onClick={() => onRowClick(item)}
               style={{ cursor: "pointer" }}
             >
               {/* TITLE */}

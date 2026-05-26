@@ -9,7 +9,7 @@ export const CreatePhieuMoLaiService = async (request: CreatePhieuMoLaiRequest):
     return res.data;
 }
 
-export const GetPhieuMoLaiByPhanCongIdService = async (id:number|string):Promise<ApiResponse<PhieuMoLaiResponse[]>> => {
+export const GetPhieuMoLaiByPhanCongIdService = async (id:number|string):Promise<ApiResponse<PhieuMoLaiResponse>> => {
     const res = await apiClient.get(API_CONFIG.ENDPOINTS.PHIEUMOLAI.GET_BY_PHANCONG_ID(id));
     return res.data;
 }

@@ -11,11 +11,11 @@ type Props = {
 };
 
 const TRANG_THAI_LABEL: Record<string, string> = {
-  CHO_TIEP_NHAN: 'Chờ tiếp nhận',
-  DA_TIEP_NHAN:  'Đã tiếp nhận',
-  DANG_XU_LY:    'Đang xử lý',
-  DA_HOAN_THANH: 'Đã hoàn thành',
-  LA_SPAM:       'Spam',
+    CHO_TIEP_NHAN: 'Chờ tiếp nhận',
+    DA_TIEP_NHAN: 'Đã tiếp nhận',
+    DANG_XU_LY: 'Đang xử lý',
+    DA_HOAN_THANH: 'Đã hoàn thành',
+    LA_SPAM: 'Spam',
 };
 
 const DanhSachPhanCong = ({ maSuCo }: Props) => {
@@ -47,49 +47,60 @@ const DanhSachPhanCong = ({ maSuCo }: Props) => {
                         </span>
                     </div>
 
-                    {pc.ketQuaXuLyDetailResponse ? (
+                
+                    {pc.ketQuaXuLyDetailResponse && pc.ketQuaXuLyDetailResponse.length > 0 ? (
                         <>
-                            <KetQuaXuLyCard ketQua={pc.ketQuaXuLyDetailResponse} />
-                            <PhieuDanhGia
-                                maKetQuaXuLy={pc.ketQuaXuLyDetailResponse.maKetQuaXuLy}
-                                canDanhGia={pc.phieuTrangThaiResponse.canDanhGia}
-                                daDanhGia={pc.phieuTrangThaiResponse.daDanhGia}
-                            />
+                            {pc.ketQuaXuLyDetailResponse.map((ketQua) => (
+                                <div key={ketQua.maKetQuaXuLy} className="ket-qua-item">
+                                    <KetQuaXuLyCard ketQua={ketQua} role="nguoi_dan" />
+                                    <PhieuDanhGia
+                                        maKetQuaXuLy={ketQua.maKetQuaXuLy}
+                                        canDanhGia={pc.phieuTrangThaiResponse.canDanhGia}
+                                        daDanhGia={pc.phieuTrangThaiResponse.daDanhGia}
+                                    />
+                                </div>
+                            ))}
                         </>
                     ) : (
                         <p className="no-ketqua">Chưa có kết quả xử lý từ đơn vị</p>
                     )}
 
-                    <div className="vung-mo-lai">
-                        <DanhSachPhieuMoLai key={reloadKey} maPhanCong={pc.maPhieuPhanCong} />
+                  <div className="vung-mo-lai">
+            <DanhSachPhieuMoLai key={reloadKey} maPhanCong={pc.maPhieuPhanCong} />
 
-                        {pc.phieuTrangThaiResponse.canMoLai && (
-                            <>
-                                <button
-                                    className={`btn-mo-lai ${selectedMoLai === pc.maPhieuPhanCong ? 'danger-btn' : ''}`}
-                                    onClick={() =>
-                                        setSelectedMoLai(
-                                            selectedMoLai === pc.maPhieuPhanCong
-                                                ? null
-                                                : pc.maPhieuPhanCong
-                                        )
-                                    }
-                                >
-                                    {selectedMoLai === pc.maPhieuPhanCong ? "Đóng Form" : "Yêu cầu mở lại xử lý"}
-                                </button>
+            {pc.phieuTrangThaiResponse.canMoLai && !pc.phieuTrangThaiResponse.daMoLai && (
+                <>
+                    <button
+                        className={`btn-mo-lai ${selectedMoLai === pc.maPhieuPhanCong ? 'danger-btn' : ''}`}
+                        onClick={() =>
+                            setSelectedMoLai(
+                                selectedMoLai === pc.maPhieuPhanCong
+                                    ? null
+                                    : pc.maPhieuPhanCong
+                            )
+                        }
+                    >
+                        {selectedMoLai === pc.maPhieuPhanCong ? "Đóng Form" : "Yêu cầu mở lại xử lý"}
+                    </button>
 
-                                {selectedMoLai === pc.maPhieuPhanCong && (
-                                    <FormPhieuMoLai
-                                        maKetQuaXuLy={pc.ketQuaXuLyDetailResponse.maKetQuaXuLy}
-                                        onSuccess={() => {
-                                            setSelectedMoLai(null);
-                                            setReloadKey(prev => prev + 1);
-                                        }}
-                                    />
-                                )}
-                            </>
-                        )}
-                    </div>
+                    {selectedMoLai === pc.maPhieuPhanCong && (
+                        <FormPhieuMoLai
+                            maKetQuaXuLy={
+                                pc.ketQuaXuLyDetailResponse?.at(-1)?.maKetQuaXuLy ?? ""
+                            }
+                            onSuccess={() => {
+                                setSelectedMoLai(null);
+                                setReloadKey(prev => prev + 1);
+                            }}
+                        />
+                    )}
+                </>
+            )}
+
+    {pc.phieuTrangThaiResponse.daMoLai && (
+        <p className="da-mo-lai-notice">⚠️ Bạn đã gửi yêu cầu mở lại cho phiếu này.</p>
+    )}
+</div>
                 </div>
             ))}
             {phanCongList.length === 0 && (

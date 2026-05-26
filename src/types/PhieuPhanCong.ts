@@ -64,7 +64,7 @@ export interface PhieuPhanCongSCResponse {
 
   phieuTrangThaiResponse: PhieuTrangThaiResponse;
 
-  ketQuaXuLyDetailResponse: KetQuaXuLyDetailResponse;
+  ketQuaXuLyDetailResponse: KetQuaXuLyDetailResponse[];
 }
 
 

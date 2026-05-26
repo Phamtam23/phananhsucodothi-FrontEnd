@@ -24,6 +24,7 @@ import QuanLyLoaiSuCoPage from '../pages/admin/QuanLyLoaiSuCoPage';
 import QuanLyDonViPage from '../pages/admin/QuanLyDonViPage';
 import ThongKeHeThongPage from '../pages/admin/ThongKeHeThongPage';
 import PhanAnhCongDongPage from '../pages/nguoidung/suco/PhanAnhCongDongPage';
+import BanDoPage from '../pages/nguoidung/suco/BanDoPage';
 
 export const AppRouter = () => {
 
@@ -31,6 +32,7 @@ export const AppRouter = () => {
         <Routes>
             <Route element={<UserLayout />} >
                 <Route path="/" element={<PhanAnhCongDongPage />} />
+                <Route path="/ban-do" element={<BanDoPage />} />
                 <Route path="/suco/create" element={<CreateSuco />} />
                 <Route path="/suco/lich-su" element={<LichSuSuCo />} />
                 <Route path="/suco/detail/:maSuCo" element={<DetailSuCoPage />} />
@@ -47,13 +49,9 @@ export const AppRouter = () => {
                 <Route path="/truongdonvi/duyet-ket-qua/:id" element={<DuyetKetQuaDetailPage />} />
             </Route>
             <Route element={<NhanVienXuLyLayout />}>
-                {/* Xử lý sự cố + Xem chỉ đạo (tích hợp trong cùng 1 trang) */}
                 <Route path="/nhanvienxuly/xu-ly" element={<XuLySuCoPage />} />
-                {/* Xem nội dung chỉ đạo → redirect về trang xử lý */}
                 <Route path="/nhanvienxuly/chi-dao" element={<XuLySuCoPage />} />
-                {/* Đăng kết quả xử lý */}
                 <Route path="/nhanvienxuly/dang-ket-qua" element={<DangKetQuaPage />} />
-                {/* Lịch sử thực hiện */}
                 <Route path="/nhanvienxuly/lich-su" element={<LichSuThucHienPage />} />
             </Route>
             <Route element={<AdminLayout />}>

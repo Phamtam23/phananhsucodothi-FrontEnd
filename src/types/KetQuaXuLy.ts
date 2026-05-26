@@ -2,7 +2,7 @@ import type { MediaResponse } from "./Media";
 export interface KetQuaXuLyBaseResponse {
   maKetQuaXuLy: string;
   maChiTietPhanCong: string;
-  thoiGianNop: string; 
+  thoiGianNop: string;
   noiDungThucHien: string;
   trangThai: TrangThaiKetQua;
   lyDoTuChoi?: string;
@@ -15,7 +15,7 @@ export interface KetQuaXuLyDetailResponse
 }
 
 export interface KetQuaXuLySummaryResponse
-  extends KetQuaXuLyBaseResponse {}
+  extends KetQuaXuLyBaseResponse { }
 
 export interface CreateKetQuaXuLyRequest {
   maChiTietPhanCong: string;

@@ -65,7 +65,7 @@ const KiemDuyetDetailPage = () => {
     // validate từ chối
     if (
       trangThaiKiemDuyet ===
-        TrangThaiKiemDuyet.TU_CHOI &&
+      TrangThaiKiemDuyet.TU_CHOI &&
       !lyDo.trim()
     ) {
       setError(
@@ -83,17 +83,17 @@ const KiemDuyetDetailPage = () => {
       setDangChon(trangThaiKiemDuyet);
 
       const body: CreatePhieuKiemDuyetRequest =
-        {
-          maSuCo,
+      {
+        maSuCo,
 
-          trangThaiKiemDuyet,
+        trangThaiKiemDuyet,
 
-          lyDoTuChoi:
-            trangThaiKiemDuyet ===
+        lyDoTuChoi:
+          trangThaiKiemDuyet ===
             TrangThaiKiemDuyet.TU_CHOI
-              ? lyDo.trim()
-              : "",
-        };
+            ? lyDo.trim()
+            : "",
+      };
 
       const res =
         await CreatePhieuKiemDuyetService(
@@ -114,8 +114,8 @@ const KiemDuyetDetailPage = () => {
     } catch (e: any) {
       setError(
         e?.response?.data?.message ||
-          e?.message ||
-          "Có lỗi xảy ra."
+        e?.message ||
+        "Có lỗi xảy ra."
       );
 
       setDangChon(null);
@@ -153,18 +153,16 @@ const KiemDuyetDetailPage = () => {
       {phieuKetQua ? (
         <div className="kdp-panel">
           <div
-            className={`kdp-success-box ${
-              isDuyet
+            className={`kdp-success-box ${isDuyet
                 ? "kdp-success-green"
                 : "kdp-success-red"
-            }`}
+              }`}
           >
             <span
-              className={`kdp-success-icon ${
-                isDuyet
+              className={`kdp-success-icon ${isDuyet
                   ? "kdp-icon-green"
                   : "kdp-icon-red"
-              }`}
+                }`}
             >
               {isDuyet ? "✓" : "✕"}
             </span>
@@ -241,11 +239,10 @@ const KiemDuyetDetailPage = () => {
             </label>
 
             <textarea
-              className={`kdp-textarea ${
-                error
+              className={`kdp-textarea ${error
                   ? "kdp-textarea--error"
                   : ""
-              }`}
+                }`}
               rows={4}
               placeholder="Nhập lý do từ chối..."
               value={lyDo}
@@ -279,7 +276,7 @@ const KiemDuyetDetailPage = () => {
               }
             >
               {loading &&
-              dangChon ===
+                dangChon ===
                 TrangThaiKiemDuyet.TU_CHOI ? (
                 <span className="kdp-spinner" />
               ) : (
@@ -298,7 +295,7 @@ const KiemDuyetDetailPage = () => {
               }
             >
               {loading &&
-              dangChon ===
+                dangChon ===
                 TrangThaiKiemDuyet.DUYET ? (
                 <span className="kdp-spinner" />
               ) : (

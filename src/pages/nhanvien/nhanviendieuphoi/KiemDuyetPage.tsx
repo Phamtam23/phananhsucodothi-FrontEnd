@@ -4,7 +4,7 @@ import "./KiemDuyetPage.scss";
 import {useKiemDuyetPage} from "../../../hooks/kiemDuyet/useKiemDuyetPage";
 import KiemDuyetTable from "../../../components/Table/KiemDuyetTable";
 import Pagination from "../../../components/Page/Pagination";
-import PhanCongPhanLoaiDetail from "./PhanCongPhanLoaiDetail";
+import type {SucoSumaryResponse} from "../../../types/Suco";
 type TrangThaiFilter = "tat_ca" | "CHO_TIEP_NHAN" | "DA_TIEP_NHAN" | "TU_CHOI";
 
 const TRANG_THAI_FILTERS: { value: TrangThaiFilter; label: string }[] = [
@@ -34,10 +34,28 @@ const KiemDuyetPage = () => {
   } = useKiemDuyetPage();
 
  
+  const getDetailRoute = (
+  item: SucoSumaryResponse
+) => {
 
-  const handleRowClick = (maSuCo: string) => {
-    navigate(`/nhanvien/kiem-duyet/${maSuCo}`);
+  switch (item.trangThai) {
+
+    case "CHO_TIEP_NHAN":
+      return `/nhanvien/phan-cong/${item.maSuCo}`;
+
+    default:
+      return `/nhanvien/kiem-duyet/${item.maSuCo}`;
+  }
+};
+
+  const handleRowClick = (
+    item: SucoSumaryResponse
+  ) => {
+
+    navigate(getDetailRoute(item));
   };
+
+
 
   const filteredData = data.filter(item => {
     const codeMatch = !searchCode || (item.maSuCo && item.maSuCo.toLowerCase().includes(searchCode.toLowerCase()));
@@ -146,7 +164,7 @@ const KiemDuyetPage = () => {
             <p>Không có sự cố nào.</p>
           </div>
         ) : (
-          <KiemDuyetTable data={filteredData} onRowClick={handleRowClick} />
+          <KiemDuyetTable data={filteredData}  onRowClick={handleRowClick} />
         )}
        <Pagination
         currentPage={currentPage}

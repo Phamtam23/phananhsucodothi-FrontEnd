@@ -27,6 +27,8 @@ export const useDanhGia = (
         maKetQuaXuLy
       );
 
+      console.log("Danh gia da load:", data);
+
       setDanhGia(data.data);
 
       return data.data;
