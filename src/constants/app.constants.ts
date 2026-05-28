@@ -78,6 +78,7 @@ export const API_CONFIG = {
         },
         THONGKE: {
             HE_THONG: "/thong-ke",
+            DONVI: () => `/thong-ke/don-vi`,
         },
         FILE: {
             UPLOAD: "/files/upload",

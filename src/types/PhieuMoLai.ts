@@ -20,9 +20,10 @@ export interface PhieuMoLaiResponse {
   lyDo: string;
   trangThaiMoLai: TrangThaiMoLai;
   maKetQuaXuLy: string;
+  MediaUrls: string[];
   thoiGianTao: string;
   lyDoTuChoi?: string;
-  maSuCo?: string;
+  maSuCo: string;
   noiDungSuCo?: string;
-  maPhieuPhanCong?: string;
+  maPhieuPhanCong: string;
 }

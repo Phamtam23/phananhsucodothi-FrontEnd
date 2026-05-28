@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Plus, Pencil, Lock, Unlock, X } from "lucide-react";
 import { useTaiKhoan } from "../../hooks/admin/useTaiKhoan";
 import type { CreateTaiKhoanRequest, UpdateTaiKhoanRequest, TaiKhoanResponse } from "../../types/TaiKhoan";
@@ -6,31 +6,32 @@ import { VaiTro, TrangThaiTaiKhoan } from "../../types/TaiKhoan";
 import "./QuanLyTaiKhoanPage.scss";
 
 const FORM_TRONG: CreateTaiKhoanRequest = {
-  email: "", matKhau: "", hoTen: "", soDienThoai: "", cccd: "", diaChi: "", vaiTro: VaiTro.NGUOI_DAN,
+  email: "", matKhau: "", hoTen: "", soDienThoai: "", cccd: "", diaChi: "", vaiTro: VaiTro.NGUOI_DAN, maDonVi: ""
 };
 
+const canChonDonVi = (vaiTro: string) =>
+  vaiTro === VaiTro.NHAN_VIEN_XU_LY || vaiTro === VaiTro.TRUONG_DON_VI;
+
 const QuanLyTaiKhoanPage = () => {
-  const { danhSach, loading, layDanhSach, taoTaiKhoan, capNhatTaiKhoan, khoaTaiKhoan, moKhoaTaiKhoan } = useTaiKhoan();
+  const { danhSach, loading, danhSachDonViXuLy, loadingDonVi, taoTaiKhoan, capNhatTaiKhoan, khoaTaiKhoan, moKhoaTaiKhoan } = useTaiKhoan();
   const [moPanel, setMoPanel] = useState(false);
   const [dangSua, setDangSua] = useState<TaiKhoanResponse | null>(null);
   const [form, setForm] = useState<CreateTaiKhoanRequest>(FORM_TRONG);
-  const [tuKhoa, setTuKhoa] = useState("");
+  const [tuKhoa, setTuKhoa] = useState("");;
   const [locVaiTro, setLocVaiTro] = useState("TẤT_CẢ");
-
-  useEffect(() => { layDanhSach(); }, [layDanhSach]);
 
   const moThem = () => { setDangSua(null); setForm(FORM_TRONG); setMoPanel(true); };
   const moSua = (tk: TaiKhoanResponse) => {
     setDangSua(tk);
-    setForm({ email: tk.email, matKhau: "", hoTen: tk.hoTen, soDienThoai: tk.soDienThoai, cccd: tk.cccd, diaChi: tk.diaChi || "", vaiTro: tk.vaiTro });
+    setForm({ email: tk.email, matKhau: "", hoTen: tk.hoTen, soDienThoai: tk.soDienThoai, cccd: tk.cccd, diaChi: tk.diaChi || "", vaiTro: tk.vaiTro, maDonVi: "" });
     setMoPanel(true);
   };
-  const dong = () => { setMoPanel(false); setDangSua(null); };
+const dong = () => { setMoPanel(false); setDangSua(null); setForm(FORM_TRONG); }
 
   const luuForm = async () => {
     try {
       if (dangSua) {
-        const req: UpdateTaiKhoanRequest = { hoTen: form.hoTen, soDienThoai: form.soDienThoai, diaChi: form.diaChi, vaiTro: form.vaiTro };
+        const req: UpdateTaiKhoanRequest = { hoTen: form.hoTen, soDienThoai: form.soDienThoai, diaChi: form.diaChi, vaiTro: form.vaiTro, maDonVi: form.maDonVi };
         await capNhatTaiKhoan(dangSua.maTaiKhoan, req);
       } else {
         await taoTaiKhoan(form);
@@ -45,6 +46,7 @@ const QuanLyTaiKhoanPage = () => {
 
   return (
     <div className="quan-ly-tai-khoan">
+      {/* Tiêu đề */}
       <div className="quan-ly-tai-khoan__tieu-de">
         <div>
           <h1>Quản lý tài khoản</h1>
@@ -55,6 +57,7 @@ const QuanLyTaiKhoanPage = () => {
         </button>
       </div>
 
+      {/* Bộ lọc */}
       <div className="quan-ly-tai-khoan__bo-loc">
         <input placeholder="Tìm kiếm tên, email..." value={tuKhoa} onChange={e => setTuKhoa(e.target.value)} />
         <select value={locVaiTro} onChange={e => setLocVaiTro(e.target.value)}>
@@ -63,6 +66,7 @@ const QuanLyTaiKhoanPage = () => {
         </select>
       </div>
 
+      {/* Bảng */}
       <div className="quan-ly-tai-khoan__bang">
         <table className="quan-ly-tai-khoan__bang-table">
           <thead>
@@ -120,7 +124,9 @@ const QuanLyTaiKhoanPage = () => {
               <h2>{dangSua ? "Cập nhật tài khoản" : "Thêm tài khoản mới"}</h2>
               <button className="slide-panel__btn-dong" onClick={dong}><X size={18} /></button>
             </div>
+
             <div className="slide-panel__body">
+              {/* Chỉ hiện khi thêm mới */}
               {!dangSua && (
                 <>
                   <div className="slide-panel__nhom">
@@ -137,6 +143,7 @@ const QuanLyTaiKhoanPage = () => {
                   </div>
                 </>
               )}
+
               <div className="slide-panel__nhom">
                 <label>Họ tên *</label>
                 <input placeholder="Nguyễn Văn A" value={form.hoTen} onChange={e => setForm(f => ({ ...f, hoTen: e.target.value }))} />
@@ -149,13 +156,28 @@ const QuanLyTaiKhoanPage = () => {
                 <label>Địa chỉ</label>
                 <input placeholder="Địa chỉ..." value={form.diaChi} onChange={e => setForm(f => ({ ...f, diaChi: e.target.value }))} />
               </div>
+
               <div className="slide-panel__nhom">
                 <label>Vai trò *</label>
-                <select value={form.vaiTro} onChange={e => setForm(f => ({ ...f, vaiTro: e.target.value }))}>
+                <select value={form.vaiTro} onChange={e => setForm(f => ({ ...f, vaiTro: e.target.value, maDonVi: "" }))}>
                   {Object.values(VaiTro).map(v => <option key={v} value={v}>{v.replace(/_/g, " ")}</option>)}
                 </select>
               </div>
+
+              {/* Hiện khi chọn vai trò nhân viên hoặc trưởng đơn vị */}
+              {canChonDonVi(form.vaiTro) && (
+                <div className="slide-panel__nhom">
+                  <label>Đơn vị xử lý *</label>
+                  <select value={form.maDonVi} onChange={e => setForm(f => ({ ...f, maDonVi: e.target.value }))}>
+                    <option value="">-- Chọn đơn vị --</option>
+                    {danhSachDonViXuLy.map(dv => (
+                      <option key={dv.maDonViXuLy} value={dv.maDonViXuLy}>{dv.tenDonVi}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
             </div>
+
             <div className="slide-panel__footer">
               <button className="slide-panel__btn-huy" onClick={dong}>Hủy</button>
               <button className="slide-panel__btn-luu" onClick={luuForm}>{dangSua ? "Lưu thay đổi" : "Tạo tài khoản"}</button>

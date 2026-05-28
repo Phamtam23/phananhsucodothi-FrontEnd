@@ -1,12 +1,21 @@
-import { Bell, Settings } from "lucide-react";
+import { Settings } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import NotificationDropdown from "../Notification/NotificationDropdown";
 import "./InternalHeader.scss";
 
 const InternalHeader = () => {
+  const navigate = useNavigate();
   const userStr = localStorage.getItem("user");
   const user = userStr ? JSON.parse(userStr) : null;
   const hoTen = user?.hoTen || "Officer Nguyen";
   const donVi = user?.role === "R_NVXULY" ? "PROCESSING UNIT" : 
                 user?.role === "R_TXULY" ? "UNIT HEAD" : "DEPARTMENT";
+  const handleProfileClick = () => {
+    if (user?.role === "R_NVXULY") navigate("/nhanvienxuly/profile");
+    else if (user?.role === "R_TXULY") navigate("/truongdonvi/profile");
+    else if (user?.role === "R_NVDIEUPHOI") navigate("/nhanvien/profile");
+    else navigate("/profile");
+  };
 
   return (
     <header className="internal-header">
@@ -19,11 +28,8 @@ const InternalHeader = () => {
       </div>
 
       <div className="internal-header__actions">
-        <button className="icon-btn">
-          <Bell size={20} />
-          <span className="badge"></span>
-        </button>
-        <button className="icon-btn">
+        <NotificationDropdown buttonClassName="icon-btn" badgeClassName="badge" isInternal={true} />
+        <button className="icon-btn" onClick={handleProfileClick}>
           <Settings size={20} />
         </button>
 

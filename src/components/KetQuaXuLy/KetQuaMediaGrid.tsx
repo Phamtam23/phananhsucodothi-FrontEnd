@@ -34,56 +34,60 @@ const KetQuaMediaGrid = ({ medias }: Props) => {
 
             </p>
 
-            <div className="ketqua-media__grid">
+            <div className="ketqua-media__slider-wrapper">
 
-                {medias.map((media, index) => (
+                <div className="ketqua-media__slider">
 
-                    <a
-                        key={index}
-                        href={`${API_CONFIG.BASE_URL}${media.url}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="ketqua-media__item"
-                    >
+                    {medias.map((media, index) => (
 
-                        {isVideo(media.url) ? (
+                        <a
+                            key={index}
+                            href={`${API_CONFIG.BASE_URL}${media.url}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="ketqua-media__slide"
+                        >
 
-                            <div className="ketqua-media__video">
+                            {isVideo(media.url) ? (
 
-                                <video
-                                    src={`${API_CONFIG.BASE_URL}${media.url}`}
-                                />
+                                <div className="ketqua-media__video">
 
-                                <div className="overlay">
+                                    <video
+                                        src={`${API_CONFIG.BASE_URL}${media.url}`}
+                                    />
 
-                                    <Video size={20} />
+                                    <div className="overlay">
 
-                                </div>
+                                        <Video size={20} />
 
-                            </div>
-
-                        ) : (
-
-                            <div className="ketqua-media__image">
-
-                                <img
-                                    src={`${API_CONFIG.BASE_URL}${media.url}`}
-                                    alt={`media-${index}`}
-                                />
-
-                                <div className="overlay">
-
-                                    <Eye size={18} />
+                                    </div>
 
                                 </div>
 
-                            </div>
+                            ) : (
 
-                        )}
+                                <div className="ketqua-media__image">
 
-                    </a>
+                                    <img
+                                        src={`${API_CONFIG.BASE_URL}${media.url}`}
+                                        alt={`media-${index}`}
+                                    />
 
-                ))}
+                                    <div className="overlay">
+
+                                        <Eye size={18} />
+
+                                    </div>
+
+                                </div>
+
+                            )}
+
+                        </a>
+
+                    ))}
+
+                </div>
 
             </div>
         </div>

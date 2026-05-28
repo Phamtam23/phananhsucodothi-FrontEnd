@@ -19,13 +19,16 @@ const Pagination = ({
   onPageChange,
   showInfo = true,
 }: PaginationProps) => {
-  if (totalPages <= 0) return null;
+  const current = Number(currentPage) || 0;
+  const total = Number(totalPages) || 0;
+
+  if (total <= 0) return null;
 
   const getPages = () => {
     const pages: number[] = [];
 
-    let start = Math.max(0, currentPage - 2);
-    let end = Math.min(totalPages - 1, start + 4);
+    let start = Math.max(0, current - 2);
+    let end = Math.min(total - 1, start + 4);
 
     if (end - start < 4) {
       start = Math.max(0, end - 4);
@@ -45,9 +48,9 @@ const Pagination = ({
           Hiển thị{" "}
           {totalElements === 0
             ? 0
-            : currentPage * pageSize + 1}
+            : current * pageSize + 1}
           {" - "}
-          {Math.min((currentPage + 1) * pageSize, totalElements)}
+          {Math.min((current + 1) * pageSize, totalElements)}
           {" trong số "}
           {totalElements}
         </div>
@@ -55,35 +58,38 @@ const Pagination = ({
 
       <div className="pagination">
         <button
-          disabled={currentPage === 0}
-          onClick={() => onPageChange(currentPage - 1)}
+          type="button"
+          disabled={current === 0}
+          onClick={() => onPageChange(current - 1)}
         >
           &lt;
         </button>
 
         {getPages().map((page) => (
           <button
+            type="button"
             key={page}
-            className={currentPage === page ? "active" : ""}
+            className={current === page ? "active" : ""}
             onClick={() => onPageChange(page)}
           >
             {page + 1}
           </button>
         ))}
 
-        {totalPages > 5 && currentPage < totalPages - 3 && (
+        {total > 5 && current < total - 3 && (
           <>
-            <button disabled>...</button>
+            <button type="button" disabled>...</button>
 
-            <button onClick={() => onPageChange(totalPages - 1)}>
-              {totalPages}
+            <button type="button" onClick={() => onPageChange(total - 1)}>
+              {total}
             </button>
           </>
         )}
 
         <button
-          disabled={currentPage === totalPages - 1}
-          onClick={() => onPageChange(currentPage + 1)}
+          type="button"
+          disabled={current === total - 1}
+          onClick={() => onPageChange(current + 1)}
         >
           &gt;
         </button>

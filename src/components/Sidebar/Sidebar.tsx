@@ -48,12 +48,7 @@ const Sidebar = () => {
         icon: <FileCheck size={20} />,
         label: "LICH SỬ KIỂM DUYỆT",
         path: "/nhanvien/lich-su/kiem-duyet",
-      },
-        {
-        icon: <FileCheck size={20} />,
-        label: "Thông tin cá nhân",
-        path: "/nhanvien/profile",
-      },
+      }
     ];
   } else if (isTruongDonVi) {
     menuItems = [
@@ -64,8 +59,8 @@ const Sidebar = () => {
       },
       {
         icon: <FileCheck size={20} />,
-        label: "Thông tin cá nhân",
-        path: "/truongdonvi/profile",
+        label: "THỐNG KÊ ĐƠN VỊ",
+        path: "/truongdonvi/thong-ke",
       }
     ];
   } else {

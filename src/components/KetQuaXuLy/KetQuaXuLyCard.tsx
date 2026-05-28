@@ -127,49 +127,7 @@ const KetQuaXuLyCard = ({
           </div>
         )}
 
-        {role === "truong_don_vi" &&
-          ketQua.trangThai === "CHO_DUYET" &&
-          duyetKetQua &&
-          tuChoiKetQua &&
-          setMaKetQuaDangTuChoi &&
-          setNoiDungTuChoi && (
 
-            <KetQuaXuLyActions
-
-              maKetQuaXuLy={
-                ketQua.maKetQuaXuLy
-              }
-
-              dangXuLyHanhDong={
-                dangXuLyHanhDong
-              }
-
-              maKetQuaDangTuChoi={
-                maKetQuaDangTuChoi
-              }
-
-              noiDungTuChoi={
-                noiDungTuChoi
-              }
-
-              setMaKetQuaDangTuChoi={
-                setMaKetQuaDangTuChoi
-              }
-
-              setNoiDungTuChoi={
-                setNoiDungTuChoi
-              }
-
-              onDuyet={
-                duyetKetQua
-              }
-
-              onTuChoi={
-                tuChoiKetQua
-              }
-            />
-
-          )}
 
       </div>
     </div>

@@ -1,5 +1,6 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { NAV_ITEMS } from '../../constants/app.constants';
+import NotificationDropdown from "../Notification/NotificationDropdown";
 import './Header.scss';
 
 const SearchIcon = () => (
@@ -11,7 +12,9 @@ const SearchIcon = () => (
 
 const Header = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const isLoggedIn = !!localStorage.getItem('accessToken');
+
   return (
     <header className="header">
       <div className="header__inner">
@@ -52,6 +55,7 @@ const Header = () => {
             </>
           ) : (
             <>
+              <NotificationDropdown buttonClassName="header__btn-bell" badgeClassName="header__bell-badge" isInternal={false} />
               <Link to="/profile" className="header__btn-profile">
                 Tài khoản
               </Link>

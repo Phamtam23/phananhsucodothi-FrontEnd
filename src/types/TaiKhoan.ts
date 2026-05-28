@@ -18,6 +18,7 @@ export interface CreateTaiKhoanRequest {
   cccd: string;
   diaChi?: string;
   vaiTro: string;
+  maDonVi?: string;
 }
 
 export interface UpdateTaiKhoanRequest {

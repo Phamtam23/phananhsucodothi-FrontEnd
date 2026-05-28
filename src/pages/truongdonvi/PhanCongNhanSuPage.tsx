@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { formatDistanceToNow, format } from "date-fns";
+import {  format } from "date-fns";
 import { MapPin, Image as ImageIcon, Map as MapIcon, ArrowLeft, RefreshCw, User, Calendar, MessageSquare } from "lucide-react";
 
 import "./PhanCongNhanSuPage.scss";
@@ -9,6 +9,7 @@ import { useNhanSuDonVi } from "../../hooks/nhansu/useNhanSuDonVi";
 import { useChiTietPhanCong } from "../../hooks/phancong/useChiTietPhanCong";
 import { usePhieuChiDao } from "../../hooks/phancong/usePhieuChiDao";
 import type { NhanVienDonViResponse } from "../../types/NhanVienDonVi";
+import { API_CONFIG} from "../../constants/app.constants";
 
 const PhanCongNhanSuPage = () => {
     const { id: maPhieuPhanCong } = useParams<{ id: string }>();
@@ -158,7 +159,7 @@ const PhanCongNhanSuPage = () => {
                         <div className="pcns-media-gallery">
                             {suco?.medias && suco.medias.slice(0, 2).map((m, i) => (
                                 <div key={i} className="pcns-media-item">
-                                    <img src={m.url} alt="Incident" />
+                                    <img src={API_CONFIG.BASE_URL + m.url} alt="Incident" />
                                 </div>
                             ))}
                             <div className="pcns-media-placeholder">

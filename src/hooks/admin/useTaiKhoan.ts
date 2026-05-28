@@ -1,16 +1,21 @@
-import { useState, useCallback } from "react";
+import type{ DonViXuLyResponse } from './../../types/DonViXuLy';
+import { useState, useCallback,useEffect } from "react";
 import {
   GetAllTaiKhoanService,
-  CreateTaiKhoanService,
+  CreateTaiKhoanService, 
   UpdateTaiKhoanService,
   KhoaTaiKhoanService,
   MoKhoaTaiKhoanService,
 } from "../../services/TaiKhoanService";
+
+import {GetAllDonViXuLyService} from "../../services/DonViXuLy";
 import type { TaiKhoanResponse, CreateTaiKhoanRequest, UpdateTaiKhoanRequest } from "../../types/TaiKhoan";
 
 export const useTaiKhoan = () => {
   const [danhSach, setDanhSach] = useState<TaiKhoanResponse[]>([]);
+  const [danhSachDonViXuLy, setDanhSachDonViXuLy] = useState< DonViXuLyResponse []>([]);
   const [loading, setLoading] = useState(false);
+  const [loadingDonVi, setLoadingDonVi] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const layDanhSach = useCallback(async () => {
@@ -25,6 +30,26 @@ export const useTaiKhoan = () => {
       setLoading(false);
     }
   }, []);
+
+
+  const layDanhSachDonViXuLy = useCallback(async () => {
+    setLoadingDonVi(true);
+    setError(null);
+    try {
+      const res = await GetAllDonViXuLyService();
+      if (res.status === 200) {
+        setDanhSachDonViXuLy(res.data);
+      } else {
+        throw new Error(res.message || "Lỗi lấy danh sách đơn vị xử lý");
+      }
+    } catch (err: any) {
+      setError(err.message || "Lỗi lấy danh sách đơn vị xử lý");
+      throw err;
+    } finally {
+      setLoadingDonVi(false);
+    }
+  }, []);
+
 
   const taoTaiKhoan = async (request: CreateTaiKhoanRequest) => {
     setLoading(true);
@@ -92,5 +117,8 @@ export const useTaiKhoan = () => {
     }
   };
 
-  return { danhSach, loading, error, layDanhSach, taoTaiKhoan, capNhatTaiKhoan, khoaTaiKhoan, moKhoaTaiKhoan };
+  useEffect(() => { layDanhSach(); }, [layDanhSach]);
+  useEffect(() => { layDanhSachDonViXuLy(); }, [layDanhSachDonViXuLy]);
+
+  return { danhSach,danhSachDonViXuLy, loading, loadingDonVi, error,layDanhSachDonViXuLy, layDanhSach, taoTaiKhoan, capNhatTaiKhoan, khoaTaiKhoan, moKhoaTaiKhoan };
 };
