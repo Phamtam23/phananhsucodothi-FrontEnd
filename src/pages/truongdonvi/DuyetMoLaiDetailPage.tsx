@@ -4,6 +4,7 @@ import { useDuyetMoLai } from "../../hooks/molai/useDuyeMoLai";
 import { useDuyetPhieuMoLai } from "../../hooks/phieumolai/useDuyetPhieuMoLai";
 import { API_CONFIG } from "../../constants/app.constants";
 import { useParams } from "react-router-dom";
+import "./DuyetMoLaiDetailPage.scss";
 
 const DuyetMoLaiDetailPage = () => {
      const { maPhieuMoLai } = useParams<{ maPhieuMoLai: string }>();
@@ -21,8 +22,13 @@ const DuyetMoLaiDetailPage = () => {
     const xacNhanDuyet = async () => {
         if (!window.confirm("Chấp nhận yêu cầu mở lại? Nhân viên sẽ phải làm lại kết quả.")) return;
         try {
-            await duyetPhieuMoLai(maPhieuMoLai, true, undefined);
-            alert("Đã duyệt yêu cầu mở lại!");
+            const res = await duyetPhieuMoLai(maPhieuMoLai, true, undefined);
+            if (res) {
+                alert("Đã duyệt yêu cầu mở lại!");
+                window.location.reload();
+            } else {
+                alert("Lỗi khi duyệt yêu cầu mở lại. Vui lòng thử lại!");
+            }
         } catch {
             alert("Lỗi khi duyệt yêu cầu mở lại");
         }
@@ -31,24 +37,29 @@ const DuyetMoLaiDetailPage = () => {
     const xacNhanTuChoi = async () => {
         if (!lyDoTuChoi.trim()) { alert("Vui lòng nhập lý do từ chối"); return; }
         try {
-            await duyetPhieuMoLai(maPhieuMoLai, false, lyDoTuChoi);
-            alert("Đã từ chối yêu cầu mở lại!");
-            setDangTuChoi(false);
-            setLyDoTuChoi("");
+            const res = await duyetPhieuMoLai(maPhieuMoLai, false, lyDoTuChoi);
+            if (res) {
+                alert("Đã từ chối yêu cầu mở lại!");
+                setDangTuChoi(false);
+                setLyDoTuChoi("");
+                window.location.reload();
+            } else {
+                alert("Lỗi khi từ chối yêu cầu mở lại. Vui lòng thử lại!");
+            }
         } catch {
             alert("Lỗi khi từ chối yêu cầu mở lại");
         }
     };
 
     return (
-        <div>
+        <div className="dkq-molai-container">
             <DuyetKetQuaDetailPage
                 maPhieuPhanCong={phieuMoLaiData.maPhieuPhanCong}
                 loai="DUYET_MO_LAI"
             />
 
             <div className="dkq-molai-section">
-                <div className="dkq-sidebar-card" style={{ margin: "16px 0" }}>
+                <div className="dkq-sidebar-card">
                     <h3>THÔNG TIN YÊU CẦU MỞ LẠI</h3>
 
                     <div className="dkq-molai-info">
@@ -111,7 +122,6 @@ const DuyetMoLaiDetailPage = () => {
                             <div className="xac-minh-card-actions">
                                 <button
                                     className="xac-minh-btn btn-phan-cong"
-                                    style={{ backgroundColor: '#059669', width: 'auto' }}
                                     onClick={xacNhanDuyet}
                                     disabled={dangDuyet}
                                 >

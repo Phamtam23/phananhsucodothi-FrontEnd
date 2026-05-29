@@ -8,6 +8,7 @@ import {
   HelpCircle,
   LogOut,
   Landmark,
+  Map as MapIcon,
 } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./Sidebar.scss";
@@ -48,6 +49,11 @@ const Sidebar = () => {
         icon: <FileCheck size={20} />,
         label: "LICH SỬ KIỂM DUYỆT",
         path: "/nhanvien/lich-su/kiem-duyet",
+      },
+      {
+        icon: <MapIcon size={20} />,
+        label: "BẢN ĐỒ SỰ CỐ",
+        path: "/nhanvien/ban-do",
       }
     ];
   } else if (isTruongDonVi) {
@@ -61,6 +67,11 @@ const Sidebar = () => {
         icon: <FileCheck size={20} />,
         label: "THỐNG KÊ ĐƠN VỊ",
         path: "/truongdonvi/thong-ke",
+      },
+      {
+        icon: <MapIcon size={20} />,
+        label: "BẢN ĐỒ SỰ CỐ",
+        path: "/truongdonvi/ban-do",
       }
     ];
   } else {

@@ -12,8 +12,8 @@ export const useChiTietPhanCongNhanVien = (page: number = 0, size: number = 20, 
         setLoading(true);
         setError(null);
         try {
-                       const res = await GetChiTietPhanCongByNhanVienIdService(page, size, keyword, tuNgay, denNgay)
-              setData(res.data ?? null);
+            const res = await GetChiTietPhanCongByNhanVienIdService(page, size, keyword, tuNgay, denNgay)
+            setData(res.data ?? null);
         } catch (err: any) {
             setError(err.message || "Không thể tải dữ liệu phân công");
         } finally {

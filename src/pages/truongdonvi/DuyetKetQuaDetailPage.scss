@@ -151,14 +151,25 @@
 }
 
 .dkq-timeline-block {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 32px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
     .timeline-block-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 16px;
-        background-color: #f8fafc;
-        padding: 8px 16px;
-        border-radius: 8px;
+        margin-bottom: 24px;
+        padding-bottom: 16px;
+        border-bottom: 1px dashed #cbd5e1;
+        background-color: transparent;
         
         .badges-left {
             display: flex;
@@ -188,28 +199,19 @@
     }
     
     .timeline-vertical-line {
-        margin-left: 32px;
-        border-left: 2px solid #e2e8f0;
-        padding-left: 32px;
-        padding-bottom: 16px;
+        margin-left: 0;
+        border-left: none;
+        padding-left: 0;
+        padding-bottom: 0;
     }
 }
 
 .timeline-item {
     position: relative;
-    margin-bottom: 32px;
+    margin-bottom: 24px;
     
     &::before {
-        content: '';
-        position: absolute;
-        left: -41px;
-        top: 2px;
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        background-color: #ffffff;
-        border: 2px solid #cbd5e1;
-        z-index: 2;
+        display: none;
     }
     
     &:last-child {
@@ -226,8 +228,8 @@
 }
 
 .chi-dao-card {
-    background-color: #ffffff;
-    border: 1px solid #e2e8f0;
+    background-color: #f8fafc;
+    border: 1px dashed #cbd5e1;
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     width: 100%;
@@ -238,8 +240,8 @@
         align-items: center;
         gap: 12px;
         padding: 12px 16px;
-        background-color: #f8fafc;
-        border-bottom: 1px solid #e2e8f0;
+        background-color: transparent;
+        border-bottom: 1px dashed #cbd5e1;
         
         .assignee-avatar {
             width: 32px;
@@ -272,39 +274,42 @@
     }
     
     .chi-dao-list {
-        padding: 16px;
+        padding: 16px 20px;
+        background-color: #ffffff;
         display: flex;
         flex-direction: column;
-        gap: 14px;
+        gap: 12px;
         
         .chi-dao-section-title {
-            font-size: 11px;
+            font-size: 14px;
             font-weight: 800;
-            color: #64748b;
+            color: #ea580c; /* Orange to stand out */
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 4px;
+            margin-bottom: 12px;
             display: block;
+            text-align: left;
         }
 
         .chi-dao-row {
             display: flex;
             align-items: flex-start;
-            gap: 10px;
+            gap: 8px;
             
             .chi-dao-bullet {
                 width: 6px;
                 height: 6px;
                 border-radius: 50%;
-                background-color: #94a3b8;
+                background-color: #3b82f6;
                 margin-top: 8px;
                 flex-shrink: 0;
             }
             
             .chi-dao-text {
                 font-size: 14px;
-                color: #334155;
-                font-style: italic;
+                font-weight: 500;
+                color: #1e40af;
+                font-style: normal;
                 margin: 0;
                 line-height: 1.5;
             }
@@ -315,16 +320,21 @@
 /* KET QUA ITEM */
 .result-item {
     &::before {
-        border-color: #10b981;
-        background-color: #ecfdf5;
+        display: none;
     }
 
     .result-indicator {
-        margin-bottom: 12px;
+        margin-bottom: 16px;
+        margin-top: 8px;
+
         span {
+            display: block;
             font-size: 14px;
-            font-weight: 700;
-            color: #0f172a;
+            font-weight: 800;
+            color: #059669; /* Green to stand out */
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: left;
         }
     }
 }
@@ -365,14 +375,8 @@
 .result-item.old {
     opacity: 0.85;
     
-    &::before {
-        border-color: #94a3b8;
-        background-color: #f1f5f9;
-    }
-
-    .result-indicator .indicator-old {
-        color: #64748b;
-        font-weight: 600;
+    .result-indicator span {
+        color: #94a3b8;
     }
 }
 
@@ -406,6 +410,63 @@
 }
 
 .approval-card {
+    h3 {
+        font-size: 14px;
+        font-weight: 800;
+        color: #0f172a;
+        margin: 0 0 16px 0;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .no-approval-msg {
+        color: #475569;
+        font-size: 13px;
+        margin-bottom: 20px;
+        line-height: 1.5;
+    }
+
+    /* Common Button Styles */
+    button {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-bottom: 12px;
+        
+        &:last-child {
+            margin-bottom: 0;
+        }
+        
+        &:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+    }
+    
+    .btn-approve {
+        background-color: #fbbf24;
+        color: #ffffff;
+        border: none;
+        
+        &:hover:not(:disabled) {
+            background-color: #f59e0b;
+        }
+    }
+    
+    .btn-reject {
+        background-color: #ffffff;
+        color: #0f172a;
+        border: 1px solid #cbd5e1;
+        
+        &:hover:not(:disabled) {
+            background-color: #f8fafc;
+        }
+    }
+
     .approval-form {
         display: flex;
         flex-direction: column;
@@ -433,45 +494,6 @@
             
             &:focus {
                 border-color: #fbbf24;
-            }
-        }
-        
-        button {
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-bottom: 12px;
-            
-            &:last-child {
-                margin-bottom: 0;
-            }
-            
-            &:disabled {
-                opacity: 0.6;
-                cursor: not-allowed;
-            }
-        }
-        
-        .btn-approve {
-            background-color: #fbbf24;
-            color: #ffffff;
-            border: none;
-            
-            &:hover:not(:disabled) {
-                background-color: #f59e0b;
-            }
-        }
-        
-        .btn-reject {
-            background-color: #ffffff;
-            color: #0f172a;
-            border: 1px solid #cbd5e1;
-            
-            &:hover:not(:disabled) {
-                background-color: #f8fafc;
             }
         }
     }

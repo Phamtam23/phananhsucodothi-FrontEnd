@@ -41,9 +41,13 @@ export interface ChiTietPhanCongLSResponse {
 
   trangThai: TrangThaiChiTietPhanCong;
 
-  thoiGianTao: string; 
+  thoiGianTao: string;
+
+  maSuCo: string,
 
   tieuDe: string,
+
   diaDiem: string,
+  
   thumbnail:string
 }

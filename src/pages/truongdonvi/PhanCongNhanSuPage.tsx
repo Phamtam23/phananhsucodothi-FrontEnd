@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {  format } from "date-fns";
 import { MapPin, Image as ImageIcon, Map as MapIcon, ArrowLeft, RefreshCw, User, Calendar, MessageSquare } from "lucide-react";
-
 import "./PhanCongNhanSuPage.scss";
 import { usePhieuPhanCongDetail } from "../../hooks/phancong/usePhieuPhanCongDetail";
 import { useNhanSuDonVi } from "../../hooks/nhansu/useNhanSuDonVi";

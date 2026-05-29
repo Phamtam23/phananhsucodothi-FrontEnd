@@ -1,4 +1,3 @@
-import React from "react";
 import { useThongKeDonVi } from "../../hooks/thongke/useThongKeDonVi";
 import "./ThongKeDonViPage.scss";
 import { ArrowUp, CheckCircle, MoreVertical, Plus } from "lucide-react";

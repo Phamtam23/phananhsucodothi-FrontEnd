@@ -51,8 +51,8 @@ const NhanVienXuLySidebar = () => {
           <Landmark size={20} />
         </div>
         <div className="brand-text">
-          <span className="brand-title">Civic Gallerist</span>
-          <span className="brand-subtitle">URBAN PULSE CIVIC</span>
+          <span className="brand-title">PHẢN ÁNH SC</span>
+          <span className="brand-subtitle">PHẢN ÁNH SC</span>
         </div>
       </div>
 

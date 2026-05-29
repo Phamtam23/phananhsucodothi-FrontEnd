@@ -31,6 +31,9 @@ import Profile from '../pages/auth/Profile';
 import LichSuPage from '../pages/nhanvien/nhanviendieuphoi/LichSuPage';
 import ThongKeDonViPage from '../pages/truongdonvi/ThongKeDonViPage';
 import DuyetMoLaiDetailPage from '../pages/truongdonvi/DuyetMoLaiDetailPage';
+import XemChiTieSuCoPage from '../pages/nhanvienxuly/XemChiTieSuCoPage';
+import BanDoDieuPhoiPage from '../pages/nhanvien/nhanviendieuphoi/BanDoDieuPhoiPage';
+import BanDoTruongDonViPage from '../pages/truongdonvi/BanDoTruongDonViPage';
 export const AppRouter = () => {
 
     return (
@@ -47,6 +50,7 @@ export const AppRouter = () => {
             </Route>
             <Route element={<NhanVienDieuPhoiLayout />} >
                 <Route path="/nhanvien/kiem-duyet" element={<KiemDuyetPage />} />
+                <Route path="/nhanvien/ban-do" element={<BanDoDieuPhoiPage />} />
                 <Route path="/nhanvien/kiem-duyet/:maSuCo" element={<KiemDuyetDetailPage />} />
                 <Route path="/nhanvien/phan-cong/phan-loai" element={<PhanCongPhanLoaiPage />} />
                 <Route path="/nhanvien/phan-cong/:maSuCo" element={<PhanCongPhanLoaiDetail />} />
@@ -56,12 +60,14 @@ export const AppRouter = () => {
             </Route>
             <Route element={<TruongDonViLayout />}>
                 <Route path="/truongdonvi/xac-minh" element={<XacMinhPhanAnhPage />} />
+                <Route path="/truongdonvi/ban-do" element={<BanDoTruongDonViPage />} />
                 <Route path="/truongdonvi/phan-cong/:id" element={<PhanCongNhanSuPage />} />
                 <Route path="/truongdonvi/duyet-ket-qua/:id" element={<DuyetKetQuaDetailPageWrapper />} />
                 <Route path="/truongdonvi/profile" element={<Profile />} />
                 <Route path="/truongdonvi/thong-bao" element={<ThongBaoPage />} />
                 <Route path="/truongdonvi/thong-ke" element={<ThongKeDonViPage />} />
                 <Route path="/truongdonvi/duyet-mo-lai/:maPhieuMoLai" element={<DuyetMoLaiDetailPage />} />
+               <Route path="/truongdonvi/ban-do" element={<BanDoTruongDonViPage />} />
             </Route>
             <Route element={<NhanVienXuLyLayout />}>
                 <Route path="/nhanvienxuly/xu-ly" element={<XuLySuCoPage />} />
@@ -70,6 +76,7 @@ export const AppRouter = () => {
                 <Route path="/nhanvienxuly/lich-su" element={<LichSuThucHienPage />} />
                 <Route path="/nhanvienxuly/profile" element={<Profile />} />
                 <Route path="/nhanvienxuly/thong-bao" element={<ThongBaoPage />} />
+                 <Route path="/nhanvienxuly/chi-tiet/:maPhieuPhanCong/:maChiTietPhanCong/:loai" element={<XemChiTieSuCoPage />} />
             </Route>
             <Route element={<AdminLayout />}>
                 <Route path="/admin/tai-khoan" element={<QuanLyTaiKhoanPage />} />

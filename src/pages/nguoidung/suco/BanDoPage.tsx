@@ -13,6 +13,8 @@ import { useNavigate } from 'react-router-dom';
 import { daNangBoundary } from '../../../daNangBoundary';
 import { renderToString } from 'react-dom/server';
 import { TreePine, AlertTriangle, TrafficCone, Droplets, Lightbulb, Zap, Trash2, Layers } from 'lucide-react';
+import IncidentMap from '../../../components/Map/IncidentMap';
+import IncidentSidebarList from '../../../components/Map/IncidentSidebarList';
 import './BanDoPage.scss';
 
 // Fix Leaflet's default icon issue in React
@@ -160,185 +162,74 @@ const BanDoPage = () => {
 
   return (
     <div className="ban-do-page">
-      <div className="ban-do-sidebar">
-        <div className="sidebar-header">
-          <h2>Danh sách sự cố chờ tiếp nhận</h2>
+      <IncidentSidebarList
+        incidents={incidents}
+        loading={loading}
+        emptyMessage="Không có sự cố nào đang chờ tiếp nhận tại Đà Nẵng."
+        onIncidentClick={(lat, lon) => {
+          setMapCenter([lat, lon]);
+          setMapZoom(17);
+        }}
+      >
+        <h2>Danh sách sự cố chờ tiếp nhận</h2>
+        <div className="search-container">
+          <div className="search-input-wrapper">
+            <Search size={18} />
+            <input
+              type="text"
+              placeholder="Nhập địa chỉ để tìm sự cố gần đó..."
+              value={query}
+              onChange={handQueryChange}
+            />
+          </div>
 
-          <div className="search-container">
-            <div className="search-input-wrapper">
-              <Search size={18} />
-              <input
-                type="text"
-                placeholder="Nhập địa chỉ để tìm sự cố gần đó..."
-                value={query}
-                onChange={handQueryChange}
-              />
-            </div>
+          {suggestions.length > 0 && (
+            <ul className="suggestions-list">
+              {isSerching && <li className="suggestion-item loading">Đang tìm kiếm...</li>}
+              {suggestions.map((item) => (
+                <li
+                  key={item.place_id}
+                  className="suggestion-item"
+                  onClick={() => handleSelect(item)}
+                >
+                  <MapPin size={16} />
+                  <span>{item.display_name}</span>
+                </li>
+              ))}
+            </ul>
+          )}
 
-            {suggestions.length > 0 && (
-              <ul className="suggestions-list">
-                {isSerching && <li className="suggestion-item loading">Đang tìm kiếm...</li>}
-                {suggestions.map((item) => (
-                  <li
-                    key={item.place_id}
-                    className="suggestion-item"
-                    onClick={() => handleSelect(item)}
-                  >
-                    <MapPin size={16} />
-                    <span>{item.display_name}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
+          <div className="filter-group" style={{ marginTop: '12px', display: 'flex', gap: '8px' }}>
+            <select
+              value={trangThaiFilter}
+              onChange={e => setTrangThaiFilter(e.target.value)}
+              style={{ flex: 1, padding: '8px', borderRadius: '6px', border: '1px solid #ccc', outline: 'none', backgroundColor: '#f1f3f4' }}
+            >
+              <option value="tat_ca">Tất cả trạng thái</option>
+              <option value="CHO_TIEP_NHAN">Chờ tiếp nhận</option>
+              <option value="DA_TIEP_NHAN">Đã tiếp nhận</option>
+              <option value="DANG_XU_LY">Đang xử lý</option>
+              <option value="DA_HOAN_THANH">Đã hoàn thành</option>
+              <option value="TU_CHOI">Từ chối</option>
+              <option value="LA_SPAM">Spam</option>
+            </select>
 
-            <div className="filter-group" style={{ marginTop: '12px', display: 'flex', gap: '8px' }}>
-              <select
-                value={trangThaiFilter}
-                onChange={e => setTrangThaiFilter(e.target.value)}
-                style={{ flex: 1, padding: '8px', borderRadius: '6px', border: '1px solid #ccc', outline: 'none', backgroundColor: '#f1f3f4' }}
-              >
-                <option value="tat_ca">Tất cả trạng thái</option>
-                <option value="CHO_TIEP_NHAN">Chờ tiếp nhận</option>
-                <option value="DA_TIEP_NHAN">Đã tiếp nhận</option>
-                <option value="DANG_XU_LY">Đang xử lý</option>
-                <option value="DA_HOAN_THANH">Đã hoàn thành</option>
-                <option value="TU_CHOI">Từ chối</option>
-                <option value="LA_SPAM">Spam</option>
-              </select>
-
-              <select
-                value={loaiFilter}
-                onChange={e => setLoaiFilter(e.target.value)}
-                style={{ flex: 1, padding: '8px', borderRadius: '6px', border: '1px solid #ccc', outline: 'none', backgroundColor: '#f1f3f4' }}
-              >
-                <option value="tat_ca">Tất cả loại sự cố</option>
-                {loaiList.map(loai => (
-                  <option key={loai.maLoai} value={loai.tenLoaiSuCo}>{loai.tenLoaiSuCo}</option>
-                ))}
-              </select>
-            </div>
+            <select
+              value={loaiFilter}
+              onChange={e => setLoaiFilter(e.target.value)}
+              style={{ flex: 1, padding: '8px', borderRadius: '6px', border: '1px solid #ccc', outline: 'none', backgroundColor: '#f1f3f4' }}
+            >
+              <option value="tat_ca">Tất cả loại sự cố</option>
+              {loaiList.map(loai => (
+                <option key={loai.maLoai} value={loai.tenLoaiSuCo}>{loai.tenLoaiSuCo}</option>
+              ))}
+            </select>
           </div>
         </div>
-
-        <div className="incident-list">
-          {loading ? (
-            <div className="loading-state">Đang tải dữ liệu...</div>
-          ) : incidents.length === 0 ? (
-            <div className="empty-state">Không có sự cố nào đang chờ tiếp nhận tại Đà Nẵng.</div>
-          ) : (
-            incidents.map((incident) => (
-              <div
-                key={incident.maSuCo}
-                className="incident-card"
-                onClick={() => {
-                  if (incident.viDo && incident.kinhDo) {
-                    setMapCenter([incident.viDo, incident.kinhDo]);
-                    setMapZoom(17);
-                  }
-                }}
-              >
-                <div className="incident-card-header">
-                  <span className="incident-id">{incident.maSuCo}</span>
-                  <span className={`incident-status ${incident.trangThai?.toLowerCase()}`}>
-                    {incident.trangThai === "CHO_TIEP_NHAN" ? "CHỜ TIẾP NHẬN" :
-                      incident.trangThai === "DA_TIEP_NHAN" ? "ĐÃ TIẾP NHẬN" :
-                        incident.trangThai === "DANG_XU_LY" ? "ĐANG XỬ LÝ" :
-                          incident.trangThai === "DA_HOAN_THANH" ? "ĐÃ HOÀN THÀNH" :
-                            incident.trangThai}
-                  </span>
-                </div>
-                <h3 className="incident-title">{incident.tieuDe}</h3>
-                <div className="incident-meta" style={{ marginBottom: '8px' }}>
-                  <span style={{ fontSize: '0.8rem', color: '#0066cc', fontWeight: 600 }}>
-                    {incident.loaiSuCos && incident.loaiSuCos.length > 0 ? incident.loaiSuCos.join(', ') : 'Chưa phân loại'}
-                  </span>
-                </div>
-                <div className="incident-meta">
-                  <span className="meta-item">
-                    <MapPin size={14} /> {incident.diaDiem || "Chưa xác định"}
-                  </span>
-                  {(!incident.viDo || !incident.kinhDo) && (
-                    <div style={{ color: '#ff4d4f', fontSize: '0.75rem', marginTop: '4px', fontStyle: 'italic' }}>
-                      * Sự cố này đang bị thiếu tọa độ từ API nên không thể ghim trên bản đồ.
-                    </div>
-                  )}
-                </div>
-                <div className="incident-footer">
-                  <span className="date">{incident.thoiGianTao ? format(new Date(incident.thoiGianTao), 'dd/MM/yyyy HH:mm') : ''}</span>
-                  <button
-                    className="detail-btn"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigate(`/suco/detail/${incident.maSuCo}`);
-                    }}
-                  >
-                    Chi tiết &rarr;
-                  </button>
-                </div>
-              </div>
-            ))
-          )}
-        </div>
-      </div>
+      </IncidentSidebarList>
 
       <div className="map-area">
-        <MapContainer
-          center={mapCenter}
-          zoom={mapZoom}
-          style={{ height: '100%', width: '100%' }}
-          maxBounds={daNangBounds}
-          maxBoundsViscosity={1.0}
-          minZoom={11}
-        >
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          <ChangeView center={mapCenter} zoom={mapZoom} />
-
-          <Polygon
-            positions={[
-              [
-                [-90, -180],
-                [90, -180],
-                [90, 180],
-                [-90, 180],
-              ],
-              daNangBoundary
-            ]}
-            pathOptions={{ color: 'transparent', fillColor: '#f8f9fa', fillOpacity: 1 }}
-          />
-          <Polygon
-            positions={daNangBoundary}
-            pathOptions={{ color: '#0066cc', weight: 2, fillOpacity: 0, dashArray: '5, 5' }}
-          />
-
-          {incidents.map((incident) => {
-            if (!incident.viDo || !incident.kinhDo) return null;
-            const markerIcon = createCustomIcon(incident.loaiSuCos);
-            return (
-              <Marker
-                key={incident.maSuCo}
-                position={[incident.viDo, incident.kinhDo]}
-                icon={markerIcon}
-              >
-                <Popup className="incident-popup">
-                  <div className="popup-content">
-                    <span className="popup-id">{incident.maSuCo}</span>
-                    <h4>{incident.tieuDe}</h4>
-                    <p className="popup-address"><MapPin size={14} /> {incident.diaDiem}</p>
-                    <button
-                      className="popup-btn"
-                      onClick={() => navigate(`/suco/detail/${incident.maSuCo}`)}
-                    >
-                      Xem chi tiết phản ánh
-                    </button>
-                  </div>
-                </Popup>
-              </Marker>
-            );
-          })}
-        </MapContainer>
+        <IncidentMap loai ="NGUOI_DAN" incidents={incidents} mapCenter={mapCenter} mapZoom={mapZoom} />
       </div>
     </div>
   );

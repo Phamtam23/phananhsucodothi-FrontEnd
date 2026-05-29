@@ -109,7 +109,6 @@ $red-light: #fee2e2;
 .kd-filter-bar {
   display: flex;
   gap: 1rem;
-  margin-bottom: 1.5rem;
   flex-wrap: wrap;
 
   .kd-filter-input-wrap {
@@ -204,9 +203,7 @@ $red-light: #fee2e2;
 // ─────────────────────────────────────
 
 .kd-table-wrapper {
-  background: $bg-card;
-  border-radius: 16px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  background: transparent;
   overflow: hidden;
   padding-bottom: 1rem;
 }
@@ -323,7 +320,7 @@ $red-light: #fee2e2;
 
 // Độ tin cậy
 .kd-reliability-cell {
-  width: 150px;
+  width: 50px;
 
   .kd-progress-wrap {
     display: flex;

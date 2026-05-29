@@ -9,14 +9,7 @@
   transition: all 0.3s ease;
 
   &::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 24px;
-    bottom: 24px;
-    width: 3px;
-    background: hsl(38, 90%, 55%);
-    border-radius: 0 4px 4px 0;
+    display: none;
   }
 
   &__header {
@@ -75,7 +68,7 @@
   .slideshow-wrapper {
     position: relative;
     width: 100%;
-    height: 380px;
+    height: 240px;
     border-radius: 12px;
     overflow: hidden;
     background: #f4f5f7;

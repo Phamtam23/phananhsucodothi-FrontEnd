@@ -1,20 +1,23 @@
 import { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ArrowLeft, ChevronDown, ChevronUp } from "lucide-react";
 import "./DuyetKetQuaDetailPage.scss";
 import { usePhieuPhanCongDetail } from "../../hooks/phancong/usePhieuPhanCongDetail";
 import { useDuyetKetQuaDetail } from "../../hooks/duyetketqua/useDuyetKetQuaDetail";
 import DetailSuCo from "../../components/Suco/DetailSuCo";
 import DanhSachKetQua from "../../components/KetQuaXuLy/DanhSachKetQua";
+import NopKetQuaForm from "../../components/NhanVienDonVi/XuLySuCo/NopKetQuaForm";
 
 interface PropsDuyetKetQuaDetailPage {
     maPhieuPhanCong: string;
-    loai: "DUYET_KET_QUA" | "DUYET_MO_LAI";
+    maChiTietPhanCong?: string;
+    loai: "DUYET_KET_QUA" | "DUYET_MO_LAI" | "NOP_KET_QUA" | "XEM_LICH_SU" | "XEM_CHI_TIET";
 }
 
-const DuyetKetQuaDetailPage = ({maPhieuPhanCong,loai}:PropsDuyetKetQuaDetailPage) => {
+const DuyetKetQuaDetailPage = ({maPhieuPhanCong, maChiTietPhanCong, loai}:PropsDuyetKetQuaDetailPage) => {
     const navigate = useNavigate();    
     const { detail: phanCong, loading: dangTaiPhanCong } = usePhieuPhanCongDetail(maPhieuPhanCong);
+    const [phieuNopKetQua, setPhieuNopKetQua] = useState<string | null>(null);
     
     const {
         danhSachTheoChiTiet, dangTai, dangXuLy,
@@ -139,11 +142,36 @@ return (
             </div>
 
             {/* SIDEBAR */}
-            <div className="dkq-sidebar">
+            {loai === "NOP_KET_QUA" && (
+                <div className="dkq-sidebar">
+                    <div className="dkq-sidebar-card approval-card">
+                        <h3>NỘP KẾT QUẢ XỬ LÝ</h3>
+                        <p className="no-approval-msg">
+                            Nhấn nút bên dưới để nộp kết quả xử lý cho công việc này.
+                        </p>
+                        <button
+                            className="btn-approve"
+                            onClick={() => setPhieuNopKetQua(maChiTietPhanCong || "")}
+                        >
+                            NỘP KẾT QUẢ
+                        </button>
+                    </div>
+                </div>
+            )}
 
-                <div className="dkq-sidebar-card approval-card">
+            {loai === "NOP_KET_QUA" && phieuNopKetQua && (
+                <NopKetQuaForm
+                    maChiTietPhanCong={phieuNopKetQua}
+                    onClose={() => setPhieuNopKetQua(null)}
+                />
+            )}
 
-                    <h3>PHÊ DUYỆT KẾT QUẢ</h3>
+            {loai === "DUYET_KET_QUA" && (
+                <div className="dkq-sidebar">
+
+                    <div className="dkq-sidebar-card approval-card">
+
+                        <h3>PHÊ DUYỆT KẾT QUẢ</h3>
 
                     {ketQuaChoDuyet ? (
                         <div className="approval-form">
@@ -186,9 +214,7 @@ return (
 
                 </div>
 
-                {loai === "DUYET_KET_QUA" && (
-                    <>
-                        <div className="dkq-sidebar-card stats-card">
+                <div className="dkq-sidebar-card stats-card">
 
                             <h3>CHI TIẾT THỰC HIỆN</h3>
 
@@ -243,10 +269,9 @@ return (
                             </div>
 
                         </div>
-                    </>
-                )}
+                </div>
+            )}
 
-            </div>
         </div>
     </div>
 );

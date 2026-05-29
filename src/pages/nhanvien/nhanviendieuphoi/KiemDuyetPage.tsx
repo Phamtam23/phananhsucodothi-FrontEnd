@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Search, MapPin, Calendar, ListFilter, MoreHorizontal, CheckCircle2 } from "lucide-react";
 import "./KiemDuyetPage.scss";
 import {useKiemDuyetPage} from "../../../hooks/kiemDuyet/useKiemDuyetPage";
-import KiemDuyetTable from "../../../components/Table/KiemDuyetTable";
+import KiemDuyetCardList from "../../../components/Table/KiemDuyetCardList";
 import Pagination from "../../../components/Page/Pagination";
 import type {SucoSumaryResponse} from "../../../types/Suco";
 type TrangThaiFilter = "tat_ca" | "CHO_TIEP_NHAN" | "DA_TIEP_NHAN" | "TU_CHOI";
@@ -41,7 +41,7 @@ const KiemDuyetPage = () => {
   switch (item.trangThai) {
 
     case "CHO_TIEP_NHAN":
-      return `/nhanvien/phan-cong/${item.maSuCo}`;
+      return `/nhanvien/kiem-duyet/${item.maSuCo}`;
 
     default:
       return `/nhanvien/kiem-duyet/${item.maSuCo}`;
@@ -101,7 +101,7 @@ const KiemDuyetPage = () => {
       {/* Table Wrapper */}
       <div className="kd-table-wrapper">
         {/* Filter Bar */}
-        <div style={{ padding: '1.5rem 1.5rem 0.5rem 1.5rem' }}>
+        <div style={{ padding: '1rem', background: '#fff', borderRadius: '16px', marginBottom: '1.5rem', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
           <div className="kd-filter-bar">
             <div className="kd-filter-input-wrap">
               <Search />
@@ -164,7 +164,12 @@ const KiemDuyetPage = () => {
             <p>Không có sự cố nào.</p>
           </div>
         ) : (
-          <KiemDuyetTable data={filteredData}  onRowClick={handleRowClick} />
+          <KiemDuyetCardList 
+            data={filteredData}  
+            onRowClick={handleRowClick}
+            onApprove={(item) => console.log("Approve", item.maSuCo)}
+            onReject={(item) => console.log("Reject", item.maSuCo)}
+          />
         )}
        <Pagination
         currentPage={currentPage}

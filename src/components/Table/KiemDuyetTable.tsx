@@ -15,6 +15,7 @@ const getReliability = (diemSpam: number | undefined) => {
 
   const score = Math.max(0, 100 - spam);
 
+  
   if (score >= 80) {
     return {
       score,
@@ -51,6 +52,7 @@ const KiemDuyetTable = ({ data, onRowClick }:Props) => {
           <th>Độ tin cậy</th>
           <th>Lý do spam</th>
           <th>Ngày tạo</th>
+          <th>Hành động</th>
         </tr>
       </thead>
 
@@ -112,8 +114,11 @@ const KiemDuyetTable = ({ data, onRowClick }:Props) => {
                 <div className="kd-address-cell">
                   <MapPin />
                   <span>
-                    {item.diaDiem ||
-                      "Chưa xác định"}
+                      {item.diaDiem
+                  ? item.diaDiem.length > 20
+                    ? item.diaDiem.slice(0, 20) + "..."
+                    : item.diaDiem
+                  : "Chưa xác định"}
                   </span>
                 </div>
               </td>
@@ -168,6 +173,30 @@ const KiemDuyetTable = ({ data, onRowClick }:Props) => {
                     )}
                   </div>
 
+                </div>
+              </td>
+
+              {/* ACTIONS */}
+              <td>
+                <div className="kd-actions-cell">
+                  <button
+                    className="kd-btn kd-btn-primary"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onApprove(item);
+                    }}
+                  >
+                    Duyệt
+                  </button>
+                  <button
+                    className="kd-btn kd-btn-danger"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onReject(item);
+                    }}
+                  >
+                    Từ chối
+                  </button>
                 </div>
               </td>
             </tr>
