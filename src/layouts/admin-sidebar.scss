@@ -1,0 +1,68 @@
+@use '../styles/urban-tokens' as *;
+
+.admin-sidebar__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid $outline-variant;
+
+  .admin-sidebar__logo-icon {
+    color: $primary;
+  }
+
+  .admin-sidebar__logo-text {
+    font-family: $font-display;
+    font-size: 16px;
+    font-weight: 800;
+    color: $on-surface;
+    letter-spacing: -0.3px;
+  }
+}
+
+.admin-sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 12px;
+}
+
+.admin-sidebar__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border-radius: $radius-md;
+  text-decoration: none;
+  color: $on-surface-variant;
+  font-family: $font-body;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.18s, color 0.18s;
+  cursor: pointer;
+
+  &:hover {
+    background: $surface-container-low;
+    color: $on-surface;
+  }
+
+  &--active {
+    background: $primary-container;
+    color: $primary;
+    font-weight: 600;
+
+    .admin-sidebar__item-icon {
+      color: $primary;
+    }
+  }
+}
+
+.admin-sidebar__item-icon {
+  flex-shrink: 0;
+  color: $on-surface-variant;
+  transition: color 0.18s;
+}
+
+.admin-sidebar__item-label {
+  flex: 1;
+}

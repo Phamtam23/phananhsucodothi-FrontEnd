@@ -1,0 +1,356 @@
+@use '../../styles/urban-tokens' as *;
+
+/* ── XacMinhPhanAnhPage ── Urban Integrity ── */
+
+.xac-minh-page {
+  padding: 32px;
+  background: $surface;
+  min-height: 100vh;
+  font-family: $font-body;
+}
+
+.xac-minh-header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 32px;
+}
+
+.xac-minh-header {
+  h1 { font-family: $font-display; font-size: 28px; font-weight: 800; color: #111827; margin-bottom: 8px; letter-spacing: -0.5px; }
+  p  { color: #6b7280; font-size: 14px; max-width: 600px; line-height: 1.5; }
+}
+
+.xac-minh-main-tabs {
+  display: flex;
+  gap: 12px;
+  
+  .xac-minh-main-tab {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid #e5e7eb;
+    background: white;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &:hover {
+      background: #f9fafb;
+    }
+
+    &.active {
+      color: #ea580c; // Orange text
+      border-color: #ea580c;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .tab-badge {
+      background: #ef4444;
+      color: white;
+      padding: 2px 6px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+  }
+}
+
+/* ── Tabs ── */
+.xac-minh-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 32px;
+  background: $surface-container-low;
+  border-radius: $radius-xl;
+  padding: 6px;
+  width: fit-content;
+
+  .xac-minh-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 20px;
+    background: transparent;
+    border: none;
+    font-family: $font-body;
+    font-size: 13px;
+    font-weight: 600;
+    color: $on-surface-variant;
+    border-radius: $radius-md;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    .tab-badge {
+      padding: 2px 8px;
+      border-radius: $radius-full;
+      font-size: 11px;
+      font-weight: 700;
+      background: $surface;
+      color: $on-surface-variant;
+    }
+
+    &:hover { color: $on-surface; }
+
+    &.active {
+      background: $surface-container-lowest;
+      color: $primary;
+      box-shadow: $shadow-ambient;
+
+      .tab-badge { background: $secondary; color: $on-secondary-container; }
+    }
+  }
+}
+
+.xac-minh-layout { display: flex; gap: 32px; align-items: flex-start; }
+.xac-minh-list   { flex: 1; display: flex; flex-direction: column; gap: $gap-card; }
+.xac-minh-sidebar { width: 340px; display: flex; flex-direction: column; gap: $gap-card; }
+
+/* ── Card ── */
+.xac-minh-card {
+  @include card;
+  position: relative;
+  transition: box-shadow 0.25s, transform 0.2s;
+  border-left: 4px solid $primary; // Default yellow border
+  padding-left: 20px; // Make room for border
+
+  &:hover { box-shadow: $shadow-elevated; transform: translateY(-2px); }
+
+  &.dang-tu-choi {
+    background: $surface-container-low;
+    border-left-color: $secondary;
+  }
+}
+
+.xac-minh-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.xac-minh-card-tags   { display: flex; align-items: center; gap: 12px; }
+
+.xac-minh-tag {
+  background: #fef08a; // Light yellow
+  color: #ea580c; // Orange text
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.xac-minh-id   { color: #9ca3af; font-size: 12px; font-weight: 600; text-transform: uppercase; }
+.xac-minh-time { color: #9ca3af; font-size: 12px; display: flex; align-items: center; gap: 4px; }
+
+.xac-minh-card-title {
+  font-family: $font-display;
+  font-size: 20px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+
+.xac-minh-card-meta   { display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+.xac-minh-meta-box {
+  display: flex; align-items: center; gap: 8px;
+  background: #f3f4f6;
+  padding: 12px 16px;
+  border-radius: 12px;
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 500;
+  flex: 1;
+}
+
+.xac-minh-card-actions { display: flex; justify-content: space-between; align-items: center; }
+.xac-minh-actions-left { display: flex; gap: 12px; }
+
+/* Buttons */
+.xac-minh-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  font-family: $font-body;
+  transition: all 0.2s;
+
+  &:disabled { opacity: 0.55; cursor: not-allowed; }
+
+  .btn-icon {
+    width: 20px; height: 20px;
+    border-radius: $radius-full;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+  }
+}
+
+.btn-tiep-nhan {
+  background: #facc15;
+  color: #000;
+  .btn-icon { background: rgba(0,0,0,0.1); }
+  &:hover { background: #eab308; }
+}
+
+.btn-tu-choi {
+  background: #f3f4f6;
+  color: #374151;
+  &:hover { background: #e5e7eb; }
+}
+
+.xac-minh-btn-text {
+  background: none;
+  border: none;
+  color: #ea580c;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px;
+  &:hover { text-decoration: underline; }
+}
+
+.btn-phan-cong {
+  @include btn-primary;
+  width: auto;
+  justify-content: center;
+  padding: 11px 24px;
+}
+
+/* Badges */
+.xac-minh-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  border-radius: $radius-full;
+  font-size: 12px;
+  font-weight: 600;
+
+  &.badge-warning { @include status-chip($secondary, $on-secondary-container); }
+  &.badge-success { @include status-chip($tertiary, $on-tertiary-container); }
+  &.badge-danger  { @include status-chip($error, $on-error-container); }
+  &.badge-info    { background: rgba(204,237,96,.4); color: $tertiary; }
+  &.badge-default { background: $surface; color: $on-surface-variant; }
+}
+
+/* Reject form */
+.xac-minh-reject-form {
+  background: $surface-container-low;
+  border-radius: $radius-md;
+  padding: 20px;
+  margin-top: -8px;
+
+  label { display: block; font-size: 11px; font-weight: 700; color: $on-surface-variant; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.07em; }
+
+  textarea {
+    @include input-field;
+    border-radius: $radius-sm;
+    height: 80px;
+    resize: none;
+    margin-bottom: 16px;
+  }
+}
+
+.xac-minh-reject-actions { display: flex; justify-content: flex-end; gap: 12px; align-items: center; }
+
+.xac-minh-btn-huy {
+  background: none;
+  border: none;
+  color: $on-surface-variant;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: $font-body;
+  &:hover { color: $on-surface; }
+}
+
+.xac-minh-btn-xac-nhan {
+  @include btn-primary;
+  padding: 9px 24px;
+  font-size: 13px;
+}
+
+/* Sidebar widgets */
+.xac-minh-widget {
+  background: $surface-container-lowest;
+  border-radius: $radius-xl;
+  padding: 20px;
+  box-shadow: $shadow-ambient;
+}
+
+.xac-minh-widget-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.xac-minh-widget-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #111827;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.xac-minh-map-placeholder {
+  height: 180px;
+  background: $surface;
+  border-radius: $radius-md;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 16px;
+}
+
+.xac-minh-widget-footer p { color: $on-surface; font-weight: 500; font-size: 15px; margin-top: 4px; }
+
+.xac-minh-stat-item {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 14px; color: $on-surface-variant;
+  margin-top: 16px; margin-bottom: 8px;
+  strong { font-size: 18px; &.text-cam { color: $primary; } }
+}
+
+.xac-minh-stat-bar { height: 6px; background: $surface; border-radius: 3px; overflow: hidden; }
+.xac-minh-stat-progress {
+  height: 100%;
+  &.bg-cam { background: $gradient-cta; }
+  &.bg-den  { background: $on-surface; }
+}
+
+.mt-4 { margin-top: 16px; }
+
+.xac-minh-info-widget {
+  position: relative;
+  background: $surface-container-low;
+  border-radius: $radius-md;
+  padding: 16px;
+
+  .xac-minh-info-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+  p { font-size: 13px; color: $on-surface-variant; line-height: 1.5; }
+}
+
+.xac-minh-help-btn {
+  position: absolute;
+  bottom: -12px; right: -12px;
+  width: 32px; height: 32px;
+  border-radius: $radius-full;
+  background: $on-surface;
+  color: $on-primary;
+  display: flex; align-items: center; justify-content: center;
+  border: none;
+  cursor: pointer;
+  box-shadow: $shadow-ambient;
+}
+
+.xac-minh-empty { text-align: center; padding: 60px 24px; color: $on-surface-variant; font-size: 14px; }
+.xac-minh-loading { text-align: center; padding: 80px; color: $on-surface-variant; font-family: $font-display; font-size: 15px; }
+.xac-minh-error { text-align: center; padding: 60px; color: $error; }
+
+.text-cam { color: $primary; }
+.text-xam { color: $on-surface-variant; }

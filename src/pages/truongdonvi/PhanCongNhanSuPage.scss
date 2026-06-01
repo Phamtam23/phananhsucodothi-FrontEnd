@@ -1,0 +1,572 @@
+.pcns-page {
+    padding: 32px;
+    background-color: #f7f9fc;
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  .pcns-header {
+    margin-bottom: 24px;
+    
+    .pcns-header-top {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+      gap: 16px;
+      
+      .pcns-back-btn {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: none;
+        border: none;
+        color: #6b7280;
+        font-weight: 500;
+        cursor: pointer;
+        padding: 4px 8px;
+        margin-left: -8px;
+        border-radius: 4px;
+        
+        &:hover {
+          background-color: #f3f4f6;
+          color: #111827;
+        }
+      }
+      
+      .pcns-tags {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        
+        .pcns-status-tag {
+          background-color: #fef3c7;
+          color: #b45309;
+          font-size: 11px;
+          font-weight: 700;
+          padding: 4px 10px;
+          border-radius: 12px;
+          text-transform: uppercase;
+        }
+        
+        .pcns-id-tag {
+          color: #9ca3af;
+          font-size: 13px;
+          font-weight: 500;
+        }
+      }
+    }
+    
+    .pcns-header-main {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      
+      h1 {
+        font-size: 28px;
+        font-weight: 700;
+        color: #111827;
+        margin: 0;
+      }
+      
+      .pcns-actions {
+        display: flex;
+        gap: 12px;
+        
+        button {
+          padding: 10px 20px;
+          border-radius: 8px;
+          font-weight: 600;
+          font-size: 14px;
+          cursor: pointer;
+          transition: all 0.2s;
+          border: none;
+          
+          &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+          }
+        }
+        
+        .pcns-btn-secondary {
+          background-color: #e5e7eb;
+          color: #374151;
+          
+          &:hover:not(:disabled) {
+            background-color: #d1d5db;
+          }
+        }
+        
+        .pcns-btn-primary {
+          background-color: #f59e0b; /* amber */
+          color: white;
+          
+          &:hover:not(:disabled) {
+            background-color: #d97706;
+          }
+        }
+      }
+    }
+  }
+  
+  .pcns-content {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+  }
+  
+  /* CỘT TRÁI */
+  .pcns-left-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  
+  .pcns-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    
+    &.pcns-chidao-card {
+      background-color: #f9fafb;
+    }
+  }
+  
+  .pcns-card-header {
+    margin-bottom: 20px;
+    
+    &.space-between {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+  
+  .pcns-section-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #f59e0b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    
+    &.text-white {
+      color: #9ca3af;
+    }
+  }
+  
+  .pcns-history-link {
+    font-size: 11px;
+    font-weight: 700;
+    color: #b45309;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+  }
+  
+  /* Chi tiết phản ánh */
+  .pcns-incident-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 16px;
+    line-height: 1.4;
+  }
+  
+  .pcns-incident-meta {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 20px;
+    
+    .pcns-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+  }
+  
+  .pcns-incident-desc {
+    font-size: 15px;
+    color: #4b5563;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+  
+  .pcns-media-gallery {
+    display: flex;
+    gap: 16px;
+    
+    .pcns-media-item, .pcns-media-placeholder {
+      flex: 1;
+      height: 160px;
+      border-radius: 12px;
+      overflow: hidden;
+      background-color: #f3f4f6;
+    }
+    
+    .pcns-media-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .pcns-media-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      
+      span {
+        font-size: 12px;
+        font-weight: 600;
+        color: #9ca3af;
+      }
+    }
+  }
+  
+  /* Chỉ đạo list */
+  .pcns-chidao-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  
+  .pcns-chidao-item {
+    background-color: white;
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    gap: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    
+    .pcns-chidao-index {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: #fef3c7;
+      color: #d97706;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    
+    .pcns-chidao-content {
+      h4 {
+        font-size: 15px;
+        font-weight: 600;
+        color: #111827;
+        margin-bottom: 4px;
+      }
+      p {
+        font-size: 14px;
+        color: #6b7280;
+        line-height: 1.5;
+        margin: 0;
+      }
+    }
+  }
+  
+  .pcns-chidao-form {
+    background-color: white;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    
+    textarea {
+      width: 100%;
+      height: 80px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 14px;
+      resize: none;
+      outline: none;
+      margin-bottom: 12px;
+      
+      &:focus {
+        border-color: #f59e0b;
+      }
+    }
+    
+    .pcns-chidao-form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      
+      button {
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+        
+        &.btn-cancel {
+          background: none;
+          color: #6b7280;
+          &:hover { color: #111827; }
+        }
+        
+        &.btn-save {
+          background-color: #f59e0b;
+          color: white;
+          &:hover { background-color: #d97706; }
+          &:disabled { opacity: 0.5; }
+        }
+      }
+    }
+  }
+  
+  .pcns-add-chidao-btn {
+    background-color: #f59e0b;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    
+    &:hover:not(:disabled) {
+      background-color: #d97706;
+    }
+    
+    &:disabled {
+      background-color: #d1d5db;
+      cursor: not-allowed;
+    }
+  }
+  
+  /* CỘT PHẢI */
+  .pcns-right-col {
+    width: 380px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  
+  .pcns-current-staff {
+    border: 1px solid #fef3c7;
+    background-color: #fffbeb;
+  }
+  
+  .pcns-staff-active {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background-color: white;
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px solid #fde68a;
+    
+    .pcns-staff-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      background-color: #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #9ca3af;
+      overflow: hidden;
+      
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    
+    .pcns-staff-info {
+      flex: 1;
+      
+      .staff-role {
+        font-size: 10px;
+        font-weight: 700;
+        color: #d97706;
+        text-transform: uppercase;
+      }
+      
+      .staff-name {
+        font-size: 16px;
+        font-weight: 700;
+        color: #111827;
+        margin: 2px 0;
+      }
+      
+      .staff-team {
+        font-size: 13px;
+        color: #6b7280;
+      }
+    }
+    
+    .pcns-swap-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: #f3f4f6;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #4b5563;
+      cursor: pointer;
+      
+      &:hover {
+        background-color: #e5e7eb;
+      }
+    }
+  }
+  
+  .pcns-staff-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  
+  .pcns-staff-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #f3f4f6;
+    cursor: pointer;
+    transition: all 0.2s;
+    
+    &:hover {
+      border-color: #d1d5db;
+    }
+    
+    &.selected {
+      border-color: #f59e0b;
+      background-color: #fffbeb;
+    }
+    
+    .pcns-staff-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #9ca3af;
+      position: relative;
+      overflow: hidden;
+      
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      
+      .pcns-staff-check {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 14px;
+        height: 14px;
+        background-color: #10b981;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 8px;
+        border: 2px solid white;
+      }
+    }
+    
+    .pcns-staff-info {
+      .staff-name {
+        font-size: 14px;
+        font-weight: 600;
+        color: #111827;
+        margin: 0 0 2px 0;
+      }
+      .staff-desc {
+        font-size: 12px;
+        color: #6b7280;
+      }
+    }
+  }
+  
+  .pcns-view-all-btn {
+    width: 100%;
+    padding: 12px;
+    background: none;
+    border: 1px dashed #d1d5db;
+    border-radius: 8px;
+    color: #6b7280;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    
+    &:hover {
+      background-color: #f9fafb;
+      border-color: #9ca3af;
+    }
+  }
+  
+  .pcns-note-form {
+    background-color: #111827;
+    border-radius: 12px;
+    padding: 24px;
+    color: white;
+    
+    .pcns-form-group {
+      margin-bottom: 20px;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+      
+      label {
+        display: block;
+        font-size: 11px;
+        font-weight: 600;
+        color: #9ca3af;
+        margin-bottom: 8px;
+      }
+      
+      input, textarea {
+        width: 100%;
+        background-color: #1f2937;
+        border: 1px solid #374151;
+        border-radius: 8px;
+        color: white;
+        padding: 12px;
+        font-size: 14px;
+        outline: none;
+        
+        &:focus {
+          border-color: #4b5563;
+        }
+      }
+      
+      textarea {
+        height: 100px;
+        resize: none;
+      }
+      
+      input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+        filter: invert(1);
+      }
+    }
+  }
+  
+  .pcns-empty-msg {
+    color: #6b7280;
+    font-size: 14px;
+    font-style: italic;
+  }
+  

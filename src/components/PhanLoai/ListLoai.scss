@@ -1,0 +1,73 @@
+$amber-50:  #FAEEDA;
+$amber-100: #FAC775;
+$amber-400: #BA7517;
+$amber-600: #854F0B;
+$amber-800: #633806;
+$border:    #e5e7eb;
+$bg-white:  #ffffff;
+$text-primary:   #1a1a2e;
+$text-secondary: #6b7280;
+
+// ── Container ─────────────────────────────────────
+.ListLoai {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  // ── List ──────────────────────────────────────
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    max-height: 240px;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: $amber-100;
+      border-radius: 4px;
+    }
+  }
+
+  // ── Item ──────────────────────────────────────
+  li {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border: 1.5px solid $border;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: $text-primary;
+    cursor: pointer;
+    background: $bg-white;
+    transition: border-color 0.15s,
+      background 0.15s,
+      box-shadow 0.15s;
+
+    &:hover {
+      border-color: $amber-100;
+      background: #fffdf8;
+    }
+
+    &.selected {
+      border-color: $amber-400;
+      background: $amber-50;
+      color: $amber-800;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.12);
+
+      &::before {
+        content: "✓";
+        font-weight: 700;
+        color: $amber-600;
+      }
+    }
+  }
+}

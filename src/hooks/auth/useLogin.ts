@@ -48,7 +48,20 @@ export const useLogin = () => {
             localStorage.setItem("user", JSON.stringify(user));
             localStorage.setItem("accessToken", user.accessToken);
 
-            navigate("/");
+            // Check role exact field from backend
+            const role = user.role || '';
+            
+            if (role === 'R_Admin') {
+                navigate("/admin/thong-ke");
+            } else if (role === 'R_DIEUPHOI') {
+                navigate("/nhanvien/kiem-duyet");
+            } else if (role === 'R_TXULY') {
+                navigate("/truongdonvi/xac-minh");
+            } else if (role === 'R_NVXULY') {
+                navigate("/nhanvienxuly/xu-ly");
+            } else {
+                navigate("/");
+            }
         } catch (error) {
              console.error("Login failed", error);
              alert("Có lỗi xảy ra");

@@ -1,0 +1,468 @@
+@use '../../../styles/urban-tokens' as *;
+
+// ─────────────────────────────────────
+// KiemDuyetPage.scss
+// ─────────────────────────────────────
+
+$amber: #f5a623;
+$amber-dark: #e09612;
+$text-main: #111827;
+$text-muted: #6b7280;
+$text-light: #9ca3af;
+$bg-page: #f9fafb;
+$bg-card: #ffffff;
+$bg-input: #f3f4f6;
+$border-color: #e5e7eb;
+$border-light: #f3f4f6;
+
+$green: #10b981;
+$green-light: #d1fae5;
+$orange: #f59e0b;
+$orange-light: #fef3c7;
+$red: #ef4444;
+$red-light: #fee2e2;
+
+.kd-page {
+  padding: 2rem 2.5rem;
+  background: $bg-page;
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+  color: $text-main;
+}
+
+// ─────────────────────────────────────
+// Summary Cards
+// ─────────────────────────────────────
+
+.kd-summary-cards {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+
+  .kd-card {
+    flex: 1;
+    background: $bg-card;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .kd-card-content {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      .kd-card-title {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: $text-muted;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .kd-card-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: $text-main;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        line-height: 1;
+      }
+
+      .kd-badge-tag {
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 0.2rem 0.5rem;
+        border-radius: 999px;
+        background: #fef3c7;
+        color: #d97706;
+      }
+    }
+
+    .kd-card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &.orange {
+        color: $orange;
+        border: 2px solid $orange-light;
+      }
+      &.black {
+        color: $text-main;
+        background: #f3f4f6;
+      }
+    }
+  }
+}
+
+// ─────────────────────────────────────
+// Filter Bar
+// ─────────────────────────────────────
+
+.kd-filter-bar {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+
+  .kd-filter-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    svg {
+      position: absolute;
+      left: 1rem;
+      color: $text-light;
+      width: 18px;
+      height: 18px;
+    }
+
+    input {
+      height: 42px;
+      padding: 0 1rem 0 2.5rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      background: $bg-input;
+      font-size: 0.875rem;
+      color: $text-main;
+      width: 220px;
+      outline: none;
+      transition: all 0.2s;
+
+      &::placeholder {
+        color: $text-light;
+      }
+
+      &:focus {
+        border-color: $amber;
+        background: $bg-card;
+      }
+    }
+
+    select.kd-filter-select {
+      height: 42px;
+      padding: 0 2.5rem 0 2.5rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      background: $bg-input;
+      font-size: 0.875rem;
+      color: $text-main;
+      outline: none;
+      transition: all 0.2s;
+      appearance: none;
+      cursor: pointer;
+      font-weight: 500;
+
+      &:hover {
+        background: $border-light;
+      }
+      
+      &:focus {
+        border-color: $amber;
+        background: $bg-card;
+      }
+    }
+  }
+
+  .kd-filter-btn {
+    height: 42px;
+    padding: 0 1.25rem;
+    border-radius: 999px;
+    border: 1px solid $border-color;
+    background: $bg-card;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: $text-main;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    svg {
+      width: 18px;
+      height: 18px;
+      color: $text-light;
+    }
+
+    &:hover {
+      background: $bg-input;
+    }
+  }
+}
+
+// ─────────────────────────────────────
+// Table Wrapper
+// ─────────────────────────────────────
+
+.kd-table-wrapper {
+  background: transparent;
+  overflow: hidden;
+  padding-bottom: 1rem;
+}
+
+// ─────────────────────────────────────
+// Table
+// ─────────────────────────────────────
+
+.kd-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+
+  thead th {
+    padding: 1rem;
+    text-align: left;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: $text-muted;
+    background: $bg-page;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid $border-color;
+    
+    &:first-child {
+      padding-left: 1.5rem;
+    }
+    &:last-child {
+      padding-right: 1.5rem;
+    }
+  }
+
+  tbody tr {
+    border-bottom: 1px solid $border-light;
+    transition: background 0.15s;
+
+    &:hover {
+      background: #fafbfc;
+    }
+
+    td {
+      padding: 1.25rem 1rem;
+      vertical-align: top;
+      color: $text-main;
+
+      &:first-child {
+        padding-left: 1.5rem;
+      }
+      &:last-child {
+        padding-right: 1.5rem;
+      }
+    }
+  }
+}
+
+// ─────────────────────────────────────
+// Specific Cells
+// ─────────────────────────────────────
+
+.kd-id-cell {
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: $text-main;
+  white-space: nowrap;
+}
+
+.kd-content-cell {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  max-width: 300px;
+
+  .kd-thumbnail {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    object-fit: cover;
+    background: $bg-input;
+    flex-shrink: 0;
+  }
+
+  .kd-text {
+    p {
+      margin: 0;
+      font-size: 0.875rem;
+      font-weight: 500;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  }
+}
+
+.kd-address-cell {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  color: $text-muted;
+  font-size: 0.875rem;
+  max-width: 250px;
+
+  svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  span {
+    line-height: 1.4;
+  }
+}
+
+// Độ tin cậy
+.kd-reliability-cell {
+  width: 50px;
+
+  .kd-progress-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .kd-progress-bg {
+      width: 100%;
+      height: 6px;
+      background: $bg-input;
+      border-radius: 999px;
+      overflow: hidden;
+
+      .kd-progress-fill {
+        height: 100%;
+        border-radius: 999px;
+      }
+    }
+
+    .kd-progress-text {
+      font-size: 0.75rem;
+      font-weight: 600;
+      
+      &.green { color: $green; }
+      &.orange { color: $orange; }
+      &.red { color: $red; }
+    }
+  }
+}
+
+// Người dân
+.kd-citizen-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  .kd-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: $bg-input;
+    color: $text-muted;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .kd-name {
+    font-size: 0.875rem;
+    color: $text-main;
+    font-weight: 500;
+  }
+}
+
+// Ngày tạo
+.kd-date-cell {
+  .kd-date {
+    font-size: 0.875rem;
+    color: $text-main;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+  }
+  .kd-time {
+    font-size: 0.75rem;
+    color: $text-light;
+  }
+}
+
+// ─────────────────────────────────────
+// Footer Pagination
+// ─────────────────────────────────────
+
+.kd-table-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+
+  .kd-showing-text {
+    font-size: 0.875rem;
+    color: $text-muted;
+  }
+
+  .kd-pagination {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+
+    button {
+      min-width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      background: transparent;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: $text-main;
+      cursor: pointer;
+
+      &:hover:not(:disabled) {
+        background: $bg-input;
+      }
+
+      &.active {
+        background: $amber;
+        color: #fff;
+      }
+
+      &:disabled {
+        color: $text-light;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+.kd-state-box {
+  padding: 4rem;
+  text-align: center;
+  color: $text-muted;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+
+  &.error { color: $red; }
+}
+
+.kd-spinner {
+  width: 30px;
+  height: 30px;
+  border: 3px solid $border-color;
+  border-top-color: $amber;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
