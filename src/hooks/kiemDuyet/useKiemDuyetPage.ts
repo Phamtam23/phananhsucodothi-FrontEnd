@@ -1,169 +1,57 @@
-import { useState, useEffect, useMemo } from "react";
-
-import {
-  GetALLSuCoService,
-  GetSuCoByTrangThaiService,
-} from "../../services/SucoService";
-
+import { useState, useEffect } from "react";
+import { useCallback } from "react";
+import { GetALLSuCoService} from "../../services/SucoService";
 import type { SucoSumaryResponse } from "../../types/Suco";
-
-import type { PageResponse } from "../../types/Page";
+import type { SuCoFilterRequest } from "../../types/Suco";
 
 const pageSize = 10;
 
-export type TrangThaiFilter =
-  | "tat_ca"
-  | "CHO_TIEP_NHAN"
-  | "DA_TIEP_NHAN"
-  | "TU_CHOI";
-
 export const useKiemDuyetPage = () => {
-
-  const [data, setData] =
-    useState<SucoSumaryResponse[]>([]);
-
-  const [totalElements, setTotalElements] =
-    useState(0);
-
-  const [totalPages, setTotalPages] =
-    useState(1);
-
-  const [currentPage, setCurrentPage] =
-    useState(0);
-
-  const [trangThaiFilter, setTrangThaiFilter] =
-    useState<TrangThaiFilter>("tat_ca");
-
-  const [searchCode, setSearchCode] =
-    useState("");
-
-  const [searchLocation, setSearchLocation] =
-    useState("");
-
-  const [loading, setLoading] =
-    useState(false);
-
-  const [error, setError] =
-    useState<string | null>(null);
-
-  // =====================================================
-  // FETCH DATA
-  // =====================================================
+  const [danhSachSuCo, setDanhSachSuCo] = useState<SucoSumaryResponse[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalElements, setTotalElements] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [sucoFilter, setSucoFilter] = useState<SuCoFilterRequest>({});
+  const fetchDanhSachSuCo = useCallback(async ( page: number = 0, size: number = 10,filter?: SuCoFilterRequest)=>{
+      try{
+          setLoading(true);
+          setError(null);
+          const response = await GetALLSuCoService(page, size,filter);
+          setDanhSachSuCo(response.data.content);
+          setTotalElements(response.data.pagination.totalElements);
+          setTotalPages(response.data.pagination.totalPages);
+      } catch (err) {
+          setError("Failed to fetch suco data");
+      } finally {
+          setLoading(false);
+      }
+  },[])
 
   useEffect(() => {
+    fetchDanhSachSuCo(currentPage, pageSize, sucoFilter);
+  }, [currentPage, sucoFilter]);
 
-    let cancelled = false;
-
-    const fetchData = async () => {
-
-      setLoading(true);
-
-      setError(null);
-
-      try {
-
-        let response;
-
-        if (trangThaiFilter === "tat_ca") {
-
-          response =
-            await GetALLSuCoService(
-              currentPage,
-              pageSize
-            );
-
-        } else {
-
-          response =
-            await GetSuCoByTrangThaiService(
-              trangThaiFilter,
-              currentPage,
-              pageSize
-            );
-        }
-
-        if (cancelled) return;
-
-        const page:
-          PageResponse<SucoSumaryResponse> =
-            response.data;
-
-        setData(page.content ?? []);
-
-        setTotalElements(
-          page.pagination?.totalElements ?? 0
-        );
-
-        setTotalPages(
-          page.pagination?.totalPages ?? 1
-        );
-
-      } catch (err) {
-
-        if (cancelled) return;
-
-        setError(
-          "Đã có lỗi xảy ra khi tải dữ liệu."
-        );
-
-      } finally {
-
-        if (!cancelled) {
-          setLoading(false);
-        }
-      }
-    };
-
-    fetchData();
-
-    return () => {
-      cancelled = true;
-    };
-
-  }, [currentPage, trangThaiFilter]);
-
-  const filteredData = useMemo(() => {
-
-    return data.filter((item) => {
-
-      const matchesCode =
-        !searchCode ||
-        item.maSuCo
-          ?.toLowerCase()
-          .includes(searchCode.toLowerCase());
-
-      const matchesLocation =
-        !searchLocation ||
-        item.diaDiem
-          ?.toLowerCase()
-          .includes(searchLocation.toLowerCase());
-
-      return matchesCode && matchesLocation;
-    });
-
-  }, [data, searchCode, searchLocation]);
+  const setSucoFilterWrapped = useCallback((
+    value: SuCoFilterRequest | ((prev: SuCoFilterRequest) => SuCoFilterRequest)
+  ) => {
+    setCurrentPage(0);
+    setSucoFilter(value);
+  }, []);
 
   return {
-    pageSize,
-
-    data: filteredData,
-
-    totalElements,
-    totalPages,
-
-    currentPage,
-    setCurrentPage,
-
-    trangThaiFilter,
-    setTrangThaiFilter,
-
-    searchCode,
-    setSearchCode,
-
-    searchLocation,
-    setSearchLocation,
-
+    danhSachSuCo,
     loading,
     error,
+    currentPage,
+    totalElements,
+    totalPages,
+    setCurrentPage,
+    fetchDanhSachSuCo,
+    sucoFilter,
+    setSucoFilter
   };
 };
+
+ 

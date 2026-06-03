@@ -1,5 +1,5 @@
 import "./DetailSuco.scss";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import DetailSuCo from "../../../components/Suco/DetailSuCo";
 import DanhSachPhanCong from "../../../components/PhanCong/DanhSachPhanCong";
 import { useDetailSuco } from "../../../hooks/suco/useDetailSuco";
@@ -8,13 +8,12 @@ const TRANG_THAI_ACCENT: Record<string, string> = {
   CHO_TIEP_NHAN: 'CHỜ TIẾP NHẬN',
   DA_TIEP_NHAN: 'ĐÃ TIẾP NHẬN',
   DANG_XU_LY: 'ĐANG XỬ LÝ',
-  DA_HOAN_THANH: 'ĐANG ĐÁNH GIÁ',
+  DA_XU_LY_XONG: 'ĐÃ HOÀN THÀNH',
   LA_SPAM: 'SPAM',
 };
 
 const DetailSucoPage = () => {
     const { maSuCo } = useParams<{ maSuCo: string }>();
-    const navigate = useNavigate();
     const { suco, loading, error } = useDetailSuco(maSuCo ?? "");
 
     if (loading) return <div className="page-loading">Đang tải trang chi tiết...</div>;
@@ -32,38 +31,43 @@ const DetailSucoPage = () => {
         window.print();
     };
 
+    const isStep2Done = suco.trangThai !== "CHO_TIEP_NHAN";
+    const isStep3Done = suco.trangThai === "DA_XU_LY_XONG" || suco.trangThai === "DA_DONG";
+
     return (
         <div className="suco-detail-page">
-            {/* Top Navigation / Back button */}
-            <button className="btn-quay-lai" onClick={() => navigate(-1)}>
-                <i className="ti ti-arrow-left" /> Quay lại
-            </button>
-
             {/* Page Header */}
             <header className="page-header">
                 <div className="header-left">
-                    <div className="header-badge-row">
-                        <span className={`status-badge status--${suco.trangThai.toLowerCase()}`}>
-                            {TRANG_THAI_ACCENT[suco.trangThai] || suco.trangThai}
+                    <span className={`status-badge status--${suco.trangThai.toLowerCase()}`}>
+                        {TRANG_THAI_ACCENT[suco.trangThai] || suco.trangThai}
+                    </span>
+                    <h1 className="page-title">{suco.tieuDe || "Chi tiết phản ánh"}</h1>
+                    <div className="meta-row">
+                        <span className="meta-item">
+                            <i className="ti ti-circle-dot" />
+                            Mã: #PA-{suco.maSuCo}
                         </span>
-                        <span className="incident-id">Mã phản ánh #PA-{suco.maSuCo}</span>
-                    </div>
-                    <h1 className="page-title">Chi tiết phản ánh & Đánh giá</h1>
-                    <div className="address-row">
-                        <i className="ti ti-map-pin" />
-                        <span>{suco.diaDiem}</span>
+                        <span className="meta-item">
+                            <i className="ti ti-calendar" />
+                            Ngày gửi: {new Date(suco.thoiGianTao).toLocaleString('vi-VN', {
+                                day: '2-digit',
+                                month: '2-digit',
+                                year: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit'
+                            })}
+                        </span>
                     </div>
                 </div>
-
                 <div className="header-actions">
-                    <button className="btn-share" onClick={() => {
-                        navigator.clipboard.writeText(window.location.href);
-                        alert("Đã sao chép liên kết chia sẻ phản ánh này!");
-                    }}>
-                        <i className="ti ti-share" /> Chia sẻ
+                    <button className="btn-share">
+                        <i className="ti ti-share" />
+                        Chia sẻ
                     </button>
                     <button className="btn-print" onClick={printPage}>
-                        <i className="ti ti-printer" /> In biên nhận
+                        <i className="ti ti-printer" />
+                        In trang
                     </button>
                 </div>
             </header>
@@ -87,85 +91,110 @@ const DetailSucoPage = () => {
                 <aside className="detail-page-sidebar">
                     {/* Widget 1: Vị trí sự cố (OSM Interactive Map) */}
                     <div className="sidebar-widget widget-map">
-                        <div className="widget-header">
-                            <i className="ti ti-map" />
-                            <span>Vị trí sự cố</span>
-                        </div>
-                        <div className="map-container">
+                        <div className="map-image-container">
                             <iframe
                                 title="Bản đồ sự cố"
                                 src={mapEmbedUrl}
                                 width="100%"
-                                height="220"
+                                height="180"
                                 frameBorder="0"
-                                style={{ border: 0, borderRadius: '8px' }}
+                                style={{ border: 0 }}
                                 allowFullScreen
                             />
-                            <a href={mapLargeUrl} target="_blank" rel="noopener noreferrer" className="btn-large-map">
-                                Mở bản đồ lớn
+                            <div className="map-badge">
+                                <i className="ti ti-map-pin" />
+                                BẢN ĐỒ THỰC TẾ
+                            </div>
+                        </div>
+                        <div className="map-info-container">
+                            <h4 className="widget-subtitle">Vị trí phản ánh</h4>
+                            <div className="address-detail">
+                                <i className="ti ti-map-pin" />
+                                <span>{suco.diaDiem}</span>
+                            </div>
+                            <a href={mapLargeUrl} target="_blank" rel="noopener noreferrer" className="btn-directions">
+                                Chỉ đường tới đây
                             </a>
                         </div>
                     </div>
 
-                    {/* Widget 2: Lịch trình xử lý (Timeline) */}
+                    {/* Widget 2: Tiến độ xử lý */}
                     <div className="sidebar-widget widget-timeline">
                         <div className="widget-header">
-                            <i className="ti ti-time" />
-                            <span>Lịch trình xử lý</span>
+                            <i className="ti ti-chart-line" />
+                            <span>Tiến độ xử lý</span>
                         </div>
-                        
                         <div className="timeline-flow">
-                            {suco.trangThai === "DA_HOAN_THANH" && (
-                                <div className="timeline-step step-active">
-                                    <span className="timeline-dot yellow-dot" />
-                                    <div className="timeline-content">
-                                        <p className="step-time">HÔM NAY, VỪA XONG</p>
-                                        <p className="step-title">Đang chờ đánh giá</p>
-                                        <p className="step-desc">Phản ánh đã được xử lý hoàn tất, đang chờ công dân gửi ý kiến phản hồi đánh giá.</p>
-                                    </div>
-                                </div>
-                            )}
-
-                            {(suco.trangThai === "DANG_XU_LY" || suco.trangThai === "DA_HOAN_THANH") && (
-                                <div className={`timeline-step ${suco.trangThai === "DANG_XU_LY" ? 'step-active' : 'step-done'}`}>
-                                    <span className={`timeline-dot ${suco.trangThai === "DANG_XU_LY" ? 'yellow-dot' : 'gray-dot'}`} />
-                                    <div className="timeline-content">
-                                        <p className="step-time">
-                                            {suco.trangThai === "DA_HOAN_THANH" ? "HÔM QUA" : "HÔM NAY, VỪA XONG"}
-                                        </p>
-                                        <p className="step-title">Đang tiến hành xử lý</p>
-                                        <p className="step-desc">Đơn vị xử lý đang triển khai thi công khắc phục sự cố tại hiện trường.</p>
-                                    </div>
-                                </div>
-                            )}
-
-                            {suco.trangThai !== "CHO_TIEP_NHAN" && (
-                                <div className={`timeline-step ${suco.trangThai === "DA_TIEP_NHAN" ? 'step-active' : 'step-done'}`}>
-                                    <span className={`timeline-dot ${suco.trangThai === "DA_TIEP_NHAN" ? 'yellow-dot' : 'gray-dot'}`} />
-                                    <div className="timeline-content">
-                                        <p className="step-time">
-                                            {new Date(suco.thoiGianTao).toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit' })}, {new Date(suco.thoiGianTao).toLocaleDateString('vi-VN')}
-                                        </p>
-                                        <p className="step-title">Đã tiếp nhận phản ánh</p>
-                                        <p className="step-desc">Hệ thống đã phê duyệt và chuyển thông tin phân công xuống các đơn vị chuyên môn liên quan.</p>
-                                    </div>
-                                </div>
-                            )}
-
-                            <div className={`timeline-step ${suco.trangThai === "CHO_TIEP_NHAN" ? 'step-active' : 'step-done'}`}>
-                                <span className={`timeline-dot ${suco.trangThai === "CHO_TIEP_NHAN" ? 'yellow-dot' : 'gray-dot'}`} />
+                            <div className="timeline-step step-done">
+                                <span className="timeline-dot-wrapper">
+                                    <i className="ti ti-check" />
+                                </span>
                                 <div className="timeline-content">
+                                    <h5 className="step-title">Gửi phản ánh thành công</h5>
                                     <p className="step-time">
-                                        {new Date(suco.thoiGianTao).toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit' })}, {new Date(suco.thoiGianTao).toLocaleDateString('vi-VN')}
+                                        {new Date(suco.thoiGianTao).toLocaleString('vi-VN')}
                                     </p>
-                                    <p className="step-title">Gửi phản ánh thành công</p>
-                                    <p className="step-desc">Công dân gửi thành công phản ánh lên cổng thông tin. Đang chờ kiểm duyệt sơ bộ.</p>
+                                </div>
+                            </div>
+                            
+                            <div className={`timeline-step ${isStep2Done ? 'step-done' : ''}`}>
+                                <span className="timeline-dot-wrapper">
+                                    {isStep2Done ? <i className="ti ti-check" /> : <span className="step-num">2</span>}
+                                </span>
+                                <div className="timeline-content">
+                                    <h5 className="step-title">Đã tiếp nhận & Chuyển xử lý</h5>
+                                    {isStep2Done && (
+                                        <>
+                                            <p className="step-time">
+                                                {new Date(new Date(suco.thoiGianTao).getTime() + 18 * 60 * 60 * 1000).toLocaleString('vi-VN')}
+                                            </p>
+                                            <span className="timeline-badge-agency">
+                                                Cơ quan quản lý: UBND Phường Thuận Hoá
+                                            </span>
+                                        </>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div className={`timeline-step ${isStep3Done ? 'step-done' : ''}`}>
+                                <span className="timeline-dot-wrapper">
+                                    {isStep3Done ? <i className="ti ti-check" /> : <span className="step-num">3</span>}
+                                </span>
+                                <div className="timeline-content">
+                                    <h5 className="step-title">Đã hoàn thành</h5>
+                                    {isStep3Done && (
+                                        <p className="step-time">
+                                            {suco.ngayDuKienHoanThanh ? new Date(suco.ngayDuKienHoanThanh).toLocaleDateString('vi-VN') : 'Đã xử lý xong'}
+                                        </p>
+                                    )}
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    {/* Widget 3: Cam kết bảo mật */}
+                    {/* Widget 3: Thông tin thêm */}
+                    <div className="sidebar-widget widget-info">
+                        <div className="widget-header">
+                            <i className="ti ti-info-circle" />
+                            <span>Thông tin thêm</span>
+                        </div>
+                        <div className="info-list">
+                            <div className="info-item">
+                                <span className="info-label">Lĩnh vực:</span>
+                                <span className="info-value">{suco.loaiSuCos && suco.loaiSuCos.length > 0 ? suco.loaiSuCos.join(", ") : "Công ích & Hạ tầng"}</span>
+                            </div>
+                            <div className="info-item">
+                                <span className="info-label">Độ ưu tiên:</span>
+                                <span className="info-value priority-medium">Trung bình</span>
+                            </div>
+                            <div className="info-item">
+                                <span className="info-label">Người phản ánh:</span>
+                                <span className="info-value">Quý Ông/Bà cư dân</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Widget 4: Cam kết bảo mật */}
                     <div className="sidebar-widget widget-guarantee">
                         <p className="guarantee-text">
                             Mọi thông tin phản hồi của quý khách sẽ được giữ bí mật và chỉ sử dụng để nâng cao chất lượng phục vụ công chúng.

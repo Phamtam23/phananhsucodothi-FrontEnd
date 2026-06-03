@@ -57,9 +57,6 @@ export const useCreateSuco = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    console.log("FORM SUBMIT:", form);
-
     if (!validate()) return;
 
     try {

@@ -77,7 +77,7 @@ const IncidentSidebarList = ({ incidents, loading,loai, emptyMessage = "Không c
                   {incident.trangThai === "CHO_TIEP_NHAN" ? "CHỜ TIẾP NHẬN" :
                     incident.trangThai === "DA_TIEP_NHAN" ? "ĐÃ TIẾP NHẬN" :
                       incident.trangThai === "DANG_XU_LY" ? "ĐANG XỬ LÝ" :
-                        incident.trangThai === "DA_HOAN_THANH" ? "ĐÃ HOÀN THÀNH" :
+                        incident.trangThai === "DA_XU_LY_XONG" ? "ĐÃ HOÀN THÀNH" :
                           incident.trangThai}
                 </span>
               </div>

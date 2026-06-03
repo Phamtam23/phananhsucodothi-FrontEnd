@@ -11,8 +11,7 @@ import {
 } from "../../services/DanhGiaService";
 
 export const useDanhGia = (
-  maKetQuaXuLy: string,
-  daDanhGia?: boolean
+  maKetQuaXuLy: string
 ) => {
   const [loading, setLoading] = useState(false);
 
@@ -58,10 +57,10 @@ export const useDanhGia = (
   };
 
   useEffect(() => {
-    if (maKetQuaXuLy && daDanhGia) {
+    if (maKetQuaXuLy) {
       loadDanhGia();
     }
-  }, [maKetQuaXuLy, daDanhGia]);
+  }, [maKetQuaXuLy]);
 
   return {
     danhGia,

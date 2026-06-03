@@ -8,13 +8,29 @@ export interface CreateSucoRequest {
   mediaUrls?: string[];
 }
 
+export interface UpdateSucoRequest {
+  maSuCo: string;
+  noiDung: string;
+  mediaUrls?: string[];
+}
+
 export enum TrangThaiSuCo {
   CHO_TIEP_NHAN = "CHO_TIEP_NHAN",
   DANG_XU_LY = "DANG_XU_LY",
-  DA_HOAN_THANH = "DA_HOAN_THANH",
+  DA_XU_LY_XONG = "DA_XU_LY_XONG",
   DA_TIEP_NHAN = "DA_TIEP_NHAN",
-  LA_SPAM = "LA_SPAM",
+  TU_CHOI = "TU_CHOI",
+  BO_SUNG = "BO_SUNG",
+  DA_DONG = "DA_DONG"
 }
+
+export enum DoUuTien {
+  THAP = "THAP",
+  TRUNG_BINH = "TRUNG_BINH",
+  CAO = "CAO",
+  KHAN_CAP = "KHAN_CAP",
+}
+
 export interface LoaiSuCo {
   maLoai: string;
   tenLoai: string;
@@ -23,6 +39,7 @@ export interface LoaiSuCo {
 export interface SucoResponse {
   maSuCo: string;
   diemSpam: number;
+  doUuTien: DoUuTien;
   lyDoSpam: string;
   tieuDe: string;
   maNguoiDan: string;
@@ -42,6 +59,7 @@ export interface SucoSumaryResponse {
   lyDoSpam: string;
   tieuDe: string;
   maNguoiDan: string;
+  doUuTien: DoUuTien;
   kinhDo: number;
   viDo: number;
   diaDiem: string;
@@ -70,5 +88,11 @@ export interface SucoDetailResponse {
   loaiSuCos: string[];
 }
 
+export interface SuCoFilterRequest {
+  keyword?: string;
+  trangThai?: TrangThaiSuCo[];
+  maLoai?: string;
+  diaDiem?: string;
+}
 
 

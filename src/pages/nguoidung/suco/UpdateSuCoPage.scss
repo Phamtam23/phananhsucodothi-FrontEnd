@@ -1,0 +1,257 @@
+.update-suco-page {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 32px 24px;
+  color: #1f2937;
+}
+
+.update-suco-page h1 {
+  margin-bottom: 24px;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #111827;
+}
+
+.update-suco-layout {
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+
+.update-suco-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: sticky;
+  top: 24px;
+  align-self: flex-start;
+}
+
+.update-suco-content {
+  width: 100%;
+}
+
+.update-suco-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
+}
+
+.update-suco-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.update-suco-card__header {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #9ca3af;
+}
+
+.update-suco-card__title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #111827;
+  line-height: 1.3;
+}
+
+.update-suco-card__subtitle {
+  margin: 0;
+  color: #475569;
+  line-height: 1.75;
+}
+
+.update-suco-card__meta {
+  display: grid;
+  gap: 6px;
+}
+
+.update-suco-card__meta-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9ca3af;
+}
+
+.update-suco-card__meta-value {
+  margin: 0;
+  color: #334155;
+  line-height: 1.6;
+}
+
+.update-suco-card__image-wrap {
+  width: 100%;
+  min-height: 180px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #f3f4f6;
+  box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.04);
+}
+
+.update-suco-card__image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.update-suco-page form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
+}
+
+.update-suco-page label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6b7280;
+  margin-bottom: 10px;
+}
+
+.update-suco-page input,
+.update-suco-page textarea {
+  width: 100%;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 14px 16px;
+  font-size: 0.95rem;
+  color: #111827;
+  background: #fafaf8;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  font-family: inherit;
+}
+
+.update-suco-page textarea {
+  min-height: 160px;
+  resize: vertical;
+}
+
+.update-suco-page input:focus,
+.update-suco-page textarea:focus {
+  border-color: #d4a017;
+  box-shadow: 0 0 0 3px rgba(212, 160, 23, 0.16);
+  background: #ffffff;
+}
+
+.update-suco-page .file-drop-area {
+  border: 2px dashed #d1d5db;
+  border-radius: 18px;
+  background: #f9faf6;
+  padding: 32px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+  position: relative;
+}
+
+.update-suco-page .file-drop-area.drag-over {
+  border-color: #d4a017;
+  background: #fffbe4;
+}
+
+.update-suco-page .file-drop-area p {
+  margin: 0;
+  color: #4b5563;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.update-suco-page .preview-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(86px, 1fr));
+  gap: 12px;
+}
+
+.update-suco-page .preview-item {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #f3f4f6;
+}
+
+.update-suco-page .preview-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.update-suco-page .preview-item button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.65);
+  color: #ffffff;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-size: 0.95rem;
+}
+
+.update-suco-page button[type="submit"] {
+  width: fit-content;
+  padding: 12px 28px;
+  border-radius: 14px;
+  border: none;
+  background: #d4a017;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.update-suco-page button[type="submit"]:hover:not(:disabled) {
+  background: #bb8c13;
+  transform: translateY(-1px);
+}
+
+.update-suco-page button[type="submit"]:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+@media (max-width: 900px) {
+  .update-suco-page {
+    padding: 24px 16px;
+  }
+
+  .update-suco-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .update-suco-sidebar {
+    position: static;
+    top: auto;
+  }
+
+  .update-suco-page form {
+    padding: 20px;
+  }
+}

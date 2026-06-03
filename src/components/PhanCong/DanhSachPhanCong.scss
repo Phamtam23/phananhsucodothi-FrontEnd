@@ -1,14 +1,14 @@
 .danh-sach-phan-cong {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
   padding: 1rem 0;
   width: 100%;
 
   .phan-cong-loading {
     padding: 24px;
     text-align: center;
-    color: var(--color-text-secondary, #667085);
+    color: #64748b;
     font-size: 14px;
     font-weight: 500;
   }
@@ -16,9 +16,9 @@
   .phan-cong-error {
     padding: 16px 20px;
     border-radius: 8px;
-    background: hsl(0, 100%, 97%);
-    color: hsl(0, 80%, 45%);
-    border: 1px solid hsl(0, 100%, 90%);
+    background: #fef2f2;
+    color: #ef4444;
+    border: 1px solid #fee2e2;
     font-size: 14px;
     font-weight: 500;
   }
@@ -26,151 +26,172 @@
   .phan-cong-trong {
     padding: 30px;
     text-align: center;
-    background: hsl(210, 20%, 98%);
-    border: 1px dashed rgba(0, 0, 0, 0.1);
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
     border-radius: 12px;
-    color: var(--color-text-secondary, #667085);
+    color: #64748b;
     font-size: 14px;
   }
 }
 
 .phan-cong-card {
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  border-radius: 14px;
+  border: 1px solid #fef08a; // soft yellow border
+  border-left: 4px solid #eab308; // yellow/orange thick line
+  border-radius: 12px;
   overflow: hidden;
-  background: white;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
-    border-color: rgba(0, 0, 0, 0.1);
-  }
-
-  &__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px 20px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  }
-
-  &__don-vi {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-}
-
-.don-vi-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  background: hsl(38, 100%, 93%);
-  color: hsl(38, 90%, 35%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  font-weight: 700;
-  flex-shrink: 0;
-  border: 1px solid hsl(38, 100%, 88%);
-}
-
-.don-vi-ten {
-  font-size: 14.5px;
-  font-weight: 600;
-  color: var(--color-text-primary, #1d2939);
-  margin: 0;
-}
-
-.don-vi-time {
-  font-size: 12px;
-  color: var(--color-text-secondary, #667085);
-  margin-top: 2px;
-}
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  font-size: 12px;
-  font-weight: 700;
-  padding: 4px 12px;
-  border-radius: 30px;
-  text-transform: uppercase;
-  letter-spacing: 0.2px;
-
-  &--cho_tiep_nhan {
-    background: hsl(38, 100%, 93%);
-    color: hsl(38, 90%, 35%);
-  }
-
-  &--da_tiep_nhan {
-    background: hsl(200, 100%, 93%);
-    color: hsl(200, 95%, 35%);
-  }
-
-  &--dang_xu_ly {
-    background: hsl(250, 100%, 94%);
-    color: hsl(250, 90%, 40%);
-  }
-
-  &--da_hoan_thanh {
-    background: hsl(140, 100%, 92%);
-    color: hsl(140, 90%, 30%);
-  }
-
-  &--la_spam {
-    background: hsl(0, 100%, 94%);
-    color: hsl(0, 90%, 40%);
-  }
-}
-
-.no-ketqua {
-  padding: 16px 20px;
-  font-size: 13.5px;
-  color: var(--color-text-secondary, #667085);
-  font-style: italic;
-  background: hsl(210, 20%, 99%);
-  margin: 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.03);
-}
-
-.vung-mo-lai {
-  padding: 18px 20px;
-  background: hsl(210, 20%, 99.5%);
+  background: #fefdf6; // soft yellow-tinted background
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.01);
+  margin-bottom: 24px;
+  position: relative;
+  padding: 24px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  border-top: 1px solid rgba(0, 0, 0, 0.03);
+  gap: 16px;
+  transition: all 0.3s ease;
 
-  .btn-mo-lai {
-    align-self: flex-start;
-    background: hsl(210, 80%, 48%);
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    box-shadow: 0 2px 6px rgba(26, 115, 232, 0.15);
-    transition: all 0.2s ease;
+  // Faded background watermark matching design
+  &::after {
+    content: "📋";
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 80px;
+    opacity: 0.03;
+    pointer-events: none;
+  }
 
-    &:hover {
-      background: hsl(210, 80%, 40%);
-      box-shadow: 0 4px 12px rgba(26, 115, 232, 0.25);
+  &:hover {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.03);
+  }
+
+  &__title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #fef3c7;
+    padding-bottom: 12px;
+    margin-bottom: 4px;
+
+    .title-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .icon-clipboard {
+        font-size: 20px;
+        color: #854d0e;
+      }
+
+      h3 {
+        font-size: 15px;
+        font-weight: 700;
+        color: #854d0e;
+        margin: 0;
+      }
     }
 
-    &.danger-btn {
-      background: hsl(0, 80%, 50%);
-      box-shadow: 0 2px 6px rgba(220, 38, 38, 0.15);
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+
+      &--cho_tiep_nhan {
+        background: #fef3c7;
+        color: #d97706;
+      }
+
+      &--da_tiep_nhan {
+        background: #e0f2fe;
+        color: #0284c7;
+      }
+
+      &--dang_xu_ly {
+        background: #f3e8ff;
+        color: #7c3aed;
+      }
+
+      &--da_hoan_thanh {
+        background: #eab308; // Yellow/orange done badge matching mockup
+        color: #78350f;
+      }
+
+      &--la_spam {
+        background: #fee2e2;
+        color: #dc2626;
+      }
+    }
+  }
+
+  &__don-vi-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .don-vi-label {
+      font-size: 13px;
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    .don-vi-ten {
+      font-size: 16px;
+      font-weight: 700;
+      color: #0f172a;
+      margin: 0;
+    }
+  }
+
+  .ket-qua-item {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .vung-mo-lai {
+    padding: 16px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    .btn-mo-lai {
+      align-self: flex-start;
+      background: #dc2626;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(220, 38, 38, 0.1);
+      transition: all 0.2s ease;
 
       &:hover {
-        background: hsl(0, 80%, 42%);
-        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+        background: #b91c1c;
       }
+
+      &.danger-btn {
+        background: #64748b;
+        &:hover {
+          background: #475569;
+        }
+      }
+    }
+
+    .da-mo-lai-notice {
+      font-size: 13px;
+      font-weight: 600;
+      color: #b45309;
+      margin: 0;
     }
   }
 }

@@ -1,8 +1,6 @@
 import {
   FileText,
   Image as ImageIcon,
-  Video,
-  Eye
 } from "lucide-react";
 
 import type { KetQuaXuLyDetailResponse } from "../../types/KetQuaXuLy";

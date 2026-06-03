@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { CheckCircle, Image, Send } from "lucide-react";
+import { Image, Send } from "lucide-react";
 import "./DangKetQuaPage.scss";
 import { useChiTietPhanCongNhanVien } from "../../hooks/chitietphancong/useChiTietPhanCongNhanVien";
 import { useTaoKetQua } from "../../hooks/ketquaxuly/useTaoKetQua";

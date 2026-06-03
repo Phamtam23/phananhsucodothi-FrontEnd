@@ -2,6 +2,7 @@ export enum TrangThaiKiemDuyet {
   CHO_KIEM_DUYET = "CHO_KIEM_DUYET",
   DUYET = "DUYET",
   TU_CHOI = "TU_CHOI",
+  BO_SUNG = "BO_SUNG",
 }
 
 export interface CreatePhieuKiemDuyetRequest {

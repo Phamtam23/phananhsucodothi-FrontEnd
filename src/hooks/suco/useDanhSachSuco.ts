@@ -1,50 +1,81 @@
-import { GetALLSuCoService } from './../../services/SucoService';
-import type { SucoSumaryResponse } from './../../types/Suco';
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import { useCallback } from "react";
+import { GetALLSuCoService} from "../../services/SucoService";
+import type { SucoSumaryResponse } from "../../types/Suco";
+import type { SuCoFilterRequest } from "../../types/Suco";
+import { GetAllLoaiService } from "../../services/LoaiService";
+import type { LoaiResponse } from "../../types/Loai";
+const pageSize = 10;
 
 export const useDanhSachSuco = () => {
+  const [danhSachSuCo, setDanhSachSuCo] = useState<SucoSumaryResponse[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalElements, setTotalElements] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [sucoFilter, setSucoFilter] = useState<SuCoFilterRequest>({});
+  const [danhSachLoai, setDanhSachLoai] = useState<LoaiResponse[]>([]);
+ 
+  const fetchDanhSachSuCo = useCallback(async ( page: number = 0, size: number = 10, filter?: SuCoFilterRequest)=>{
+      try{
+          setLoading(true);
+          setError(null);
+          const response = await GetALLSuCoService(page, size,filter);
+          setDanhSachSuCo(response.data.content);
+          setTotalElements(response.data.pagination.totalElements);
+          setTotalPages(response.data.pagination.totalPages);
+      } catch (err) {
+          setError("Failed to fetch suco data");
+      } finally {
+          setLoading(false);
+      }
+  },[])
 
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
-    const [sucoList, setSucoList] = useState<SucoSumaryResponse[]>([]);
-    const [pagination, setPagination] = useState({
-        page: 0,
-        size: 10,
-        totalElements: 0,
-        totalPages: 0,
-        first: true,
-        last: true
-    });
-
-    const fetchSucoList = async () => {
-        setLoading(true);
-        setError(null);
-
-        try {
-            const res = await GetALLSuCoService(pagination.page, pagination.size);
-            setSucoList(res.data.content);
-            setPagination(res.data.pagination);
+      const fetchDanhSachLoai = useCallback(async () => {
+        try
+        {
+            const response = await GetAllLoaiService();
+            setDanhSachLoai(response.data);
         }
-        catch (err) {
-            setError("Không thể tải danh sách sự cố");
+        catch (err: any)
+        {
+            setError(err.message || 'Đã xảy ra lỗi khi tải dữ liệu loại sự cố');
         }
-        finally {
+        finally
+        {
             setLoading(false);
         }
+    }, []);
 
-    }
+  useEffect(() => {
+    fetchDanhSachSuCo(currentPage, pageSize, sucoFilter);
+  }, [currentPage, sucoFilter]);
 
-    useEffect(() => {
-        fetchSucoList();
-    }, [pagination.page])
+      useEffect(() => {
+        fetchDanhSachLoai();
+    }, []);
+  
+  const setSucoFilterWrapped = useCallback((
+    value: SuCoFilterRequest | ((prev: SuCoFilterRequest) => SuCoFilterRequest)
+  ) => {
+    setCurrentPage(0);
+    setSucoFilter(value);
+  }, []);
 
-return {
-        loading,
-        error,
-        sucoList,
-        pagination,
-        setPage: (newPage: number) => setPagination(prev => ({ ...prev, page: newPage }))
-    }
+  return {
+    danhSachSuCo,
+    loading,
+    error,
+    currentPage,
+    totalElements,
+    totalPages,
+    setCurrentPage,
+    fetchDanhSachSuCo,
+    sucoFilter,
+    setSucoFilter:setSucoFilterWrapped
+    ,danhSachLoai
+  };
+};
 
-}
-
+ 

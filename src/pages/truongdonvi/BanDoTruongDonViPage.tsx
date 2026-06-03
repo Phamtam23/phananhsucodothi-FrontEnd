@@ -92,7 +92,7 @@ const BanDoTruongDonViPage = () => {
           Bản đồ chỉ hiển thị các sự cố đã được phân công cho đơn vị của bạn và đang trong quá trình xử lý.
         </p>
 
-        <div className="filter-group" style={{ display: 'flex', gap: '8px' }}>
+        <div className="filter" style={{ display: 'flex', gap: '8px' }}>
           <select
             value={trangThaiFilter}
             onChange={e => setTrangThaiFilter(e.target.value)}

@@ -3,14 +3,14 @@ import { useState } from "react";
 
 import "./PhanCongPhanLoaiDetail.scss";
 
-import DetailSuCo from "../../../components/Suco/DetailSuCo";
-import ListLoai from "../../../components/PhanLoai/ListLoai";
-import DanhSachPhanCong from "../../../components/PhanCong/DanhSachPhanCong";
-import CreatePhanCong from "../../../components/PhanCong/CreatePhanCong";
+import DetailSuCo from "../../components/Suco/DetailSuCo";
+import ListLoai from "../../components/PhanLoai/ListLoai";
+import DanhSachPhanCong from "../../components/PhanCong/DanhSachPhanCong";
+import CreatePhanCong from "../../components/PhanCong/CreatePhanCong";
 
-import { useCreatePhanLoai } from "../../../hooks/phanloai/useCreatePhanLoai";
+import { useCreatePhanLoai } from "../../hooks/phanloai/useCreatePhanLoai";
 
-import type { LoaiResponse } from "../../../types/Loai";
+import type { LoaiResponse } from "../../types/Loai";
 
 const PhanCongPhanLoaiDetail = () => {
   const navigate = useNavigate();
@@ -84,13 +84,6 @@ const PhanCongPhanLoaiDetail = () => {
   // ── Render ───────────────────────────────────
   return (
     <div className="pcpl-page">
-      {/* Back button */}
-      <button
-        className="pcpl-back-btn"
-        onClick={() => navigate(-1)}
-      >
-        ← Quay lại danh sách
-      </button>
 
       {/* Two-column layout */}
       <div className="pcpl-layout">

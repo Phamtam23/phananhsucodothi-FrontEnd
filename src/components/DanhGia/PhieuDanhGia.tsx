@@ -1,8 +1,8 @@
 import "./PhieuDanhGia.scss";
-
+import { useState } from "react";
 import { useDanhGia } from "../../hooks/suco/useDanhGia";
-
 import { MucDoDanhGia } from "../../types/PhieuDanhGia";
+import { Smile, Meh, Frown } from "lucide-react";
 
 interface PhieuDanhGiaProps {
   maKetQuaXuLy: string;
@@ -12,97 +12,103 @@ interface PhieuDanhGiaProps {
 
 const PhieuDanhGia = ({
   maKetQuaXuLy,
-  daDanhGia,
   canDanhGia,
 }: PhieuDanhGiaProps) => {
-
   const {
     danhGia,
     submitDanhGia,
     loading,
-  } = useDanhGia(
-    maKetQuaXuLy,
-    daDanhGia
-  );
+  } = useDanhGia(maKetQuaXuLy);
 
-  const handleDanhGia = async (
-    mucDo: MucDoDanhGia
-  ) => {
-    await submitDanhGia({
-      maKetQuaXuLy,
-      mucDoHaiLong: mucDo,
-    });
+  const [selectedRating, setSelectedRating] = useState<MucDoDanhGia | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+
+  const activeRating = danhGia?.mucDoDanhGia || selectedRating;
+  const isSubmitted = !!danhGia;
+
+  const handleGui = async () => {
+    if (!selectedRating) return;
+    setSubmitting(true);
+    try {
+      await submitDanhGia({
+        maKetQuaXuLy,
+        mucDoHaiLong: selectedRating,
+      });
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   if (loading) {
-    return <div>Đang tải...</div>;
+    return <div className="phieu-danh-gia-loading">Đang tải đánh giá...</div>;
+  }
+
+  if (!isSubmitted && !canDanhGia) {
+    return null;
   }
 
   return (
-    <div className="phieu-danh-gia">
+    <div className="phieu-danh-gia-card">
+      <h3 className="dg-title">Đánh giá chất lượng xử lý</h3>
+      
+      <div className="dg-smileys-container">
+        <button
+          type="button"
+          disabled={isSubmitted}
+          onClick={() => setSelectedRating(MucDoDanhGia.HAI_LONG)}
+          className={`dg-smiley-btn dg-smiley-btn--happy ${
+            activeRating === MucDoDanhGia.HAI_LONG ? "active" : ""
+          } ${isSubmitted ? "disabled" : ""}`}
+        >
+          <div className="smiley-icon-wrapper">
+            <Smile size={36} />
+          </div>
+          <span className="smiley-label">Hài lòng</span>
+        </button>
 
-      <h3>Đánh giá kết quả xử lý</h3>
+        <button
+          type="button"
+          disabled={isSubmitted}
+          onClick={() => setSelectedRating(MucDoDanhGia.CHAP_NHAN)}
+          className={`dg-smiley-btn dg-smiley-btn--neutral ${
+            activeRating === MucDoDanhGia.CHAP_NHAN ? "active" : ""
+          } ${isSubmitted ? "disabled" : ""}`}
+        >
+          <div className="smiley-icon-wrapper">
+            <Meh size={36} />
+          </div>
+          <span className="smiley-label">Chấp nhận</span>
+        </button>
 
-      {daDanhGia ? (
-        <div className="danh-gia-da-co">
+        <button
+          type="button"
+          disabled={isSubmitted}
+          onClick={() => setSelectedRating(MucDoDanhGia.KHONG_HAI_LONG)}
+          className={`dg-smiley-btn dg-smiley-btn--sad ${
+            activeRating === MucDoDanhGia.KHONG_HAI_LONG ? "active" : ""
+          } ${isSubmitted ? "disabled" : ""}`}
+        >
+          <div className="smiley-icon-wrapper">
+            <Frown size={36} />
+          </div>
+          <span className="smiley-label">Không hài lòng</span>
+        </button>
+      </div>
 
-          <p>Bạn đã đánh giá:</p>
-
-          <strong>
-
-            {danhGia?.mucDoDanhGia ===
-              MucDoDanhGia.HAI_LONG &&
-              "Hài lòng"}
-
-            {danhGia?.mucDoDanhGia ===
-              MucDoDanhGia.CHAP_NHAN &&
-              "Chấp nhận"}
-
-            {danhGia?.mucDoDanhGia ===
-              MucDoDanhGia.KHONG_HAI_LONG &&
-              "Không hài lòng"}
-
-          </strong>
-
+      {!isSubmitted && canDanhGia && (
+        <div className="dg-action-row">
+          <button
+            type="button"
+            className="dg-submit-btn"
+            disabled={!selectedRating || submitting}
+            onClick={handleGui}
+          >
+            {submitting ? "Đang gửi..." : "Gửi đánh giá"}
+          </button>
         </div>
-      ) : canDanhGia ? (
-        <div className="danh-gia-buttons">
-
-          <button
-            onClick={() =>
-              handleDanhGia(
-                MucDoDanhGia.HAI_LONG
-              )
-            }
-          >
-            Hài lòng
-          </button>
-
-          <button
-            onClick={() =>
-              handleDanhGia(
-                MucDoDanhGia.CHAP_NHAN
-              )
-            }
-          >
-            Chấp nhận
-          </button>
-
-          <button
-            onClick={() =>
-              handleDanhGia(
-                MucDoDanhGia.KHONG_HAI_LONG
-              )
-            }
-          >
-            Không hài lòng
-          </button>
-
-        </div>
-      ) : (
-        <p>Chưa thể đánh giá</p>
       )}
-
     </div>
   );
 };

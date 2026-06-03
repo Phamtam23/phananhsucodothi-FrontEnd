@@ -1,28 +1,20 @@
 .ketqua-box {
-  border-top: 2px dashed hsl(38, 90%, 75%);
-  background: linear-gradient(135deg, hsl(38, 100%, 98%), hsl(38, 100%, 99%));
-  border-radius: 0 0 12px 12px;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.01);
-  padding: 18px;
+  border: 1px solid #e2e8f0; // Clean thin border
+  background: white; // Clean white background
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 8px;
   transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.01);
+  position: relative;
 
   &:hover {
-    background: linear-gradient(135deg, hsl(38, 100%, 97%), hsl(38, 100%, 98%));
-    border-top-color: hsl(38, 90%, 65%);
+    background: white;
+    border-color: #cbd5e1;
   }
 
-  &__label {
-    display: inline-flex;
-    align-items: center;
-    font-size: 11px;
-    font-weight: 700;
-    color: hsl(38, 85%, 35%);
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    background: hsl(38, 100%, 90%);
-    padding: 4px 10px;
-    border-radius: 20px;
-    margin-bottom: 12px;
+  &__header {
+    display: none !important; // Hide redundant header
   }
 
   &__content {
@@ -32,32 +24,42 @@
   }
 
   &__time {
-    font-size: 12px;
-    color: var(--color-text-secondary, #6b7280);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-weight: 500;
-    i { 
-      font-size: 14px;
-      color: hsl(38, 85%, 45%);
-    }
+    display: none !important; // Hide redundant time
+  }
+
+  &__title {
+    display: none !important; // Hide redundant title
+  }
+
+  &__noi-dung-box {
+    margin: 0;
+    padding: 0;
   }
 
   &__noi-dung {
-    font-size: 14px;
-    color: var(--color-text-primary, #111827);
-    line-height: 1.6;
-    margin-bottom: 8px;
-    background: #fefbeb;
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #fde68a;
+    font-size: 14.5px;
+    color: #334155;
+    line-height: 1.7;
+    margin: 0;
+    background: transparent !important;
+    padding: 0 !important;
+    border: none !important;
+    white-space: pre-line;
+  }
+
+  &__tu-choi {
+    margin-top: 12px;
+    padding: 10px 14px;
+    background: #fef2f2;
+    border: 1px solid #fee2e2;
+    border-radius: 6px;
+    color: #b91c1c;
+    font-size: 13.5px;
   }
 }
 
 .ketqua-media {
-  margin-top: 4px;
+  margin-top: 12px;
 
   &__title {
     font-size: 13px;
@@ -80,8 +82,8 @@
     gap: 12px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     padding-bottom: 8px;
     
     &::-webkit-scrollbar {
@@ -90,7 +92,7 @@
   }
 
   &__slide {
-    flex: 0 0 160px; /* Width of each slide */
+    flex: 0 0 160px;
     scroll-snap-align: start;
     position: relative;
     height: 120px;

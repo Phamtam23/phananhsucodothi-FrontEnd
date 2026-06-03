@@ -6,10 +6,10 @@ import NhanVienDieuPhoiLayout from '../layouts/NhanVienDieuPhoiLayout';
 import CreateSuco from '../pages/nguoidung/suco/CreateSucoPage';
 import LichSuSuCo from '../pages/nguoidung/suco/LichSuSuCoPage';
 import DetailSuCoPage from "../pages/nguoidung/suco/DetailSucoPage"
-import KiemDuyetDetailPage from '../pages/nhanvien/nhanviendieuphoi/KiemDuyetDetailPage';
-import KiemDuyetPage from '../pages/nhanvien/nhanviendieuphoi/KiemDuyetPage';
-import PhanCongPhanLoaiPage from '../pages/nhanvien/nhanviendieuphoi/PhanCongPhanLoaiPage';
-import PhanCongPhanLoaiDetail from '../pages/nhanvien/nhanviendieuphoi/PhanCongPhanLoaiDetail';
+import KiemDuyetDetailPage from '../pages/nhanviendieuphoi/KiemDuyetDetailPage';
+import KiemDuyetPage from '../pages/nhanviendieuphoi/KiemDuyetPage';
+import PhanCongPhanLoaiPage from '../pages/nhanviendieuphoi/PhanCongPhanLoaiPage';
+import PhanCongPhanLoaiDetail from '../pages/nhanviendieuphoi/PhanCongPhanLoaiDetail';
 import ThongBaoPage from '../components/Page/ThongBaoPage';
 import TruongDonViLayout from '../layouts/TruongDonViLayout';
 import XacMinhPhanAnhPage from '../pages/truongdonvi/XacMinhPhanAnhPage';
@@ -28,12 +28,13 @@ import PhanAnhCongDongPage from '../pages/nguoidung/suco/PhanAnhCongDongPage';
 import BanDoPage from '../pages/nguoidung/suco/BanDoPage';
 import DanhSachSuCo from '../pages/nguoidung/suco/DanhSachSuco';
 import Profile from '../pages/auth/Profile';
-import LichSuPage from '../pages/nhanvien/nhanviendieuphoi/LichSuPage';
+import LichSuPage from '../pages/nhanviendieuphoi/LichSuPage';
 import ThongKeDonViPage from '../pages/truongdonvi/ThongKeDonViPage';
 import DuyetMoLaiDetailPage from '../pages/truongdonvi/DuyetMoLaiDetailPage';
 import XemChiTieSuCoPage from '../pages/nhanvienxuly/XemChiTieSuCoPage';
-import BanDoDieuPhoiPage from '../pages/nhanvien/nhanviendieuphoi/BanDoDieuPhoiPage';
+import BanDoDieuPhoiPage from '../pages/nhanviendieuphoi/BanDoDieuPhoiPage';
 import BanDoTruongDonViPage from '../pages/truongdonvi/BanDoTruongDonViPage';
+import UpdateSuCoPage from '../pages/nguoidung/suco/UpdateSuCoPage';
 export const AppRouter = () => {
 
     return (
@@ -45,6 +46,7 @@ export const AppRouter = () => {
                 <Route path="/suco/create" element={<CreateSuco />} />
                 <Route path="/suco/lich-su" element={<LichSuSuCo />} />
                 <Route path="/suco/detail/:maSuCo" element={<DetailSuCoPage />} />
+                <Route path="/suco/update/:maSuCo" element={<UpdateSuCoPage />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/thong-bao" element={<ThongBaoPage />} />
             </Route>

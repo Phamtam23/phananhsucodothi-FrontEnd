@@ -1,18 +1,9 @@
 import type { DonViXuLyResponse } from './../../types/DonViXuLy';
 import {useState } from "react";
 import {CreatePhanCongService} from "../../services/PhanCongService";
-import type { SucoDetailResponse } from "../../types/Suco";
-import type {PhieuPhanCongSCResponse,CreatePhieuPhanCongRequest} from "../../types/PhieuPhanCong";
-
 export const useCreatePhanCong = (maSuCo: string) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  const [suco, setSuco] =
-    useState<SucoDetailResponse | null>(null);
-
-  const [phanCongList, setPhanCongList] =
-    useState<PhieuPhanCongSCResponse[]>([]);
 
   const [donviList, setDonViList] =
     useState<DonViXuLyResponse[]>([]);
@@ -45,7 +36,7 @@ export const useCreatePhanCong = (maSuCo: string) => {
       setLoading(true);
       setError(null);
 
-      const data: CreatePhieuPhanCongRequest = {
+      const data: CreatePhanCongService = {
         maSuCo: String(maSuCo),
         maDonViXuLy: donviList.map(
           (dv) => dv.maDonViXuLy

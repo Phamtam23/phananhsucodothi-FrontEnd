@@ -1,0 +1,462 @@
+@use '../../styles/urban-tokens' as *;
+
+// ─────────────────────────────────────
+// Brand Colors & Constants (Warm charcoal & warm greys)
+// ─────────────────────────────────────
+$primary-amber: #f5a623;
+$primary-amber-dark: #e09612;
+$text-dark: #0f172a;
+$text-secondary: #475569;
+$text-light: #94a3b8;
+$bg-light: #f8fafc;
+$white: #ffffff;
+$border-color: #e2e8f0;
+
+// Status colors
+$green-success: #10b981;
+$green-success-light: #ecfdf5;
+$red-danger: #ef4444;
+$red-danger-light: #fef2f2;
+$purple-info: #8b5cf6;
+$purple-info-light: #f5f3ff;
+$blue-info: #3b82f6;
+$blue-info-light: #eff6ff;
+
+.lich-su-page {
+  padding: 2rem 2.5rem;
+  background: $bg-light;
+  min-height: 100vh;
+  font-family: $font-body;
+  color: $text-dark;
+}
+
+// ─────────────────────────────────────
+// Header & Dashboard Section
+// ─────────────────────────────────────
+.lich-su-header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.5rem;
+  gap: 2rem;
+
+  .lich-su-title-box {
+    flex: 1;
+
+    .title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+
+      .icon-title {
+        color: $primary-amber;
+      }
+    }
+    
+    h2 {
+      font-family: $font-display;
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: $text-dark;
+      margin: 0;
+      letter-spacing: -0.02em;
+    }
+
+    p {
+      color: $text-secondary;
+      font-size: 14px;
+      margin: 0;
+    }
+  }
+}
+
+.lich-su-summary-cards {
+  display: flex;
+  gap: 1.25rem;
+  flex-shrink: 0;
+
+  .lich-su-card {
+    background: $white;
+    border-radius: 16px;
+    padding: 1.25rem 1.5rem;
+    box-shadow: $shadow-ambient;
+    border: 1px solid $outline-variant;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 240px;
+    transition: transform 0.25s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: $shadow-elevated;
+    }
+
+    .lich-su-card-content {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      .lich-su-card-title {
+        font-size: 11px;
+        font-weight: 700;
+        color: $text-light;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .lich-su-card-value {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: $text-dark;
+        line-height: 1.1;
+      }
+
+      .lich-su-card-subtext {
+        font-size: 12px;
+        color: $text-secondary;
+      }
+    }
+
+    .lich-su-card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &.blue {
+        color: $blue-info;
+        background: $blue-info-light;
+      }
+      &.orange {
+        color: $primary-amber;
+        background: #fffbeb;
+      }
+    }
+  }
+}
+
+// ─────────────────────────────────────
+// Tabs Navigation
+// ─────────────────────────────────────
+.lich-su-tabs-container {
+  margin-bottom: 1.5rem;
+}
+
+.lich-su-tabs {
+  display: flex;
+  gap: 6px;
+  background: rgba($text-dark, 0.04);
+  padding: 4px;
+  border-radius: 10px;
+  width: fit-content;
+
+  button {
+    padding: 8px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: $text-secondary;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: $text-dark;
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    &.active {
+      color: $text-dark;
+      background: $white;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+  }
+}
+
+// ─────────────────────────────────────
+// Filters Container
+// ─────────────────────────────────────
+.filter-card {
+  background: $white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: $shadow-ambient;
+  border: 1px solid $outline-variant;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .filter-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: $text-dark;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding-bottom: 8px;
+    border-bottom: 1px solid $outline-variant;
+
+    svg {
+      color: $text-light;
+    }
+  }
+}
+
+.lich-su-filter {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+
+  .filter-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    min-width: 180px;
+
+    label {
+      font-size: 12px;
+      font-weight: 600;
+      color: $text-secondary;
+    }
+
+    .input-with-icon {
+      position: relative;
+      display: flex;
+      align-items: center;
+
+      svg {
+        position: absolute;
+        left: 12px;
+        color: $text-light;
+        pointer-events: none;
+      }
+
+      input[type="date"] {
+        @include input-field;
+        padding-left: 2.25rem;
+        height: 38px;
+        font-size: 13px;
+      }
+    }
+
+    .filter-select {
+      @include input-field;
+      height: 38px;
+      font-size: 13px;
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 14px;
+      padding-right: 2.25rem;
+      cursor: pointer;
+    }
+  }
+
+  .btn-reset {
+    @include btn-secondary;
+    height: 38px;
+    padding: 0 1.25rem;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+}
+
+// ─────────────────────────────────────
+// Table Card & Responsive Table
+// ─────────────────────────────────────
+.table-card {
+  background: $white;
+  border-radius: 16px;
+  box-shadow: $shadow-ambient;
+  border: 1px solid $outline-variant;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.modern-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+
+  thead tr {
+    background: $bg-light;
+    border-bottom: 1px solid $border-color;
+
+    th {
+      padding: 1rem 1.25rem;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      color: $text-secondary;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid $outline-variant;
+      transition: background 0.15s ease;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &.clickable-row {
+        cursor: pointer;
+
+        &:hover {
+          background: rgba($primary-amber, 0.02);
+        }
+      }
+    }
+
+    td {
+      padding: 1.1rem 1.25rem;
+      color: $text-dark;
+      vertical-align: middle;
+
+      &.id-col {
+        font-family: monospace;
+        font-weight: 700;
+        color: $text-secondary;
+      }
+
+      &.title-col {
+        font-weight: 600;
+        max-width: 250px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      &.addr-col {
+        max-width: 220px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      &.date-col {
+        color: $text-secondary;
+      }
+
+      &.no-data {
+        text-align: center;
+        padding: 4rem 2rem;
+        color: $text-light;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+.action-col {
+  text-align: right;
+  
+  .btn-action-view {
+    @include btn-secondary;
+    height: 28px;
+    padding: 0 10px;
+    font-size: 11px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    border-radius: 6px;
+    border-color: $border-color;
+    
+    &:hover {
+      border-color: $primary-amber;
+      color: $primary-amber;
+      background: #fffbeb;
+    }
+  }
+}
+
+// ─────────────────────────────────────
+// Status Badges
+// ─────────────────────────────────────
+.badge-lich-su {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+
+  &.xong {
+    background: $green-success-light;
+    color: $green-success;
+  }
+
+  &.dang {
+    background: $blue-info-light;
+    color: $blue-info;
+  }
+
+  &.cho {
+    background: #fff7ed;
+    color: #d97706;
+  }
+
+  &.tu-choi {
+    background: $red-danger-light;
+    color: $red-danger;
+  }
+
+  &.bo-sung {
+    background: $purple-info-light;
+    color: $purple-info;
+  }
+}
+
+// ─────────────────────────────────────
+// Loading Spinner Row & Pagination
+// ─────────────────────────────────────
+.lich-su-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 5rem 2rem;
+  color: $text-secondary;
+
+  .kd-spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid $border-color;
+    border-top-color: $primary-amber;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.pagination-row {
+  padding: 1.25rem;
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid $outline-variant;
+}

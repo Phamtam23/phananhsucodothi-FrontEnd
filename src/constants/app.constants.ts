@@ -16,9 +16,11 @@ export const API_CONFIG = {
         },
         SUCO: {
             GET_BY_ID: (id: number | string) => `/suco/${id}`,
-            GET_ALL: () => `/suco`,
+            GET_ALL: () => `/suco/all`,
             GET_ALL_BY_NGUOI_DAN: () => `/suco/nguoi-dan`,
             CREATE: "/suco",
+            UPDATE: () => `/suco`,
+            GET_BY_BAN_DO: () => `/suco/ban-do`,
             GET_ALL_BY_TRANGTHAI: (trangThai: string) => `/suco/trang-thai/${trangThai}`,
         },
         PHANCONG: {

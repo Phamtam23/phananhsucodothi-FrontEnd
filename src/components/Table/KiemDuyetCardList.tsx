@@ -1,14 +1,17 @@
-import { MapPin, X, CheckCircle2, AlertTriangle, Info } from "lucide-react";
+import { MapPin, CheckCircle2, XCircle, Clock } from "lucide-react";
+import { useState } from "react";
 import type { SucoSumaryResponse } from "../../types/Suco";
 import { API_CONFIG } from "../../constants/app.constants";
-import { formatDate, formatTime } from "../../utils/Format";
+import { timeAgo } from "../../utils/Format";
+import { TrangThaiKiemDuyet } from "../../types/PhieuKiemDuyet";
 import "./KiemDuyetCardList.scss";
 
 type Props = {
   data: SucoSumaryResponse[];
   onRowClick: (item: SucoSumaryResponse) => void;
-  onApprove?: (item: SucoSumaryResponse) => void;
-  onReject?: (item: SucoSumaryResponse) => void;
+  onKiemDuyet?: (maSuCo:string ,trangThai: TrangThaiKiemDuyet ,lyDo : string ) => void;
+  onRequireMoreInfo?: (item: SucoSumaryResponse) => void;
+  loai?: "KIEM_DUYET" | "PHAN_CONG";
 };
 
 const getReliability = (diemSpam: number | undefined) => {
@@ -20,31 +23,80 @@ const getReliability = (diemSpam: number | undefined) => {
   return { score, colorClass: "low" };
 };
 
-// A helper for severity (just mimicking the UI for now, you can adjust based on real data)
-const getSeverityInfo = (item: SucoSumaryResponse) => {
-    // Random or mock logic if real severity doesn't exist on SucoSumaryResponse
-    const score = 100 - (item.diemSpam ?? 0);
-    if (score < 50) return { label: "Mức độ: Cao", className: "high", icon: <AlertTriangle /> };
-    if (score < 80) return { label: "Mức độ: Trung bình", className: "medium", icon: <Info /> };
-    return { label: "Mức độ: Thấp", className: "low", icon: <Info /> };
-}
+const getStatusDetails = (trangThai: string) => {
+  switch (trangThai) {
+    case "CHO_TIEP_NHAN":
+      return { label: "Chờ duyệt", className: "status-cho-duyet" };
+    case "DA_TIEP_NHAN":
+      return { label: "Chờ phân công", className: "status-cho-phan-cong" };
+    case "TU_CHOI":
+      return { label: "Từ chối", className: "status-tu-choi" };
+    case "BO_SUNG":
+      return { label: "Cần bổ sung", className: "status-bo-sung" };
+    case "DANG_XU_LY":
+      return { label: "Đang xử lý", className: "status-dang-xu-ly" };
+    case "DA_XU_LY_XONG":
+      return { label: "Đã xử lý xong", className: "status-da-xu-ly" };
+    case "DA_DONG":
+      return { label: "Đã đóng", className: "status-da-dong" };
+    default:
+      return { label: trangThai, className: "status-default" };
+  }
+};
 
-const KiemDuyetCardList = ({ data, onRowClick, onApprove, onReject }: Props) => {
+const getPriorityDetails = (uuTien: string) => {
+  switch (uuTien) {
+    case "KHAN_CAP":
+      return { label: "Khẩn cấp", className: "prio-khan-cap" };
+    case "CAO":
+      return { label: "Ưu tiên cao", className: "prio-cao" };
+    case "TRUNG_BINH":
+      return { label: "Trung bình", className: "prio-trung-binh" };
+    case "THAP":
+      return { label: "Thấp", className: "prio-thap" };
+    default:
+      return { label: uuTien, className: "prio-default" };
+  }
+};
+
+const KiemDuyetCardList = ({ data, onRowClick, onKiemDuyet, loai }: Props) => {
+  const [rejectTargetId, setRejectTargetId] = useState<string | null>(null);
+  const [rejectReason, setRejectReason] = useState("");
+
+  const startReject = (maSuCo: string) => {
+    setRejectTargetId(maSuCo);
+    setRejectReason("");
+  };
+
+  const cancelReject = () => {
+    setRejectTargetId(null);
+    setRejectReason("");
+  };
+
+  const submitReject = (item: SucoSumaryResponse) => {
+    if (!onKiemDuyet) return;
+    onKiemDuyet(item.maSuCo, TrangThaiKiemDuyet.TU_CHOI, rejectReason.trim());
+    cancelReject();
+  };
+
   return (
     <div className="kd-card-list">
       {data.map((item) => {
         const rel = getReliability(item.diemSpam);
-        const severity = getSeverityInfo(item);
-        
+        const status = getStatusDetails(item.trangThai);
+        const priority = getPriorityDetails(item.doUuTien);
         return (
-          <div 
-            key={item.maSuCo} 
-            className={`kd-list-card severity-${severity.className}`}
+          <div
+            key={item.maSuCo}
+            className={`kd-list-card severity ${priority.className}`}
             onClick={() => onRowClick(item)}
           >
-            {/* Left Image */}
+            {/* Top Image & Overlays */}
             <div className="card-img-wrap">
-              <div className="card-id-overlay">ID: #{item.maSuCo.slice(0, 8).toUpperCase()}</div>
+              <div className="card-id-overlay">#{item.maSuCo}</div>
+              <div className={`card-status-overlay ${status.className}`}>
+                {status.label}
+              </div>
               {item.thumbnail ? (
                 <img
                   src={API_CONFIG.BASE_URL + item.thumbnail}
@@ -55,76 +107,109 @@ const KiemDuyetCardList = ({ data, onRowClick, onApprove, onReject }: Props) => 
               )}
             </div>
 
-            {/* Middle Content */}
-            <div className="card-content-wrap">
-              <div className="card-info-top">
-                <h3>{item.tieuDe || item.noiDung || "Không có nội dung"}</h3>
-                <div className="card-address">
-                  <MapPin />
-                  <span>{item.diaDiem || "Chưa xác định"}</span>
-                </div>
-              </div>
-
-              <div className="card-badges">
-                <span className="badge-category">HẠ TẦNG GIAO THÔNG</span>
-                
-                <span className={`badge-severity ${severity.className}`}>
-                  {severity.icon}
-                  {severity.label}
+            {/* Bottom Content Container */}
+            <div className="card-info-container">
+              {/* Priority & Time Ago */}
+              <div className="card-meta-row">
+                <span className={`badge-priority ${priority.className}`}>
+                  {priority.label}
+                </span>
+                <span className="time-elapsed">
+                  <Clock size={14} />
+                  {timeAgo(item.thoiGianTao)}
                 </span>
               </div>
-            </div>
 
-            {/* Right Side Stats & Actions */}
-            <div className="card-actions-wrap">
-              <div className="card-stats-row">
-                <div className="stat-block">
-                  <span className="stat-label">ĐỘ TIN CẬY</span>
-                  <div className="confidence-bar">
-                    <div className="bar-bg">
-                      <div 
-                        className={`bar-fill bg-${rel.colorClass}`} 
-                        style={{ width: `${rel.score}%` }} 
-                      />
-                    </div>
-                    <span className={`bar-text text-${rel.colorClass}`}>{rel.score}%</span>
-                  </div>
-                  {rel.score < 50 && (
-                    <span className="spam-warning-text">{item.lyDoSpam}</span>
-                  )}
-                </div>
+              {/* Title */}
+              <h3 className="card-title" title={item.tieuDe || item.noiDung}>
+                {item.tieuDe || item.noiDung || "Không có tiêu đề"}
+              </h3>
 
-                <div className="stat-block">
-                  <span className="stat-label">NGÀY GỬI</span>
-                  <span className="stat-value">
-                    {formatDate(item.thoiGianTao)}, {formatTime(item.thoiGianTao)}
-                  </span>
-                </div>
+              {/* Location */}
+              <div className="card-address">
+                <MapPin size={16} />
+                <span>{item.diaDiem || "Chưa xác định"}</span>
               </div>
 
-              <div className="card-buttons-row">
-                <button className="btn-detail" onClick={(e) => { e.stopPropagation(); onRowClick(item); }}>
-                  Xem chi tiết
-                </button>
-                <button 
-                  className="btn-reject" 
-                  title="Từ chối"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onReject?.(item);
-                  }}
-                >
-                  <X size={18} />
-                </button>
-                <button 
-                  className="btn-approve"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onApprove?.(item);
-                  }}
-                >
-                  <CheckCircle2 size={16} /> Duyệt
-                </button>
+              {/* Reliability Progress Bar */}
+              <div className="confidence-bar-section">
+                <span className="confidence-label">Độ tin cậy AI:</span>
+                <div className="bar-bg">
+                  <div
+                    className={`bar-fill bg-${rel.colorClass}`}
+                    style={{ width: `${rel.score}%` }}
+                  />
+                </div>
+                <span className={`bar-text text-${rel.colorClass}`}>{rel.score}%</span>
+              </div>      
+
+              <div className="card-actions">
+                {item.trangThai === "CHO_TIEP_NHAN" && loai === "KIEM_DUYET" && (
+                  <>
+                    <div className="actions-primary-row">
+                      <button
+                        className="btn-approve"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onKiemDuyet?.(item.maSuCo, TrangThaiKiemDuyet.DUYET, "");
+                        }}
+                      >
+                        <CheckCircle2 size={16} /> Duyệt
+                      </button>
+
+                      <button
+                        className="btn-reject"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          startReject(item.maSuCo);
+                        }}
+                      >
+                        <XCircle size={16} /> Từ chối
+                      </button>
+                    </div>
+                    <button
+                      className="btn-detail-full"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onKiemDuyet?.(item.maSuCo, TrangThaiKiemDuyet.BO_SUNG, "");
+                      }}
+                    >
+                      Yêu cầu bổ sung
+                    </button>
+
+                    {rejectTargetId === item.maSuCo && (
+                      <div className="reject-reason-panel">
+                        <textarea
+                          value={rejectReason}
+                          onChange={(e) => setRejectReason(e.target.value)}
+                          placeholder="Nhập lý do từ chối..."
+                          className="reject-reason-input"
+                        />
+                        <div className="reject-actions-row">
+                          <button
+                            className="btn-reject-confirm"
+                            disabled={!rejectReason.trim()}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              submitReject(item);
+                            }}
+                          >
+                            Xác nhận từ chối
+                          </button>
+                          <button
+                            className="btn-secondary"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              cancelReject();
+                            }}
+                          >
+                            Hủy
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </>
+                )}
               </div>
             </div>
           </div>

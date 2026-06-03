@@ -1,0 +1,763 @@
+@use '../../styles/urban-tokens' as *;
+
+$gold: #f2a900;
+$gold-hover: #e09d00;
+$gold-light: #fef8e7;
+$gold-dark: #b8860b;
+$green: #059669;
+$green-light: #d1fae5;
+$red: #dc2626;
+$red-light: #fee2e2;
+$text-primary: #1d2939;
+$text-secondary: #667085;
+$border-color: #eaecf0;
+$bg-page: #f9fafb;
+$bg-white: #ffffff;
+$font: 'Segoe UI', 'Be Vietnam Pro', -apple-system, sans-serif;
+
+// ── General Page Layout ─────────────────────────────────────────
+.kdp-page {
+  padding: 24px 32px;
+  background-color: $bg-page;
+  min-height: 100vh;
+  font-family: $font;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+// ── Breadcrumbs ─────────────────────────────────────────────────
+.kdp-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: $text-secondary;
+
+  .kdp-breadcrumb-item {
+    cursor: pointer;
+    transition: color 0.15s ease;
+
+    &:hover {
+      color: $gold;
+    }
+
+    &.active {
+      color: $text-secondary;
+      font-weight: 500;
+      cursor: default;
+      &:hover {
+        color: $text-secondary;
+      }
+    }
+  }
+
+  .kdp-breadcrumb-separator {
+    color: #d0d5dd;
+    user-select: none;
+  }
+}
+
+// ── Page Title ──────────────────────────────────────────────────
+.kdp-page-title {
+  margin: 0 0 4px 0;
+  font-size: 26px;
+  font-weight: 700;
+  color: #101828;
+  letter-spacing: -0.5px;
+}
+
+// ── Main Layout Split ───────────────────────────────────────────
+.kdp-layout {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 28px;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .kdp-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+.kdp-main {
+  min-width: 0;
+}
+
+.kdp-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: sticky;
+  top: 24px;
+}
+
+// ── Left Card: Incident Detail ──────────────────────────────────
+.kdp-suco-card {
+  background: $bg-white;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.kdp-suco-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.kdp-suco-title-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.kdp-suco-warning-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #fef08a; // Yellow-200
+  color: #a16207; // Yellow-800
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.kdp-suco-code-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: #98a2b3;
+  letter-spacing: 0.8px;
+  margin-bottom: 2px;
+}
+
+.kdp-suco-code-value {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #101828;
+}
+
+// ── Status Badges ───────────────────────────────────────────────
+.kdp-status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+
+  &.status--cho_tiep_nhan {
+    background-color: #fef3c7;
+    color: #d97706;
+  }
+  &.status--bo_sung {
+    background-color: #f3e8ff;
+    color: #7c3aed;
+  }
+  &.status--tu_choi {
+    background-color: #fee2e2;
+    color: #dc2626;
+  }
+  &.status--da_tiep_nhan, &.status--da_xu_ly_xong {
+    background-color: #d1fae5;
+    color: #059669;
+  }
+  &.status--dang_xu_ly {
+    background-color: #dbeafe;
+    color: #2563eb;
+  }
+  &.status--da_dong {
+    background-color: #f3f4f6;
+    color: #4b5563;
+  }
+}
+
+// ── Slideshow ───────────────────────────────────────────────────
+.kdp-slideshow {
+  width: 100%;
+
+  .slideshow-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .slideshow-wrapper {
+    position: relative;
+    width: 100%;
+    height: 380px;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #f4f5f7;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+
+    @media (max-width: 640px) {
+      height: 240px;
+    }
+
+    .slide-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .slide-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #101828;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    transition: all 0.2s ease;
+    user-select: none;
+    z-index: 10;
+
+    &:hover {
+      background: white;
+      color: $gold;
+    }
+
+    &.prev-arrow { left: 16px; }
+    &.next-arrow { right: 16px; }
+  }
+
+  .slide-badge {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 12px;
+    z-index: 10;
+  }
+
+  .slide-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 4px;
+
+    .slide-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #d0d5dd;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &.active {
+        background: $gold;
+        width: 18px;
+        border-radius: 4px;
+      }
+    }
+  }
+
+  .slideshow-placeholder {
+    width: 100%;
+    height: 240px;
+    background: #f9fafb;
+    border: 1px dashed #d0d5dd;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: $text-secondary;
+    font-size: 14px;
+
+    i {
+      font-size: 32px;
+      color: #98a2b3;
+    }
+  }
+}
+
+// ── Detail Section (Location, Description) ──────────────────────
+.kdp-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.kdp-section-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #ba8a3a;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.kdp-location-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: #f2f4f7;
+  border-radius: 12px;
+  padding: 16px 20px;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: #344054;
+
+  i {
+    font-size: 18px;
+    color: #e68a00;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+}
+
+.kdp-content-box {
+  background: #f9fafb;
+  border-left: 4px solid #b8860b; // Thick gold border
+  border-radius: 0 12px 12px 0;
+  padding: 18px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.kdp-content-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  font-style: italic;
+  color: #475467;
+}
+
+.kdp-content-description {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: #1d2939;
+}
+
+// ── Right Sidebar Card: Moderation Action ────────────────────────
+.kdp-moderation-panel {
+  background: $bg-white;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.kdp-panel-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid $border-color;
+}
+
+.kdp-panel-icon-shield {
+  font-size: 22px;
+  color: #b8860b;
+}
+
+.kdp-panel-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #101828;
+}
+
+// ── Form Input Fields ───────────────────────────────────────────
+.kdp-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.kdp-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #667085;
+  letter-spacing: 0.6px;
+}
+
+.kdp-hint-required {
+  color: #d92d20;
+  font-style: italic;
+  font-weight: 600;
+}
+
+.kdp-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 16px;
+  border: 1.5px solid #d0d5dd;
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+  font-family: $font;
+  color: #1d2939;
+  background-color: #f9fafb;
+  resize: vertical;
+  outline: none;
+  transition: all 0.2s ease;
+
+  &::placeholder {
+    color: #98a2b3;
+  }
+
+  &:focus {
+    background-color: #fff;
+    border-color: $gold;
+    box-shadow: 0 0 0 3px rgba(242, 169, 0, 0.15);
+  }
+
+  &:disabled {
+    background: #f4f5f7;
+    cursor: not-allowed;
+  }
+
+  &--error {
+    border-color: #fda29b;
+    background-color: #fffbfa;
+    &:focus {
+      border-color: #f04438;
+      box-shadow: 0 0 0 3px rgba(240, 68, 56, 0.15);
+    }
+  }
+}
+
+.kdp-error-text {
+  margin: 2px 0 0;
+  font-size: 12.5px;
+  color: #d92d20;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 500;
+
+  i {
+    font-size: 14px;
+  }
+}
+
+// ── Moderation Buttons ──────────────────────────────────────────
+.kdp-actions-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.kdp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 14.5px;
+  font-weight: 700;
+  font-family: $font;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  i {
+    font-size: 18px;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+// Main Approve Button: Wide, yellow-gold
+.kdp-btn--approve-large {
+  @extend .kdp-btn;
+  width: 100%;
+  background-color: #ffc107; // Bright Golden Yellow
+  color: #101828; // Bold dark text
+  box-shadow: 0 2px 8px rgba(242, 169, 0, 0.2);
+
+  &:hover:not(:disabled) {
+    background-color: #e0a800;
+    box-shadow: 0 4px 12px rgba(242, 169, 0, 0.3);
+  }
+}
+
+// Button Row
+.kdp-actions-row {
+  display: flex;
+  gap: 12px;
+
+  .kdp-btn {
+    flex: 1;
+  }
+}
+
+.kdp-btn--require-info {
+  background-color: #f2f4f7;
+  color: #344054;
+  border: 1px solid #d0d5dd;
+
+  &:hover:not(:disabled) {
+    background-color: #eaecf0;
+  }
+}
+
+.kdp-btn--reject {
+  background-color: #fee2e2;
+  color: #d92d20;
+
+  &:hover:not(:disabled) {
+    background-color: #fcd5d5;
+  }
+}
+
+// ── Bottom Info Area ────────────────────────────────────────────
+.kdp-creation-time {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px dashed $border-color;
+  padding-top: 14px;
+  margin-top: 4px;
+
+  .kdp-time-text {
+    font-size: 11.5px;
+    color: #667085;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    i {
+      font-size: 14px;
+      color: #98a2b3;
+    }
+  }
+
+  .help-icon {
+    font-size: 15px;
+    color: #98a2b3;
+    cursor: help;
+    transition: color 0.2s;
+
+    &:hover {
+      color: $gold;
+    }
+  }
+}
+
+// ── Map Widget Card ─────────────────────────────────────────────
+.kdp-map-card {
+  background: $bg-white;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+}
+
+.kdp-map-header-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.kdp-map-header {
+  padding: 16px 20px;
+  background-color: #f2f4f7;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid $border-color;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #eaecf0;
+  }
+}
+
+.kdp-map-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.kdp-map-icon {
+  font-size: 20px;
+  color: #4b5563;
+}
+
+.kdp-map-title {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: #344054;
+  letter-spacing: 0.5px;
+}
+
+.kdp-map-subtitle {
+  margin: 2px 0 0 0;
+  font-size: 10.5px;
+  color: #667085;
+}
+
+.kdp-map-arrow {
+  font-size: 16px;
+  color: #98a2b3;
+}
+
+.kdp-map-iframe-container {
+  padding: 12px;
+  background-color: #fff;
+}
+
+// ── Success Feedback Panel ──────────────────────────────────────
+.kdp-success-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 10px;
+}
+
+.kdp-success-green {
+  background-color: $green-light;
+  border: 1px solid #a7f3d0;
+}
+
+.kdp-success-red {
+  background-color: $red-light;
+  border: 1px solid #fecaca;
+}
+
+.kdp-success-purple {
+  background-color: #f5f3ff;
+  border: 1px solid #ddd6fe;
+}
+
+.kdp-success-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 18px;
+  font-weight: 700;
+  flex-shrink: 0;
+  color: #fff;
+}
+
+.kdp-icon-green { background-color: $green; }
+.kdp-icon-red   { background-color: $red; }
+.kdp-icon-purple { background-color: #7c3aed; }
+
+.kdp-success-text-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.kdp-success-title {
+  margin: 0 0 4px 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #101828;
+}
+
+.kdp-success-sub {
+  margin: 0;
+  font-size: 13px;
+  color: #344054;
+  line-height: 1.4;
+
+  strong {
+    color: #101828;
+  }
+}
+
+// ── Extra Panels (Loading / Errors) ──────────────────────────────
+.kdp-loading {
+  padding: 40px;
+  text-align: center;
+  background: $bg-white;
+  border-radius: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  font-weight: 600;
+  color: $text-secondary;
+}
+
+.kdp-error-panel {
+  padding: 40px;
+  text-align: center;
+  background: $bg-white;
+  border-radius: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  color: $red;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+
+  p {
+    margin: 0;
+    font-weight: 600;
+  }
+}
+
+.kdp-btn--back {
+  background-color: #f2f4f7;
+  color: #344054;
+  border: 1px solid #d0d5dd;
+  padding: 8px 16px;
+  font-size: 13.5px;
+
+  &:hover {
+    background-color: #eaecf0;
+  }
+}
+
+// ── Spinner ─────────────────────────────────────────────────────
+.kdp-spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: kdp-spin 0.7s linear infinite;
+}
+
+@keyframes kdp-spin {
+  to { transform: rotate(360deg); }
+}

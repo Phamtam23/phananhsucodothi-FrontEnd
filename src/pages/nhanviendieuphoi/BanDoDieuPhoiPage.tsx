@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { GetALLSuCoService } from '../../../services/SucoService';
-import type { SucoSumaryResponse } from '../../../types/Suco';
-import IncidentMap from '../../../components/Map/IncidentMap';
-import IncidentSidebarList from '../../../components/Map/IncidentSidebarList';
-import '../../nguoidung/suco/BanDoPage.scss';
+import { GetALLSuCoService } from '../../services/SucoService';
+import type { SucoSumaryResponse } from '../../types/Suco';
+import IncidentMap from '../../components/Map/IncidentMap';
+import IncidentSidebarList from '../../components/Map/IncidentSidebarList';
+import '../nguoidung/suco/BanDoPage.scss';
 
 const BanDoDieuPhoiPage = () => {
   const [incidents, setIncidents] = useState<SucoSumaryResponse[]>([]);
@@ -23,24 +23,24 @@ const BanDoDieuPhoiPage = () => {
         let allIncidents = response.data?.content ?? [];
 
         const allowedStatuses = ["CHO_TIEP_NHAN", "DA_TIEP_NHAN", "DANG_XU_LY"];
-        
+
         let filtered = allIncidents.filter(incident => allowedStatuses.includes(incident.trangThai || ""));
 
 
         if (trangThaiFilter !== "tat_ca") {
-            filtered = filtered.filter(incident => incident.trangThai === trangThaiFilter);
+          filtered = filtered.filter(incident => incident.trangThai === trangThaiFilter);
         }
 
         filtered = filtered.filter(incident => {
-            if (incident.viDo && incident.kinhDo) {
-              return incident.viDo >= 15.9000 && incident.viDo <= 16.2500 &&
-                incident.kinhDo >= 107.8000 && incident.kinhDo <= 108.3500;
-            }
-            if (incident.diaDiem) {
-              const loc = incident.diaDiem.toLowerCase();
-              return loc.includes("đà nẵng") || loc.includes("da nang");
-            }
-            return false;
+          if (incident.viDo && incident.kinhDo) {
+            return incident.viDo >= 15.9000 && incident.viDo <= 16.2500 &&
+              incident.kinhDo >= 107.8000 && incident.kinhDo <= 108.3500;
+          }
+          if (incident.diaDiem) {
+            const loc = incident.diaDiem.toLowerCase();
+            return loc.includes("đà nẵng") || loc.includes("da nang");
+          }
+          return false;
         });
 
         setIncidents(filtered);
@@ -66,7 +66,7 @@ const BanDoDieuPhoiPage = () => {
         }}
       >
         <h2>Sự cố đang điều phối / xử lý</h2>
-        <div className="filter-group" style={{ marginTop: '16px' }}>
+        <div className="filter" style={{ marginTop: '16px' }}>
           <select
             value={trangThaiFilter}
             onChange={e => setTrangThaiFilter(e.target.value)}
@@ -81,7 +81,7 @@ const BanDoDieuPhoiPage = () => {
       </IncidentSidebarList>
 
       <div className="map-area">
-        <IncidentMap incidents={incidents} mapCenter={mapCenter} mapZoom={mapZoom} />
+        <IncidentMap loai="DIEU_PHOI" incidents={incidents} mapCenter={mapCenter} mapZoom={mapZoom} />
       </div>
     </div>
   );

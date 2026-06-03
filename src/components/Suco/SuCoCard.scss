@@ -12,6 +12,7 @@
     position: relative;
     width: 100%;
     height: 160px;
+    overflow: hidden;
   }
 
   &__img {
@@ -34,6 +35,8 @@
     display: flex;
     gap: 6px;
     flex-wrap: wrap;
+    align-items: center;
+    z-index: 2;
   }
 
   &__body {
@@ -82,6 +85,7 @@
   &--xl   { background: #EAF3DE; color: #27500A; }
   &--hoan { background: #E1F5EE; color: #085041; }
   &--spam { background: #FCEBEB; color: #791F1F; }
-  &--loai { background: #EEEDFE; color: #3C3489; }
+  &--loai { background: #D8DBFF; color: #2B2E8E; }
+  &--more { background: #F4F4F8; color: #555; }
 }
 
