@@ -1,14 +1,12 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
-
 import "./KiemDuyetDetailPage.scss";
-
 import { CreatePhieuKiemDuyetService } from "../../services/PhieuKiemDuyetService";
 import { useDetailSuco } from "../../hooks/suco/useDetailSuco";
 import { API_CONFIG } from "../../constants/app.constants";
 import { formatDateTime } from "../../utils/Format";
 import { TrangThaiKiemDuyet } from "../../types/PhieuKiemDuyet";
-
+import { getLableTrangThaiSuco } from "../../utils/StatusUtils";
 import type {
   CreatePhieuKiemDuyetRequest,
   PhieuKiemDuyetResponse,
@@ -118,26 +116,7 @@ const KiemDuyetDetailPage = () => {
   const isDuyet = phieuKetQua?.trangThai === TrangThaiKiemDuyet.DUYET;
   const isBoSung = phieuKetQua?.trangThai === TrangThaiKiemDuyet.BO_SUNG;
 
-  const getStatusLabel = (trangThai: string) => {
-    switch (trangThai) {
-      case "CHO_TIEP_NHAN":
-        return "ĐANG CHỜ DUYỆT";
-      case "DA_TIEP_NHAN":
-        return "ĐÃ TIẾP NHẬN";
-      case "TU_CHOI":
-        return "ĐÃ TỪ CHỐI";
-      case "BO_SUNG":
-        return "CẦN BỔ SUNG";
-      case "DANG_XU_LY":
-        return "ĐANG XỬ LÝ";
-      case "DA_XU_LY_XONG":
-        return "ĐÃ HOÀN THÀNH";
-      case "DA_DONG":
-        return "ĐÃ ĐÓNG";
-      default:
-        return trangThai;
-    }
-  };
+
 
   const lat = suco.viDo;
   const lon = suco.kinhDo;
@@ -146,36 +125,16 @@ const KiemDuyetDetailPage = () => {
 
   return (
     <div className="kdp-page">
-      {/* Breadcrumbs */}
-      <div className="kdp-breadcrumbs">
-        <span className="kdp-breadcrumb-item" onClick={() => navigate("/nhanviendieuphoi/kiemduyet")}>
-          Danh sách phản ánh
-        </span>
-        <span className="kdp-breadcrumb-separator">&gt;</span>
-        <span className="kdp-breadcrumb-item active">Chi tiết kiểm duyệt</span>
-      </div>
-
-      {/* Page Title */}
       <h1 className="kdp-page-title">Kiểm duyệt Sự cố</h1>
 
-      {/* Grid Layout */}
       <div className="kdp-layout">
-        {/* Left Column: Details */}
+
         <div className="kdp-main">
           <div className="kdp-suco-card">
-            {/* Top Code & Status */}
             <div className="kdp-suco-header">
-              <div className="kdp-suco-title-group">
-                <div className="kdp-suco-warning-icon">
-                  <i className="ti ti-alert-triangle" />
-                </div>
-                <div>
-                  <span className="kdp-suco-code-label">MÃ SỰ CỐ</span>
-                  <h2 className="kdp-suco-code-value">{suco.maSuCo}</h2>
-                </div>
-              </div>
+             
               <span className={`kdp-status-badge status--${suco.trangThai.toLowerCase()}`}>
-                {getStatusLabel(suco.trangThai)}
+                {getLableTrangThaiSuco(suco.trangThai)}
               </span>
             </div>
 

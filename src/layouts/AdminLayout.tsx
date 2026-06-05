@@ -51,9 +51,8 @@ const AdminLayout = () => {
         </nav>
         
         <div 
-            className="admin-sidebar__item" 
+            className="admin-sidebar__item admin-sidebar__item--logout" 
             onClick={handleLogout}
-            style={{ cursor: "pointer", marginTop: "auto", marginBottom: "20px", color: "#ef4444" }}
         >
           <span className="admin-sidebar__item-icon"><LogOut size={18} /></span>
           <span className="admin-sidebar__item-label">Đăng xuất</span>

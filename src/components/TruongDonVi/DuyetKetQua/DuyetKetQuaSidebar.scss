@@ -1,0 +1,458 @@
+// ─── Brand tokens (lấy từ màu app: dark navy + vàng cam) ─────────────────────
+$brand-amber: #F5A623;
+$brand-amber-light: #FEF3DC;
+$brand-amber-dark: #B87309;
+
+$radius-sm: 6px;
+$radius-md: 8px;
+$radius-lg: 12px;
+
+// ─── Sidebar container ────────────────────────────────────────────────────────
+.dkq-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+}
+
+// ─── Card chung ───────────────────────────────────────────────────────────────
+.dkq-sidebar-card {
+    background: #fff;
+    border: 0.5px solid rgba(0, 0, 0, 0.1);
+    border-radius: $radius-lg;
+    padding: 14px 16px;
+
+    h3 {
+        font-size: 11px;
+        font-weight: 600;
+        color: #888;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        margin: 0 0 12px;
+    }
+
+    &-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+
+        h3 {
+            margin: 0;
+        }
+    }
+
+    &-meta {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11px;
+        color: #888;
+    }
+}
+
+// ─── Chỉ đạo / yêu cầu block ─────────────────────────────────────────────────
+.kq-chidao-block {
+    margin-bottom: 18px;
+    padding: 12px 14px;
+    background: #f0f9ff;
+    border-left: 3px solid #0284c7;
+    border-radius: 0 $radius-md $radius-md 0;
+
+    &-title {
+        font-size: 11px;
+        font-weight: 700;
+        color: #0369a1;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+        display: block;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    li {
+        font-size: 12px;
+        color: #334155;
+        padding-left: 14px;
+        position: relative;
+        line-height: 1.5;
+
+        &::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #0284c7;
+            font-weight: 700;
+        }
+    }
+}
+
+.chidao-sidebar-header {
+    margin-bottom: 16px;
+}
+
+// ─── Badge trạng thái ─────────────────────────────────────────────────────────
+.kq-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+    flex-shrink: 0;
+    letter-spacing: 0.02em;
+
+    // Chờ duyệt → vàng cam brand
+    &--cho,
+    &.cho_duyet {
+        background: $brand-amber-light;
+        color: $brand-amber-dark;
+        border: 0.5px solid rgba($brand-amber, 0.4);
+    }
+
+    // Đã duyệt → xanh lá
+    &--duyet,
+    &.da_duyet {
+        background: #EAF3DE;
+        color: #3B6D11;
+        border: 0.5px solid rgba(#639922, 0.3);
+    }
+
+    // Từ chối / làm lại → đỏ
+    &--tu,
+    &.tu_choi {
+        background: #FCEBEB;
+        color: #A32D2D;
+        border: 0.5px solid rgba(#E24B4A, 0.3);
+    }
+
+    // Đang chờ duyệt — variant inline text (dùng trong list button)
+    &--pending-text {
+        background: transparent;
+        color: $brand-amber-dark;
+        font-weight: 700;
+        padding: 0;
+        letter-spacing: 0.04em;
+    }
+}
+
+// ─── KetQuaSelectList ─────────────────────────────────────────────────────────
+.kq-select-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.kq-select-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    &+& {
+        padding-top: 10px;
+        border-top: 0.5px solid rgba(0, 0, 0, 0.07);
+        margin-top: 5px;
+    }
+
+    &-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 2px 4px;
+    }
+
+    &-name {
+        font-size: 12px;
+        font-weight: 500;
+        color: #333;
+    }
+
+    &-count {
+        font-size: 11px;
+        color: #888;
+    }
+}
+
+.kq-select-empty {
+    font-size: 12px;
+    color: #888;
+    padding: 8px 2px;
+}
+
+.kq-select-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: $radius-md;
+    border: 0.5px solid rgba(0, 0, 0, 0.1);
+    background: #f7f7f5;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    transition: border-color 0.15s, background 0.15s;
+
+    &:hover {
+        border-color: rgba(0, 0, 0, 0.18);
+        background: #f0f0ee;
+    }
+
+    // Active → dùng màu amber brand thay vì blue
+    &--active {
+        border: 1.5px solid $brand-amber;
+        background: $brand-amber-light;
+
+        .kq-select-num {
+            background: $brand-amber;
+            color: #fff;
+        }
+
+        .kq-select-label {
+            color: $brand-amber-dark;
+        }
+    }
+}
+
+.kq-select-num {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #e0e0dc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    color: #666;
+    flex-shrink: 0;
+    transition: background 0.15s, color 0.15s;
+}
+
+.kq-select-meta {
+    flex: 1;
+    min-width: 0;
+}
+
+.kq-select-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: #222;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.kq-select-date {
+    display: block;
+    font-size: 11px;
+    color: #888;
+    margin-top: 1px;
+}
+
+// ─── KetQuaDetailPanel ────────────────────────────────────────────────────────
+.kq-detail-panel {
+    display: flex;
+    flex-direction: column;
+}
+
+.kq-detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 6px 0;
+    font-size: 12px;
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.06);
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    span:first-child {
+        color: #888;
+        flex-shrink: 0;
+        margin-right: 8px;
+    }
+
+    strong {
+        color: #222;
+        font-weight: 500;
+        text-align: right;
+        word-break: break-word;
+    }
+
+    &--block {
+        flex-direction: column;
+        gap: 3px;
+
+        strong,
+        p {
+            text-align: left;
+            font-size: 12px;
+            color: #333;
+            font-weight: 400;
+            line-height: 1.5;
+            margin: 0;
+        }
+    }
+}
+
+// ─── Hình ảnh — kích thước cố định, không bự ra ───────────────────────────────
+.kq-detail-images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+    padding-bottom: 4px;
+}
+
+.kq-detail-thumb {
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+    border-radius: $radius-sm;
+    border: 0.5px solid rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+    display: block;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.15s;
+
+    &:hover {
+        opacity: 0.85;
+        transform: scale(1.04);
+    }
+}
+
+// ─── Lý do từ chối ────────────────────────────────────────────────────────────
+.kq-detail-reject {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: #FCEBEB;
+    border-left: 3px solid #E24B4A;
+    border-radius: 0;
+
+    span {
+        display: block;
+        font-size: 11px;
+        font-weight: 700;
+        color: #A32D2D;
+        margin-bottom: 3px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+    }
+
+    p {
+        font-size: 12px;
+        color: #791F1F;
+        margin: 0;
+        line-height: 1.5;
+    }
+}
+
+// ─── DuyetForm ────────────────────────────────────────────────────────────────
+.duyet-form {
+    display: flex;
+    flex-direction: column;
+
+    &-divider {
+        border: none;
+        border-top: 0.5px solid rgba(0, 0, 0, 0.08);
+        margin: 10px 0;
+    }
+
+    &-label {
+        display: block;
+        font-size: 11px;
+        font-weight: 600;
+        color: #888;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        margin-bottom: 6px;
+    }
+
+    &-textarea {
+        width: 100%;
+        font-size: 12px;
+        line-height: 1.5;
+        border: 0.5px solid rgba(0, 0, 0, 0.12);
+        border-radius: $radius-md;
+        padding: 8px 10px;
+        resize: vertical;
+        min-height: 64px;
+        background: #f7f7f5;
+        color: #222;
+        transition: border-color 0.15s, background 0.15s;
+
+        &:focus {
+            outline: none;
+            border-color: $brand-amber;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba($brand-amber, 0.12);
+        }
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    }
+
+    &-actions {
+        display: flex;
+        gap: 6px;
+        margin-top: 8px;
+    }
+}
+
+// ─── Buttons ─────────────────────────────────────────────────────────────────
+.btn-approve {
+    flex: 1;
+    padding: 8px 12px;
+    border-radius: $radius-md;
+    border: none;
+    background: $brand-amber; // vàng cam brand thay vì teal
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.03em;
+    transition: background 0.15s, opacity 0.15s;
+
+    &:hover:not(:disabled) {
+        background: $brand-amber-dark;
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+.btn-reject {
+    flex: 1;
+    padding: 8px 12px;
+    border-radius: $radius-md;
+    border: 0.5px solid rgba(0, 0, 0, 0.15);
+    background: #f7f7f5;
+    color: #333;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s, opacity 0.15s;
+
+    &:hover:not(:disabled) {
+        background: #ececea;
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}

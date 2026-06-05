@@ -75,7 +75,7 @@ export const useCreateSuco = () => {
       }
 
       alert("Thành công!");
-      navigate("danh-sach-su-co");
+      navigate("suco/lich-su");
     } catch (err) {
       console.error(err);
       alert("Lỗi server");

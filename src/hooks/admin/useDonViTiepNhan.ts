@@ -3,6 +3,7 @@ import {
   GetAllDonViXuLyService,
   CreateDonViXuLyService,
   UpdateDonViXuLyService,
+  DeleteDonViXuLyService,
 } from "../../services/DonViXuLy";
 import type { DonViXuLyResponse, CreateDonViXuLyRequest, UpdateDonViXuLyRequest } from "../../types/DonViXuLy";
 
@@ -62,5 +63,24 @@ export const useDonViTiepNhan = () => {
     }
   };
 
-  return { danhSach, loading, error, layDanhSach, themDonVi, capNhatDonVi };
+  const xoaDonVi = async (id: string) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await DeleteDonViXuLyService(id);
+      if (res.status === 200 || res.status === 204) {
+        await layDanhSach();
+        return;
+      }
+      throw new Error(res.message || "Lỗi xóa đơn vị");
+    } catch (err: any) {
+      const msg = err.response?.data?.message || err.message || "Lỗi xóa đơn vị";
+      setError(msg);
+      throw new Error(msg);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { danhSach, loading, error, layDanhSach, themDonVi, capNhatDonVi, xoaDonVi };
 };

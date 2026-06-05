@@ -10,14 +10,13 @@ export interface ChiTietVoiKetQua extends ChiTietPhanCongResponse {
 }
 
 export const useDuyetKetQuaDetail = (maPhieuPhanCong: string) => {
-    const [danhSach, setDanhSach] = useState<ChiTietVoiKetQua[]>([]);
-    const [dangTai, setDangTai] = useState(true);
+    const [danhSachCTPC, setDanhSachCTPC] = useState<ChiTietVoiKetQua[]>([]);
+    const [loading, setLoading] = useState(true);
     const [dangXuLy, setDangXuLy] = useState(false);
-    const [maKetQuaTuChoi, setMaKetQuaTuChoi] = useState<string | null>(null);
     const [lyDoTuChoi, setLyDoTuChoi] = useState("");
 
     const fechData = useCallback(async () => {
-        setDangTai(true);
+        setLoading(true);
 
         try {
             const chiTietPhanCong = await GetChiTietPhanCongByPhanCongIdService(maPhieuPhanCong);
@@ -32,30 +31,14 @@ export const useDuyetKetQuaDetail = (maPhieuPhanCong: string) => {
                         }
                     })
                 );
-                setDanhSach(fullData);
+                setDanhSachCTPC(fullData);
             }
         } catch (error) {
             console.error("Error fetching data:", error);
         } finally {
-            setDangTai(false);
+            setLoading(false);
         }
     }, [maPhieuPhanCong]);
-
-    const danhSachTheoChiTiet = useMemo(() => {
-    const map = new Map<string, ChiTietVoiKetQua[]>();
-
-        danhSach.forEach((item) => {
-            const key = item.maChiTietPhanCong;
-
-            if (!map.has(key)) {
-                map.set(key, []);
-            }
-
-            map.get(key)?.push(item);
-        });
-
-        return map;
-    }, [danhSach]);
 
      useEffect(() => { fechData(); }, [fechData]);
 
@@ -80,7 +63,6 @@ export const useDuyetKetQuaDetail = (maPhieuPhanCong: string) => {
         try {
             await DuyetKetQuaXuLyService(maKetQua, false, lyDoTuChoi);
             alert("Đã từ chối kết quả!");
-            setMaKetQuaTuChoi(null);
             setLyDoTuChoi("");
             await fechData();
         }
@@ -91,10 +73,9 @@ export const useDuyetKetQuaDetail = (maPhieuPhanCong: string) => {
     }
 
     return {
-        danhSach, dangTai, dangXuLy,
-        maKetQuaTuChoi, setMaKetQuaTuChoi,
+        danhSachCTPC, loading, dangXuLy,
         lyDoTuChoi, setLyDoTuChoi,
         duyetKetQua, tuChoiKetQua,
-        danhSachTheoChiTiet
+       
     }
 }

@@ -35,11 +35,10 @@
 }
 
 .phan-cong-card {
-  border: 1px solid #fef08a; // soft yellow border
-  border-left: 4px solid #eab308; // yellow/orange thick line
+  border: 1.5px solid rgba(0, 0, 0, 0.08);
   border-radius: 12px;
   overflow: hidden;
-  background: #fefdf6; // soft yellow-tinted background
+  background: #ffffff;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.01);
   margin-bottom: 24px;
   position: relative;

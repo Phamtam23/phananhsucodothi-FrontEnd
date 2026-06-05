@@ -1,6 +1,7 @@
 import type { DonViXuLyResponse } from './../../types/DonViXuLy';
 import {useState } from "react";
 import {CreatePhanCongService} from "../../services/PhanCongService";
+import type {CreatePhieuPhanCongRequest} from "../../types/PhieuPhanCong"
 export const useCreatePhanCong = (maSuCo: string) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -36,7 +37,7 @@ export const useCreatePhanCong = (maSuCo: string) => {
       setLoading(true);
       setError(null);
 
-      const data: CreatePhanCongService = {
+      const data: CreatePhieuPhanCongRequest = {
         maSuCo: String(maSuCo),
         maDonViXuLy: donviList.map(
           (dv) => dv.maDonViXuLy

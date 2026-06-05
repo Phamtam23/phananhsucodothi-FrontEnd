@@ -3,6 +3,7 @@ import {
   GetAllLoaiService,
   CreateLoaiService,
   UpdateLoaiService,
+  DeleteLoaiService,
 } from "../../services/LoaiService";
 import type { LoaiResponse, LoaiRequest } from "../../types/Loai";
 
@@ -62,5 +63,24 @@ export const useLoaiSuCo = () => {
     }
   };
 
-  return { danhSach, loading, error, layDanhSach, themLoai, capNhatLoai };
+  const xoaLoai = async (maLoai: string) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await DeleteLoaiService(maLoai);
+      if (res.status === 200 || res.status === 204) {
+        await layDanhSach();
+        return;
+      }
+      throw new Error(res.message || "Lỗi xóa loại sự cố");
+    } catch (err: any) {
+      const msg = err.response?.data?.message || err.message || "Lỗi xóa loại sự cố";
+      setError(msg);
+      throw new Error(msg);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { danhSach, loading, error, layDanhSach, themLoai, capNhatLoai, xoaLoai };
 };

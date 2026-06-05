@@ -5,7 +5,7 @@
   align-items: center;
   gap: 10px;
   padding: 20px 20px 16px;
-  border-bottom: 1px solid $outline-variant;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 
   .admin-sidebar__logo-icon {
     color: $primary;
@@ -15,7 +15,7 @@
     font-family: $font-display;
     font-size: 16px;
     font-weight: 800;
-    color: $on-surface;
+    color: #ffffff;
     letter-spacing: -0.3px;
   }
 }
@@ -34,20 +34,28 @@
   padding: 11px 14px;
   border-radius: $radius-md;
   text-decoration: none;
-  color: $on-surface-variant;
+  color: #94a3b8;
   font-family: $font-body;
   font-size: 14px;
   font-weight: 500;
   transition: background 0.18s, color 0.18s;
   cursor: pointer;
 
+  .admin-sidebar__item-icon {
+    color: #94a3b8;
+  }
+
   &:hover {
-    background: $surface-container-low;
-    color: $on-surface;
+    background: rgba(255, 255, 255, 0.06);
+    color: #ffffff;
+
+    .admin-sidebar__item-icon {
+      color: #ffffff;
+    }
   }
 
   &--active {
-    background: $primary-container;
+    background: rgba(255, 193, 7, 0.12);
     color: $primary;
     font-weight: 600;
 
@@ -55,11 +63,29 @@
       color: $primary;
     }
   }
+
+  &--logout {
+    margin-top: auto;
+    margin-bottom: 20px;
+    color: #f87171;
+
+    .admin-sidebar__item-icon {
+      color: #f87171;
+    }
+
+    &:hover {
+      background: rgba(239, 68, 68, 0.08);
+      color: #fca5a5;
+
+      .admin-sidebar__item-icon {
+        color: #fca5a5;
+      }
+    }
+  }
 }
 
 .admin-sidebar__item-icon {
   flex-shrink: 0;
-  color: $on-surface-variant;
   transition: color 0.18s;
 }
 

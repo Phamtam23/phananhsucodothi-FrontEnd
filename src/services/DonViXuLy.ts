@@ -22,3 +22,8 @@ export const GetDonViXuLyByIdService = async (id: number | string): Promise<ApiR
     const res = await apiClient.get(API_CONFIG.ENDPOINTS.DONVIXULY.GET_BY_ID(id));
     return res.data;
 };
+
+export const DeleteDonViXuLyService = async (id: number | string): Promise<ApiResponse<void>> => {
+    const res = await apiClient.delete(API_CONFIG.ENDPOINTS.DONVIXULY.DELETE(id));
+    return res.data;
+};

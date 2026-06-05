@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Plus, Pencil, X } from "lucide-react";
+import { Plus, Pencil, X, Trash2 } from "lucide-react";
 import { useDonViTiepNhan } from "../../hooks/admin/useDonViTiepNhan";
 import type { DonViXuLyResponse, CreateDonViXuLyRequest, UpdateDonViXuLyRequest } from "../../types/DonViXuLy";
 import { TrangThaiDonVi } from "../../types/DonViXuLy";
@@ -9,10 +9,11 @@ import "../admin/QuanLyTaiKhoanPage.scss"; // dùng lại slide-panel
 const FORM_TRONG: CreateDonViXuLyRequest = { tenDonVi: "", khuVuc: "", moTa: "", diaChi: "", sdt: "", email: "" };
 
 const QuanLyDonViPage = () => {
-  const { danhSach, loading, layDanhSach, themDonVi, capNhatDonVi } = useDonViTiepNhan();
+  const { danhSach, loading, layDanhSach, themDonVi, capNhatDonVi, xoaDonVi } = useDonViTiepNhan();
   const [moPanel, setMoPanel] = useState(false);
   const [dangSua, setDangSua] = useState<DonViXuLyResponse | null>(null);
   const [form, setForm] = useState<CreateDonViXuLyRequest>(FORM_TRONG);
+  const [tuKhoa, setTuKhoa] = useState("");
 
   useEffect(() => { layDanhSach(); }, [layDanhSach]);
 
@@ -36,6 +37,14 @@ const QuanLyDonViPage = () => {
     } catch {}
   };
 
+  const danhSachHienThi = danhSach.filter(dv => 
+    dv.tenDonVi.toLowerCase().includes(tuKhoa.toLowerCase()) ||
+    (dv.khuVuc && dv.khuVuc.toLowerCase().includes(tuKhoa.toLowerCase())) ||
+    (dv.diaChi && dv.diaChi.toLowerCase().includes(tuKhoa.toLowerCase())) ||
+    (dv.email && dv.email.toLowerCase().includes(tuKhoa.toLowerCase())) ||
+    (dv.sdt && dv.sdt.toLowerCase().includes(tuKhoa.toLowerCase()))
+  );
+
   return (
     <div className="quan-ly-don-vi">
       <div className="quan-ly-don-vi__tieu-de">
@@ -46,6 +55,14 @@ const QuanLyDonViPage = () => {
         <button className="quan-ly-don-vi__btn-them" onClick={moThem}>
           <Plus size={16} /> Thêm đơn vị
         </button>
+      </div>
+
+      <div className="quan-ly-don-vi__bo-loc">
+        <input 
+          placeholder="Tìm kiếm tên, khu vực, SĐT..." 
+          value={tuKhoa} 
+          onChange={e => setTuKhoa(e.target.value)} 
+        />
       </div>
 
       <div className="quan-ly-don-vi__bang">
@@ -63,10 +80,14 @@ const QuanLyDonViPage = () => {
           </thead>
           <tbody>
             {loading && <tr><td colSpan={7} className="quan-ly-don-vi__trong">Đang tải...</td></tr>}
-            {!loading && danhSach.length === 0 && (
-              <tr><td colSpan={7} className="quan-ly-don-vi__trong">Chưa có đơn vị nào</td></tr>
+            {!loading && danhSachHienThi.length === 0 && (
+              <tr>
+                <td colSpan={7} className="quan-ly-don-vi__trong">
+                  {danhSach.length === 0 ? "Chưa có đơn vị nào" : "Không tìm thấy đơn vị nào phù hợp"}
+                </td>
+              </tr>
             )}
-            {danhSach.map(dv => (
+            {danhSachHienThi.map(dv => (
               <tr key={dv.maDonViXuLy}>
                 <td><strong>{dv.tenDonVi}</strong></td>
                 <td>{dv.khuVuc || "—"}</td>
@@ -83,6 +104,16 @@ const QuanLyDonViPage = () => {
                   <div className="quan-ly-don-vi__hanh-dong">
                     <button className="quan-ly-don-vi__btn-sua" onClick={() => moSua(dv)}>
                       <Pencil size={13} /> Sửa
+                    </button>
+                    <button 
+                      className="quan-ly-don-vi__btn-xoa" 
+                      onClick={() => {
+                        if (window.confirm(`Bạn có chắc chắn muốn xóa đơn vị "${dv.tenDonVi}"?`)) {
+                          xoaDonVi(dv.maDonViXuLy);
+                        }
+                      }}
+                    >
+                      <Trash2 size={13} /> Xóa
                     </button>
                   </div>
                 </td>

@@ -7,8 +7,8 @@ import { useParams } from "react-router-dom";
 import "./DuyetMoLaiDetailPage.scss";
 
 const DuyetMoLaiDetailPage = () => {
-     const { maPhieuMoLai } = useParams<{ maPhieuMoLai: string }>();
-     const { phieuMoLaiData, loading, error } = useDuyetMoLai({ maPhieuMoLai: maPhieuMoLai || "" });
+    const { maPhieuMoLai } = useParams<{ maPhieuMoLai: string }>();
+    const { phieuMoLaiData, loading, error } = useDuyetMoLai({ maPhieuMoLai: maPhieuMoLai || "" });
     const { duyetPhieuMoLai, loading: dangDuyet } = useDuyetPhieuMoLai();
 
     const [dangTuChoi, setDangTuChoi] = useState(false);
@@ -18,7 +18,6 @@ const DuyetMoLaiDetailPage = () => {
     if (loading) return <div className="dkq-loading">Đang tải...</div>;
     if (error) return <div className="dkq-error-page">{error}</div>;
     if (!phieuMoLaiData?.maPhieuPhanCong) return <div className="dkq-error-page">Không tìm thấy thông tin phiếu mở lại.</div>;
-
     const xacNhanDuyet = async () => {
         if (!window.confirm("Chấp nhận yêu cầu mở lại? Nhân viên sẽ phải làm lại kết quả.")) return;
         try {
@@ -55,7 +54,7 @@ const DuyetMoLaiDetailPage = () => {
         <div className="dkq-molai-container">
             <DuyetKetQuaDetailPage
                 maPhieuPhanCong={phieuMoLaiData.maPhieuPhanCong}
-                loai="DUYET_MO_LAI"
+                loai="DUYET_KET_QUA"
             />
 
             <div className="dkq-molai-section">
@@ -63,20 +62,48 @@ const DuyetMoLaiDetailPage = () => {
                     <h3>THÔNG TIN YÊU CẦU MỞ LẠI</h3>
 
                     <div className="dkq-molai-info">
-                        <div className="dkq-molai-row">
-                            <span className="dkq-molai-label">Lý do mở lại:</span>
-                            <p className="dkq-molai-value">{phieuMoLaiData.lyDo}</p>
-                        </div>
-                        <div className="dkq-molai-row">
-                            <span className="dkq-molai-label">Trạng thái:</span>
-                            <span className={`dkq-status-tag status-${phieuMoLaiData.trangThaiMoLai?.toLowerCase()}`}>
-                                {phieuMoLaiData.trangThaiMoLai}
-                            </span>
+                        <div className="dkq-molai-grid">
+                            {/* Left panel: The reason block */}
+                            <div className="dkq-molai-left">
+                                <div className="dkq-molai-reason-card">
+                                    <span className="dkq-molai-reason-badge">LÝ DO TỪ NGƯỜI DÂN</span>
+                                    <p className="dkq-molai-reason-text">“{phieuMoLaiData.lyDo}”</p>
+                                </div>
+                            </div>
+
+                            {/* Right panel: Metadata */}
+                            <div className="dkq-molai-right">
+                                <div className="dkq-meta-item">
+                                    <span className="dkq-meta-label">Mã yêu cầu:</span>
+                                    <span className="dkq-meta-value font-mono">#{phieuMoLaiData.maPhieuMoLai}</span>
+                                </div>
+                                <div className="dkq-meta-item">
+                                    <span className="dkq-meta-label">Trạng thái:</span>
+                                    <span className={`dkq-status-tag status-${phieuMoLaiData.trangThaiMoLai?.toLowerCase()}`}>
+                                        {phieuMoLaiData.trangThaiMoLai === 'CHO_PHAN_HOI' ? 'Chờ phản hồi' :
+                                            phieuMoLaiData.trangThaiMoLai === 'CHAP_NHAN' ? 'Chấp nhận' : 'Từ chối'}
+                                    </span>
+                                </div>
+                                {phieuMoLaiData.thoiGianTao && (
+                                    <div className="dkq-meta-item">
+                                        <span className="dkq-meta-label">Thời gian gửi:</span>
+                                        <span className="dkq-meta-value">
+                                            {new Date(phieuMoLaiData.thoiGianTao).toLocaleString("vi-VN", {
+                                                hour: "2-digit",
+                                                minute: "2-digit",
+                                                day: "2-digit",
+                                                month: "2-digit",
+                                                year: "numeric"
+                                            })}
+                                        </span>
+                                    </div>
+                                )}
+                            </div>
                         </div>
 
                         {phieuMoLaiData?.MediaUrls?.length > 0 && (
-                            <div className="dkq-molai-row">
-                                <span className="dkq-molai-label">Hình ảnh đính kèm:</span>
+                            <div className="dkq-molai-attachment">
+                                <span className="dkq-molai-label">Hình ảnh minh chứng đính kèm:</span>
                                 <div className="dkq-molai-medias">
                                     {phieuMoLaiData.MediaUrls.map((url, index) => (
                                         <img
@@ -92,49 +119,51 @@ const DuyetMoLaiDetailPage = () => {
                         )}
 
                         {/* Nút duyệt / từ chối */}
-                        {dangTuChoi ? (
-                            <div className="xac-minh-reject-form">
-                                <label>LÝ DO TỪ CHỐI MỞ LẠI</label>
-                                <textarea
-                                    placeholder="Nhập lý do từ chối..."
-                                    value={lyDoTuChoi}
-                                    onChange={e => setLyDoTuChoi(e.target.value)}
-                                    disabled={dangDuyet}
-                                />
-                                <div className="xac-minh-reject-actions">
+                        {phieuMoLaiData.trangThaiMoLai === "CHO_PHAN_HOI" && (
+                            dangTuChoi ? (
+                                <div className="xac-minh-reject-form">
+                                    <label>LÝ DO TỪ CHỐI MỞ LẠI</label>
+                                    <textarea
+                                        placeholder="Nhập lý do từ chối..."
+                                        value={lyDoTuChoi}
+                                        onChange={e => setLyDoTuChoi(e.target.value)}
+                                        disabled={dangDuyet}
+                                    />
+                                    <div className="xac-minh-reject-actions">
+                                        <button
+                                            className="xac-minh-btn-huy"
+                                            onClick={() => { setDangTuChoi(false); setLyDoTuChoi(""); }}
+                                            disabled={dangDuyet}
+                                        >
+                                            HỦY BỎ
+                                        </button>
+                                        <button
+                                            className="xac-minh-btn-xac-nhan"
+                                            onClick={xacNhanTuChoi}
+                                            disabled={dangDuyet}
+                                        >
+                                            XÁC NHẬN TỪ CHỐI
+                                        </button>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="xac-minh-card-actions">
                                     <button
-                                        className="xac-minh-btn-huy"
-                                        onClick={() => { setDangTuChoi(false); setLyDoTuChoi(""); }}
+                                        className="xac-minh-btn btn-phan-cong"
+                                        onClick={xacNhanDuyet}
                                         disabled={dangDuyet}
                                     >
-                                        HỦY BỎ
+                                        <div className="btn-icon">✓</div> Duyệt Mở Lại
                                     </button>
                                     <button
-                                        className="xac-minh-btn-xac-nhan"
-                                        onClick={xacNhanTuChoi}
+                                        className="xac-minh-btn btn-tu-choi"
+                                        onClick={() => setDangTuChoi(true)}
                                         disabled={dangDuyet}
                                     >
-                                        XÁC NHẬN TỪ CHỐI
+                                        <div className="btn-icon">✕</div> Từ chối
                                     </button>
                                 </div>
-                            </div>
-                        ) : (
-                            <div className="xac-minh-card-actions">
-                                <button
-                                    className="xac-minh-btn btn-phan-cong"
-                                    onClick={xacNhanDuyet}
-                                    disabled={dangDuyet}
-                                >
-                                    <div className="btn-icon">✓</div> Duyệt Mở Lại
-                                </button>
-                                <button
-                                    className="xac-minh-btn btn-tu-choi"
-                                    onClick={() => setDangTuChoi(true)}
-                                    disabled={dangDuyet}
-                                >
-                                    <div className="btn-icon">✕</div> Từ chối
-                                </button>
-                            </div>
+                            )
                         )}
                     </div>
                 </div>

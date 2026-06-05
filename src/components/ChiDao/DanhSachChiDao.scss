@@ -1,0 +1,123 @@
+// ─── Brand tokens ─────────────────────────────────────────────────────────────
+$brand-amber:       #F5A623;
+$brand-amber-light: #FEF3DC;
+$brand-amber-dark:  #B87309;
+
+$radius-md: 8px;
+$radius-lg: 12px;
+
+// ─── Container ────────────────────────────────────────────────────────────────
+.chi-dao-container {
+    margin-bottom: 10px;
+}
+
+.chi-dao-card {
+    background: $brand-amber-light;
+    border: 0.5px solid rgba($brand-amber, 0.45);
+    border-left: 3px solid $brand-amber;
+    border-radius: 0 $radius-lg $radius-lg 0;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+// ─── Header nhân viên ─────────────────────────────────────────────────────────
+.chi-dao-assignee-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 10px;
+    border-bottom: 0.5px solid rgba($brand-amber, 0.3);
+}
+
+.assignee-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 1.5px solid rgba($brand-amber, 0.5);
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+}
+
+.assignee-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.assignee-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #3a2500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.assignee-role {
+    font-size: 10px;
+    font-weight: 700;
+    color: $brand-amber-dark;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+}
+
+// ─── List chỉ đạo ─────────────────────────────────────────────────────────────
+.chi-dao-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.chi-dao-section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: $brand-amber-dark;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.chi-dao-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.chi-dao-bullet {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: $brand-amber;
+    flex-shrink: 0;
+    margin-top: 5px;
+}
+
+.chi-dao-text {
+    font-size: 12px;
+    color: #5a3d00;
+    line-height: 1.55;
+    margin: 0;
+    word-break: break-word;
+}
+
+// ─── States ───────────────────────────────────────────────────────────────────
+.timeline-loading,
+.timeline-error {
+    font-size: 12px;
+    color: #888;
+    padding: 6px 0;
+    display: block;
+}
+
+.timeline-error {
+    color: #A32D2D;
+}

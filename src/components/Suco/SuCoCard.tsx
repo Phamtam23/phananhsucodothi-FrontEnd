@@ -2,7 +2,7 @@ import "./SuCoCard.scss";
 import type { TrangThaiSuCo, SucoSumaryResponse } from "../../types/Suco";
 import { API_CONFIG } from "../../constants/app.constants";
 import {timeAgo} from "../../utils/Format";
-
+import iconDiaDiem from "../../assets/location-pin.png";
 const TRANG_THAI_CONFIG: Record<TrangThaiSuCo, { label: string; className: string }> = {
   CHO_TIEP_NHAN: { label: 'Chờ tiếp nhận', className: 'badge--cho' },
   DANG_XU_LY: { label: 'Đang xử lý', className: 'badge--xl' },
@@ -64,13 +64,13 @@ const SuCoCard = ({ suco, onClick,onBoSungClick,type }: Props) => {
         </span>
         <p className="suco-card__title">{suco.tieuDe}</p>
         <p className="suco-card__loc">
-          <span className="suco-card__loc-icon"></span>
+          <img src={iconDiaDiem} alt="Địa điểm" className="suco-card__loc-icon" />
           {suco.diaDiem}
         </p>
       </div>
 
       <div className ="action">
-          <button className="action__btn">Xem chi tiết</button>
+       
           
           {suco.trangThai === "BO_SUNG" && type==="lich-su" && (
              <button onClick={(e) => {

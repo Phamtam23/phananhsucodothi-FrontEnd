@@ -85,7 +85,6 @@ const PhanCongPhanLoaiDetail = () => {
   return (
     <div className="pcpl-page">
 
-      {/* Two-column layout */}
       <div className="pcpl-layout">
         {/* ─── LEFT: Detail sự cố ──────────── */}
         <div className="pcpl-main">
@@ -161,9 +160,6 @@ const PhanCongPhanLoaiDetail = () => {
                 )}
 
                 <div>
-                  <span className="section-label">
-                    Chọn loại sự cố
-                  </span>
                   <ListLoai
                     selectedLoaiList={
                       selectedLoaiList
@@ -208,24 +204,6 @@ const PhanCongPhanLoaiDetail = () => {
                     )}
                   </div>
                 </div>
-
-                <div>
-                  <span className="section-label">
-                    Ghi chú điều phối
-                  </span>
-                  <textarea
-                    className="don-vi-search"
-                    rows={3}
-                    placeholder="Nhập ghi chú cụ thể cho đơn vị..."
-                    value={ghiChu}
-                    onChange={(e) =>
-                      setGhiChu(e.target.value)
-                    }
-                    style={{ resize: "vertical" }}
-                  />
-                </div>
-
-                {/* Success */}
                 {phanLoaiDone && (
                   <div className="pcpl-success-box">
                     <span className="pcpl-success-icon">
@@ -250,12 +228,10 @@ const PhanCongPhanLoaiDetail = () => {
               </div>
             )}
 
-            {/* ── Tab: Phân công ──────────── */}
             {activeTab === "phan-cong" && (
               <CreatePhanCong maSuCo={maSuCo} />
             )}
 
-            {/* ── Tab: DS Phân công ───────── */}
             {activeTab === "ds-phan-cong" && (
               <DanhSachPhanCong maSuCo={maSuCo} />
             )}

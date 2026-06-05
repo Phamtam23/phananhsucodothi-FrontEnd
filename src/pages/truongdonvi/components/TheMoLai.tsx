@@ -39,7 +39,7 @@ export const TheMoLai = ({
         <div className={`xac-minh-card ${dangTuChoiPhieu ? 'dang-tu-choi' : ''}`}>
             <div className="xac-minh-card-header">
                 <div className="xac-minh-card-tags">
-                    <span className="xac-minh-tag" style={{ backgroundColor: '#fee2e2', color: '#dc2626' }}>
+                    <span className="xac-minh-tag" style={{ backgroundColor: '#fffbeb', color: '#d97706', borderColor: '#fde68a' }}>
                         YÊU CẦU MỞ LẠI
                     </span>
                     <span className="xac-minh-id">Mã: #{phieuMoLai.maPhieuMoLai}</span>
@@ -51,13 +51,13 @@ export const TheMoLai = ({
                 {phieuMoLai.noiDungSuCo || "Sự cố #" + phieuMoLai.maSuCo}
             </h3>
 
-            <div className="xac-minh-info-widget" style={{ marginBottom: 16, backgroundColor: '#fef2f2', borderColor: '#fecaca' }}>
+            <div className="xac-minh-info-widget" style={{ marginBottom: 16, backgroundColor: '#f0f9ff', borderColor: '#bae6fd' }}>
                 <div className="xac-minh-info-header">
-                    <span className="xac-minh-widget-label" style={{ color: '#dc2626' }}>
+                    <span className="xac-minh-widget-label" style={{ color: '#0369a1' }}>
                         LÝ DO CỦA NGƯỜI DÂN:
                     </span>
                 </div>
-                <p style={{ color: '#b91c1c', fontWeight: 500 }}>{phieuMoLai.lyDo}</p>
+                <p style={{ color: '#0f172a', fontWeight: 500 }}>{phieuMoLai.lyDo}</p>
             </div>
 
             {dangTuChoiPhieu ? (
@@ -80,21 +80,6 @@ export const TheMoLai = ({
                 </div>
             ) : (
                 <div className="xac-minh-card-actions">
-                    <button
-                        className="xac-minh-btn btn-phan-cong"
-                        style={{ backgroundColor: '#059669', width: 'auto' }}
-                        onClick={() => onDuyetMoLai(phieuMoLai.maPhieuMoLai, true)}
-                        disabled={dangDuyet}
-                    >
-                        <div className="btn-icon">✓</div> Duyệt Mở Lại
-                    </button>
-                    <button
-                        className="xac-minh-btn btn-tu-choi"
-                        onClick={() => setIdDangTuChoi(phieuMoLai.maPhieuMoLai)}
-                        disabled={dangDuyet}
-                    >
-                        <div className="btn-icon">✕</div> Từ chối
-                    </button>
                     {phieuMoLai.maPhieuPhanCong && (
                         <button
                             className="xac-minh-btn btn-detail"

@@ -69,6 +69,7 @@ export const API_CONFIG = {
             UPDATE: (id: number | string) => `/don-vi-xu-ly/${id}`,
             GET_BY_ID: (id: number | string) => `/don-vi-xu-ly/${id}`,
             GET_ALL: "/don-vi-xu-ly",
+            DELETE: (id: number | string) => `/don-vi-xu-ly/${id}`,
         },
         TAIKHOAN: {
             GET_ALL: "/tai-khoan",
@@ -99,6 +100,7 @@ export const API_CONFIG = {
             UPDATE: "/loai",
             GET_ALL: "/loai",
             GET_BY_ID: (id: number | string) => `/loai/${id}`,
+            DELETE: (id: number | string) => `/loai/${id}`,
         },
         PHIEUCHIDAO: {
             CREATE: "/phieu-chi-dao",

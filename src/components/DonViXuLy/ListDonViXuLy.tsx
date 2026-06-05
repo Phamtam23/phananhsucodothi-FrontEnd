@@ -23,8 +23,6 @@ const ListDonViXuLy = ({
 
     return (
         <div className="ListDonVi">
-            <h2>Danh sách Đơn Vị Xử Lý</h2>
-
             <ul>
                 {donViXuLyList.map((dv) => (
                     <li

@@ -33,7 +33,7 @@ const XacMinhPhanAnhPage = () => {
 
         <header className="xac-minh-header-wrapper">
             <div className="xac-minh-header">
-                <h1>Quản lý Công việc</h1>
+                <h2>Quản lý Công việc</h2>
                 <p>
                     Kiểm duyệt phản ánh mới, phân công nhân sự và xét duyệt kết quả xử lý.
                 </p>
@@ -168,13 +168,10 @@ const XacMinhPhanAnhPage = () => {
 
             </div>
 
-            <div className="xac-minh-sidebar">
-                <SidebarWidgets
-                    pendingCount={soChoXacNhan}
-                    acceptedCount={soDaXacNhan}
-                />
-            </div>
-
+         
+            <aside className="xac-minh-sidebar">
+        <SidebarWidgets pendingCount={0} acceptedCount={0}  />
+    </aside>
         </div>
 
         {idXemKetQua && (

@@ -29,3 +29,8 @@ export const UpdateLoaiService = async (requestUpdateLoai: LoaiRequest): Promise
   );
   return res.data;
 };
+
+export const DeleteLoaiService = async (id: number | string): Promise<ApiResponse<void>> => {
+  const res = await apiClient.delete(API_CONFIG.ENDPOINTS.LOAI.DELETE(id));
+  return res.data;
+};

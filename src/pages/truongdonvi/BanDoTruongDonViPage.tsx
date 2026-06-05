@@ -24,14 +24,12 @@ const BanDoTruongDonViPage = () => {
 
   useEffect(() => {
     if (!data?.content) return;
-    // Response content là danh sách PhieuPhanCongWithSuCo
     const phanCongList = data.content;
 
-    // Chỉ lấy các phiếu phân công đang active (chưa hoàn thành, chưa từ chối)
+  
     const activeStatuses = ["CHO_XAC_NHAN", "DA_XAC_NHAN", "DANG_XU_LY", "CHO_DUYET_KET_QUA"];
     const activePhanCongs = phanCongList.filter((pc: any) => activeStatuses.includes(pc.trangThai));
 
-    // Trích xuất suCoDetail từ phiếu phân công đang active, gán thêm trạng thái của phiếu phân công vào để lọc
     let allIncidents: any[] = activePhanCongs.map((pc: any) => {
       if (!pc.suCoDetail) return null;
       return {

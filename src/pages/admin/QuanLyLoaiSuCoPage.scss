@@ -33,28 +33,64 @@
     padding: 10px 20px;
   }
 
-  &__luoi {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 16px;
-  }
-
-  &__the {
-    @include card;
+  &__bo-loc {
     display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
     gap: 12px;
-    transition: box-shadow 0.2s, transform 0.2s;
+    margin: 0 auto 20px auto;
+    max-width: 800px;
+    align-items: center;
 
-    &:hover {
-      box-shadow: $shadow-elevated;
-      transform: translateY(-2px);
+    input {
+      @include input-field;
+      max-width: 280px;
     }
   }
 
-  &__the-noi-dung {
-    flex: 1;
+  &__bang {
+    @include card;
+    padding: 0;
+    overflow: hidden;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  &__bang-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th {
+      font-family: $font-body;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #334155;
+      background: #f1f5f9;
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    td {
+      font-family: $font-body;
+      font-size: 14px;
+      color: $on-surface;
+      padding: 14px 16px;
+      border-bottom: 1px solid $outline-variant;
+      vertical-align: middle;
+    }
+
+    tr:nth-child(even) td {
+      background: #f8fafc;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: #f1f5f9 !important;
+    }
   }
 
   &__the-ma {
@@ -68,21 +104,6 @@
     padding: 2px 8px;
     border-radius: $radius-full;
     display: inline-block;
-    margin-bottom: 8px;
-  }
-
-  &__the-ten {
-    font-family: $font-display;
-    font-size: 15px;
-    font-weight: 700;
-    color: $on-surface;
-    line-height: 1.4;
-  }
-
-  &__the-hanh-dong {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
   }
 
   &__btn-sua {
@@ -94,10 +115,29 @@
     gap: 4px;
   }
 
+  &__btn-xoa {
+    background: #fee2e2;
+    color: #dc2626;
+    border: none;
+    border-radius: $radius-md;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-family: $font-body;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    &:hover {
+      background: #fecaca;
+    }
+  }
+
   &__trong {
-    @include card;
     text-align: center;
-    padding: 64px 16px;
+    padding: 48px 16px;
     color: $on-surface-variant;
     font-family: $font-body;
     font-size: 14px;

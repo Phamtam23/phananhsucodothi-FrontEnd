@@ -6,10 +6,11 @@ import { useTaoKetQua } from "../../hooks/ketquaxuly/useTaoKetQua";
 import { TrangThaiChiTietPhanCong } from "../../types/ChiTietPhanCong";
 import apiClient from "../../services/apiClient";
 import { API_CONFIG } from "../../constants/app.constants";
-
+import {useNavigate}  from "react-router-dom";
 const DangKetQuaPage = () => {
     const { data, loading } = useChiTietPhanCongNhanVien(0, 50);
     const { taoKetQua, loading: nopLoading } = useTaoKetQua();
+      const navigate = useNavigate();
 
     const [phieuChon, setPhieuChon] = useState("");
     const [noiDung, setNoiDung] = useState("");
@@ -90,6 +91,9 @@ const DangKetQuaPage = () => {
         setThanhCong(false);
     };
 
+    const handOnclick = () =>{
+        navigate("/xu-ly")
+    }
     if (loading) {
         return <div className="trang-dang-ket-qua"><div style={{ textAlign: "center", padding: "60px", color: "#9ca3af" }}>Đang tải...</div></div>;
     }
@@ -106,8 +110,8 @@ const DangKetQuaPage = () => {
                     <div className="bieu-tuong">✅</div>
                     <h2>Nộp kết quả thành công!</h2>
                     <p>Kết quả của bạn đã được ghi nhận và đang chờ trưởng đơn vị xem xét, duyệt.</p>
-                    <button className="nut-lam-tiep" onClick={datLai}>
-                        Nộp kết quả khác
+                    <button className="nut-lam-tiep" onClick={handOnclick}>
+                       Okee
                     </button>
                 </div>
             </div>

@@ -1,3 +1,5 @@
+@use '../../styles/urban-tokens' as *;
+
 .dkq-molai-container {
     background-color: #fafbfc;
     min-height: 100vh;
@@ -6,7 +8,7 @@
 
 .dkq-molai-section {
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 24px auto 0;
     padding: 0 32px;
 
     .dkq-sidebar-card {
@@ -14,7 +16,7 @@
         border-radius: 12px;
         padding: 24px;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-        border-left: 4px solid #3b82f6;
+        border: 1.5px solid rgba(0, 0, 0, 0.08);
 
         h3 {
             font-size: 16px;
@@ -29,40 +31,135 @@
     .dkq-molai-info {
         display: flex;
         flex-direction: column;
-        gap: 16px;
+        gap: 24px;
+        margin-top: 16px;
 
-        .dkq-molai-row {
+        .dkq-molai-grid {
+            display: grid;
+            grid-template-columns: 1.8fr 1fr;
+            gap: 24px;
+
+            @media (max-width: 768px) {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+        }
+
+        .dkq-molai-left {
             display: flex;
-            align-items: flex-start;
-            gap: 16px;
+            flex-direction: column;
+            width: 100%;
+        }
 
-            .dkq-molai-label {
-                font-weight: 600;
-                color: #64748b;
-                min-width: 140px;
-                font-size: 14px;
-                padding-top: 2px;
-            }
+        .dkq-molai-reason-card {
+            background-color: #f0f9ff;
+            border: 1.5px solid rgba(2, 132, 199, 0.15);
+            border-radius: 8px;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            height: 100%;
+            justify-content: center;
 
-            .dkq-molai-value {
-                margin: 0;
-                color: #0f172a;
-                font-size: 15px;
-                line-height: 1.6;
-                flex: 1;
-            }
-
-            .dkq-status-tag {
+            .dkq-molai-reason-badge {
                 font-size: 11px;
                 font-weight: 700;
-                padding: 4px 12px;
-                border-radius: 9999px;
+                color: #0369a1;
+                letter-spacing: 0.8px;
+                text-transform: uppercase;
+            }
+
+            .dkq-molai-reason-text {
+                margin: 0;
+                font-size: 15px;
+                line-height: 1.6;
+                color: #0f172a;
+                font-weight: 600;
+                font-style: italic;
+            }
+        }
+
+        .dkq-molai-right {
+            background-color: #f8fafc;
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            border: 1px solid #e2e8f0;
+            box-sizing: border-box;
+
+            .dkq-meta-item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 12px;
+                font-size: 14px;
+                border-bottom: 1px dashed #e2e8f0;
+                padding-bottom: 10px;
+
+                &:last-child {
+                    border-bottom: none;
+                    padding-bottom: 0;
+                }
+
+                .dkq-meta-label {
+                    color: #64748b;
+                    font-weight: 600;
+                }
+
+                .dkq-meta-value {
+                    color: #0f172a;
+                    font-weight: 700;
+                    text-align: right;
+
+                    &.font-mono {
+                        font-family: monospace;
+                        color: #475569;
+                    }
+                }
+
+                .dkq-status-tag {
+                    font-size: 11px;
+                    font-weight: 700;
+                    padding: 4px 12px;
+                    border-radius: 9999px;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+
+                    &.status-cho_phan_hoi {
+                        background-color: #fef3c7;
+                        color: #d97706;
+                    }
+
+                    &.status-chap_nhan {
+                        background-color: #ecfdf5;
+                        color: #059669;
+                    }
+
+                    &.status-tu_choi {
+                        background-color: #fef2f2;
+                        color: #dc2626;
+                    }
+                }
+            }
+        }
+
+        .dkq-molai-attachment {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding-top: 16px;
+            border-top: 1px dashed #e2e8f0;
+
+            .dkq-molai-label {
+                font-size: 13px;
+                font-weight: 700;
+                color: #475569;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
-                
-                &.status-cho_phan_hoi { background-color: #fef3c7; color: #d97706; }
-                &.status-chap_nhan { background-color: #ecfdf5; color: #059669; }
-                &.status-tu_choi { background-color: #fef2f2; color: #dc2626; }
             }
         }
 
@@ -122,7 +219,8 @@
         }
     }
 
-    .xac-minh-reject-actions, .xac-minh-card-actions {
+    .xac-minh-reject-actions,
+    .xac-minh-card-actions {
         display: flex;
         justify-content: flex-end;
         gap: 16px;
@@ -153,7 +251,8 @@
             }
         }
 
-        .xac-minh-btn-huy, .btn-tu-choi {
+        .xac-minh-btn-huy,
+        .btn-tu-choi {
             background-color: #ffffff;
             border: 1px solid #cbd5e1;
             color: #475569;
@@ -175,11 +274,11 @@
         }
 
         .btn-phan-cong {
-            background-color: #059669;
-            color: white;
+            background-color: $primary;
+            color: #0f172a;
 
             &:hover:not(:disabled) {
-                background-color: #047857;
+                background-color: #e6a800;
             }
         }
     }

@@ -1,11 +1,17 @@
+import "./Footer.scss";
 const Footer = () => {
-    return (
-        <footer className="bg-gray-800 text-white py-4">
-            <div className="container mx-auto text-center">
-                <p>&copy; 2026 Your Company. All rights reserved.</p>
-            </div>
-        </footer>
-    );
+  return (
+    <footer className="pacd__footer">
+      <div className="footer-bottom">
+        <p className="copyright">© 2026 Phản ánh sự cố hạ tầng đô thị</p>
+        <div className="footer-policy-links">
+          <span>ĐIỀU KHOẢN</span>
+          <span>RIÊNG TƯ</span>
+          <span>COOKIES</span>
+        </div>
+      </div>
+    </footer>
+  );
 }
 
 export default Footer;

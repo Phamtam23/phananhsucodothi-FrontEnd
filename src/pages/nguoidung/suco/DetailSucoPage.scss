@@ -1,0 +1,154 @@
+@use '../../../styles/urban-tokens' as *;
+
+.trang-chi-tiet-su-co {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+  font-family: $font-body;
+  background: $surface-dim;
+  min-height: 100vh;
+  box-sizing: border-box;
+
+  // ── Layout lưới 2 cột ──
+  .bo-cuc-chi-tiet {
+    display: grid;
+    grid-template-columns: 8fr 4fr;
+    gap: 32px;
+    align-items: start;
+
+    @media (max-width: 992px) {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+  }
+
+  // ── Cột chính ──
+  .cot-chinh {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+
+    .khung-don-vi-xu-ly {
+      background: $surface;
+      border: 1px solid rgba(15, 23, 42, 0.05);
+      border-radius: 14px;
+      box-shadow: $shadow-ambient;
+      padding: 24px;
+      position: relative;
+
+      &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 24px;
+        bottom: 24px;
+        width: 3px;
+        background: #3b82f6;
+        border-radius: 0 4px 4px 0;
+      }
+
+      .tieu-de-section {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 20px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid rgba(15, 23, 42, 0.05);
+
+        i {
+          font-size: 20px;
+          color: #3b82f6;
+        }
+
+        h2 {
+          font-family: $font-display;
+          font-size: 16px;
+          font-weight: 700;
+          color: $on-surface;
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  // ── Cột phụ (sidebar) ──
+  .cot-phu {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    .khung-cam-ket {
+      background: linear-gradient(135deg, hsl(38, 100%, 98.5%), hsl(38, 100%, 99.5%));
+      border: 1px dashed hsl(38, 90%, 75%);
+      border-radius: 14px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      text-align: center;
+
+      .noi-dung-cam-ket {
+        font-size: 12.5px;
+        color: hsl(38, 85%, 30%);
+        line-height: 1.55;
+        font-style: italic;
+        margin: 0;
+      }
+
+      .chan-cam-ket {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        font-size: 11px;
+        font-weight: 700;
+        color: hsl(38, 90%, 35%);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        background: hsl(38, 100%, 92%);
+        padding: 4px 12px;
+        border-radius: $radius-full;
+        align-self: center;
+
+        i { font-size: 13px; }
+      }
+    }
+  }
+}
+
+// ── Trạng thái trang ──
+.dang-tai,
+.loi-tai,
+.trong-rong {
+  max-width: 600px;
+  margin: 80px auto;
+  padding: 32px;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: $shadow-elevated;
+  text-align: center;
+  font-size: 14.5px;
+  font-weight: 600;
+}
+
+.dang-tai  { color: $on-surface-variant; }
+.loi-tai   { color: $error; border-color: hsl(0, 100%, 92%); background: $error-container; }
+.trong-rong { color: $on-surface-variant; }
+
+// ── In trang ──
+@media print {
+  body { background: white; color: black; }
+
+  .trang-chi-tiet-su-co {
+    padding: 0;
+    background: white;
+
+    .khung-cam-ket { display: none !important; }
+
+    .bo-cuc-chi-tiet {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+  }
+}

@@ -15,7 +15,7 @@ const ListLoai = ({ selectedLoaiList, onSelect }: Props) => {
     if (error) return <div>Error: {error}</div>;
 
     return (
-        <div className="ListLoai">
+        <div className="ListDonVi">
             <ul>
                 {loaiList.map((loai) => (
                     <li 

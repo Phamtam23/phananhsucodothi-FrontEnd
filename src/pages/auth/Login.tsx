@@ -19,7 +19,7 @@ const Login = () => {
             <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
           </svg>
         </div>
-        <h1>Urban Pulse Civic</h1>
+        <h1>PAS</h1>
         <p>Hệ thống quản lý đô thị thông minh</p>
       </div>
 
@@ -65,18 +65,13 @@ const Login = () => {
         </button>
 
         <div className="divider">Hoặc tiếp tục với</div>
-
-        <button type="button" className="btn-secondary">
-          Đăng nhập bằng OTP
-        </button>
-
         <div className="register-link">
           Chưa có tài khoản? <Link to="/auth/register">Đăng ký ngay</Link>
         </div>
       </form>
 
       <div className="auth-footer">
-        © 2024 URBAN PULSE CIVIC • BẢO MẬT & AN TOÀN
+        © 2024 PASC • BẢO MẬT & AN TOÀN
       </div>
     </div>
   );

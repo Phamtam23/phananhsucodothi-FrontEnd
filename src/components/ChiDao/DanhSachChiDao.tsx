@@ -1,8 +1,8 @@
-import {GetPhieuChiDaoByPhanCongIdService} from "../../services/PhieuChiDaoService";
-import {useState ,useEffect} from "react";
+import { GetPhieuChiDaoByPhanCongIdService } from "../../services/PhieuChiDaoService";
+import { useState, useEffect } from "react";
 import type { PhieuChiDaoResponse } from "../../types/PhieuChiDao";
-
-const DanhSachChiDao = ({chiTietPhanCong, nhanVien}: {chiTietPhanCong: string | number, nhanVien?: any}) => {
+import "./DanhSachChiDao.scss";
+const DanhSachChiDao = ({ chiTietPhanCong, nhanVien }: { chiTietPhanCong: string | number, nhanVien?: any }) => {
   const [chiDaoData, setChiDaoData] = useState<PhieuChiDaoResponse[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -10,6 +10,7 @@ const DanhSachChiDao = ({chiTietPhanCong, nhanVien}: {chiTietPhanCong: string | 
   const fetchChiDao = async (chiTietPhanCong: number | string) => {
     try {
       setLoading(true);
+      setError(null);
       const response = await GetPhieuChiDaoByPhanCongIdService(chiTietPhanCong);
       if (response.status === 200) {
         setChiDaoData(response.data);
@@ -24,7 +25,9 @@ const DanhSachChiDao = ({chiTietPhanCong, nhanVien}: {chiTietPhanCong: string | 
   }
 
   useEffect(() => {
-    fetchChiDao(chiTietPhanCong);
+    if (chiTietPhanCong) {
+      fetchChiDao(chiTietPhanCong);
+    }
   }, [chiTietPhanCong]);
 
   if (loading) {
@@ -45,7 +48,7 @@ const DanhSachChiDao = ({chiTietPhanCong, nhanVien}: {chiTietPhanCong: string | 
         {nhanVien && (
           <div className="chi-dao-assignee-header">
             <div className="assignee-avatar">
-               <img src={nhanVien.anhDaiDien || `https://ui-avatars.com/api/?name=${encodeURIComponent(nhanVien.hoTen)}&background=475569&color=fff`} alt={nhanVien.hoTen} />
+              <img src={nhanVien.anhDaiDien || `https://ui-avatars.com/api/?name=${encodeURIComponent(nhanVien.hoTen)}&background=475569&color=fff`} alt={nhanVien.hoTen} />
             </div>
             <div className="assignee-info">
               <span className="assignee-name">{nhanVien.hoTen}</span>

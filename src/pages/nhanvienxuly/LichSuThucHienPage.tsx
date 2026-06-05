@@ -1,7 +1,7 @@
 import "./LichSuThucHienPage.scss";
 import { useChiTietPhanCongNhanVien } from "../../hooks/chitietphancong/useChiTietPhanCongNhanVien";
 import { TrangThaiChiTietPhanCong } from "../../types/ChiTietPhanCong";
-import {formatDate} from "../../utils/Format"
+import { formatDate } from "../../utils/Format"
 import { useState } from "react";
 import Pagination from "../../components/Page/Pagination";
 import { Search, ListFilter, FolderClosed, Clock, ShieldCheck, MapPin, Trash2 } from "lucide-react";
@@ -33,11 +33,29 @@ const LichSuThucHienPage = () => {
     };
 
     const tatCaPhieu = data?.content || [];
-    const lichSu = tatCaPhieu.filter(p =>
-        p.trangThai === TrangThaiChiTietPhanCong.HOAN_THANH ||
-        p.trangThai === TrangThaiChiTietPhanCong.DANG_XU_LY ||
-        p.trangThai === TrangThaiChiTietPhanCong.DANG_CHO
-    );
+    const lichSu = tatCaPhieu.filter(p => {
+        const matchesStatus = p.trangThai === TrangThaiChiTietPhanCong.HOAN_THANH ||
+            p.trangThai === TrangThaiChiTietPhanCong.DANG_XU_LY ||
+            p.trangThai === TrangThaiChiTietPhanCong.DANG_CHO;
+
+        if (!matchesStatus) return false;
+
+        if (search.trim()) {
+            const keyword = search.toLowerCase().trim();
+            const matchesId = p.maChiTietPhanCong?.toLowerCase().includes(keyword);
+            const matchesTieuDe = p.tieuDe?.toLowerCase().includes(keyword);
+            const matchesDiaDiem = p.diaDiem?.toLowerCase().includes(keyword);
+            if (!matchesId && !matchesTieuDe && !matchesDiaDiem) return false;
+        }
+
+        if (tuNgay) {
+            if (!p.thoiGianTao) return false;
+            const itemDate = p.thoiGianTao.split('T')[0];
+            if (itemDate < tuNgay) return false;
+        }
+
+        return true;
+    });
 
     const tongSo = data?.pagination.totalElements || 0;
     const dangXuLy = tatCaPhieu.filter(p => p.trangThai === TrangThaiChiTietPhanCong.DANG_XU_LY).length;
@@ -52,21 +70,6 @@ const LichSuThucHienPage = () => {
                 <div className="header-titles">
                     <h1>Lịch sử phản ánh</h1>
                     <p>Hệ thống quản lý và giám sát các khiếu nại, phản ánh từ công dân.</p>
-                </div>
-                <div className="header-actions">
-                    <div className="search-box">
-                        <Search size={18} className="search-icon" />
-                        <input
-                            type="text"
-                            placeholder="Tìm kiếm mã ID, tiêu đề..."
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                        />
-                    </div>
-                    <button className="filter-btn">
-                        <ListFilter size={18} />
-                        Bộ lọc
-                    </button>
                 </div>
             </div>
 
@@ -104,24 +107,39 @@ const LichSuThucHienPage = () => {
             </div>
 
             <div className="lich-su-filter-bar">
-                <div className="filter-group">
-                    <span className="filter-label">PHÂN LOẠI:</span>
-                    <select className="filter-select">
-                        <option>Tất cả danh mục</option>
-                    </select>
-                </div>
-                <div className="filter-group">
-                    <span className="filter-label">THỜI GIAN:</span>
-                    <div className="date-inputs">
-                        <input
-                            type="date"
-                            value={tuNgay}
-                            onChange={(e) => setTuNgay(e.target.value)}
-                            className="date-input"
-                        />
+                {/* Cụm tìm kiếm */}
+                <div className="ls-card-loc ls-card-tim">
+                    <div className="ls-o-timkiem">
+                        <Search size={18} className="search-icon" />
+                        <div className="ls-khung-nhap">
+                            <input
+                                type="text"
+                                placeholder="Tìm kiếm mã ID, tiêu đề..."
+                                value={search}
+                                onChange={(e) => setSearch(e.target.value)}
+                            />
+                        </div>
                     </div>
                 </div>
-                <div className="filter-spacer"></div>
+
+                {/* Cụm thời gian */}
+                <div className="ls-card-loc ls-card-thoigian">
+                    <div className="ls-chu-thoigian">
+                        <span>THỜI</span>
+                        <span>GIAN:</span>
+                    </div>
+                    <div className="ls-o-thoigian">
+                        <div className="ls-khung-nhap">
+                            <input
+                                type="date"
+                                value={tuNgay}
+                                onChange={(e) => setTuNgay(e.target.value)}
+                                className="ls-date-input"
+                            />
+                        </div>
+                    </div>
+                </div>
+
                 <button onClick={handleReset} className="reset-filter-btn">
                     Đặt lại bộ lọc
                 </button>
@@ -130,9 +148,9 @@ const LichSuThucHienPage = () => {
             <table className="lich-su-table">
                 <thead>
                     <tr>
-                        <th>MÃ ID</th>
-                        <th>HÌNH ẢNH</th>
-                        <th>TIÊU ĐỀ / ĐỊA ĐIỂM</th>
+
+                        <th>TIÊU ĐỀ</th>
+                        <th>ĐỊA ĐIỂM</th>
                         <th>ĐƠN VỊ XỬ LÝ</th>
                         <th>TRẠNG THÁI</th>
                         <th>THAO TÁC</th>
@@ -141,20 +159,14 @@ const LichSuThucHienPage = () => {
                 <tbody>
                     {lichSu.map((item) => (
                         <tr key={item.maChiTietPhanCong}>
-                            <td className="id-col">
-                                <span className="id-text">#{item.maChiTietPhanCong.slice(0, 8)}</span>
-                            </td>
-                            <td>
-                                <div className="image-wrapper">
-                                    <img src={item.thumbnail || 'https://via.placeholder.com/80x50'} alt="Thumbnail" />
+                            <td className="title-col">
+                                <div className="table-title" title={item.tieuDe}>
+                                    {item.tieuDe}
                                 </div>
                             </td>
-                            <td>
-                                <div className="title-location">
-                                    <div className="title">{item.tieuDe}</div>
-                                    <div className="location">
-                                        <MapPin size={14}/> {item.diaDiem}
-                                    </div>
+                            <td className="location-col">
+                                <div className="location-wrapper" title={item.diaDiem}>
+                                    <MapPin size={14} /> {item.diaDiem}
                                 </div>
                             </td>
                             <td>{item.nhanVienXuLy?.hoTen || 'Sở Giao thông Vận tải'}</td>
@@ -163,9 +175,6 @@ const LichSuThucHienPage = () => {
                                 <button className="action-btn view-btn">
                                     Xem chi tiết
                                 </button>
-                                <button className="action-btn delete-btn">
-                                    <Trash2 size={16} />
-                                </button>
                             </td>
                         </tr>
                     ))}
@@ -173,7 +182,7 @@ const LichSuThucHienPage = () => {
             </table>
             <Pagination
                 currentPage={page}
-                totalPages={data?.pagination.totalPages??0}
+                totalPages={data?.pagination.totalPages ?? 0}
                 totalElements={data?.pagination.totalElements}
                 onPageChange={setPage}
             />

@@ -4,13 +4,13 @@ import { Search, MapPin } from 'lucide-react';
 import { useLocationSearch } from '../../../hooks/suco/uselocationsearch';
 import IncidentMap from '../../../components/Map/IncidentMap';
 import IncidentSidebarList from '../../../components/Map/IncidentSidebarList';
-import {useBanDo} from '../../../hooks/nguodan/useBanDo';
+import { useBanDo } from '../../../hooks/nguodan/useBanDo';
 import './BanDoPage.scss';
 
 const BanDoPage = () => {
   const { danhSachSuCo, loading, error, fetchDanhSachSuCo, danhSachLoai } = useBanDo();
 
-  const [mapCenter, setMapCenter] = useState<[number, number]>([16.0544, 108.2022]); 
+  const [mapCenter, setMapCenter] = useState<[number, number]>([16.0544, 108.2022]);
   const [mapZoom, setMapZoom] = useState(13);
   const [trangThaiFilter, setTrangThaiFilter] = useState<string>("tat_ca");
   const [loaiFilter, setLoaiFilter] = useState<string>("tat_ca");
@@ -26,11 +26,11 @@ const BanDoPage = () => {
     setMapZoom(16);
   };
   const { query, suggestions, isSerching, handQueryChange, handleSelect } = useLocationSearch(handleSelectLocation);
- 
+
   if (error) {
     return <div className="error-message">{error}</div>;
   }
- 
+
   return (
     <div className="ban-do-page">
       <IncidentSidebarList
@@ -74,7 +74,6 @@ const BanDoPage = () => {
             <select
               value={trangThaiFilter}
               onChange={e => setTrangThaiFilter(e.target.value)}
-              style={{ flex: 1, padding: '8px', borderRadius: '6px', border: '1px solid #ccc', outline: 'none', backgroundColor: '#f1f3f4' }}
             >
               <option value="tat_ca">Tất cả trạng thái</option>
               <option value="CHO_TIEP_NHAN">Chờ tiếp nhận</option>
@@ -84,7 +83,6 @@ const BanDoPage = () => {
             <select
               value={loaiFilter}
               onChange={e => setLoaiFilter(e.target.value)}
-              style={{ flex: 1, padding: '8px', borderRadius: '6px', border: '1px solid #ccc', outline: 'none', backgroundColor: '#f1f3f4' }}
             >
               <option value="tat_ca">Tất cả loại sự cố</option>
               {danhSachLoai.map(loai => (
@@ -96,7 +94,7 @@ const BanDoPage = () => {
       </IncidentSidebarList>
 
       <div className="map-area">
-        <IncidentMap loai ="NGUOI_DAN" incidents={danhSachSuCo} mapCenter={mapCenter} mapZoom={mapZoom} />
+        <IncidentMap loai="NGUOI_DAN" incidents={danhSachSuCo} mapCenter={mapCenter} mapZoom={mapZoom} />
       </div>
     </div>
   );

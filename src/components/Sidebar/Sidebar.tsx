@@ -27,7 +27,7 @@ const Sidebar = () => {
   const userStr = localStorage.getItem("user");
   const user = userStr ? JSON.parse(userStr) : null;
   const role = user?.role || "";
-  
+
   const isDieuPhoi = role === "R_DIEUPHOI";
   const isTruongDonVi = role === "R_TXULY";
 
@@ -45,7 +45,7 @@ const Sidebar = () => {
         label: "PHÂN CÔNG PHÂN LOẠI",
         path: "/nhanvien/phan-cong/phan-loai",
       },
-       {
+      {
         icon: <FileCheck size={20} />,
         label: "LICH SỬ KIỂM DUYỆT",
         path: "/nhanvien/lich-su/kiem-duyet",
@@ -102,8 +102,8 @@ const Sidebar = () => {
           <Landmark size={20} />
         </div>
         <div className="brand-text">
-          <span className="brand-title">Civic Gallerist</span>
-          <span className="brand-subtitle">URBAN PULSE CIVIC</span>
+          <span className="brand-title">PASC</span>
+          <span className="brand-subtitle">ĐÀ NẴNG</span>
         </div>
       </div>
 

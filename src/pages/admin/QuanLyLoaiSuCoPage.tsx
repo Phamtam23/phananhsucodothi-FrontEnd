@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Plus, Pencil, X } from "lucide-react";
+import { Plus, Pencil, X, Trash2 } from "lucide-react";
 import { useLoaiSuCo } from "../../hooks/admin/useLoaiSuCo";
 import type { LoaiRequest, LoaiResponse } from "../../types/Loai";
 import "./QuanLyLoaiSuCoPage.scss";
@@ -8,10 +8,11 @@ import "../admin/QuanLyTaiKhoanPage.scss"; // dùng lại slide-panel
 const FORM_TRONG: LoaiRequest = { maLoai: "", tenLoaiSuCo: "" };
 
 const QuanLyLoaiSuCoPage = () => {
-  const { danhSach, loading, layDanhSach, themLoai, capNhatLoai } = useLoaiSuCo();
+  const { danhSach, loading, layDanhSach, themLoai, capNhatLoai, xoaLoai } = useLoaiSuCo();
   const [moPanel, setMoPanel] = useState(false);
   const [dangSua, setDangSua] = useState<LoaiResponse | null>(null);
   const [form, setForm] = useState<LoaiRequest>(FORM_TRONG);
+  const [tuKhoa, setTuKhoa] = useState("");
 
   useEffect(() => { layDanhSach(); }, [layDanhSach]);
 
@@ -27,6 +28,11 @@ const QuanLyLoaiSuCoPage = () => {
     } catch {}
   };
 
+  const danhSachHienThi = danhSach.filter(l => 
+    l.tenLoaiSuCo.toLowerCase().includes(tuKhoa.toLowerCase()) ||
+    l.maLoai.toLowerCase().includes(tuKhoa.toLowerCase())
+  );
+
   return (
     <div className="quan-ly-loai">
       <div className="quan-ly-loai__tieu-de">
@@ -39,26 +45,61 @@ const QuanLyLoaiSuCoPage = () => {
         </button>
       </div>
 
-      {loading && <div style={{ textAlign: "center", padding: 48, color: "#64748b", fontFamily: "Inter, sans-serif" }}>Đang tải...</div>}
+      <div className="quan-ly-loai__bo-loc">
+        <input 
+          placeholder="Tìm kiếm loại sự cố..." 
+          value={tuKhoa} 
+          onChange={e => setTuKhoa(e.target.value)} 
+        />
+      </div>
 
-      {!loading && danhSach.length === 0 && (
-        <div className="quan-ly-loai__trong">Chưa có loại sự cố nào. Hãy thêm mới!</div>
-      )}
-
-      <div className="quan-ly-loai__luoi">
-        {danhSach.map(l => (
-          <div className="quan-ly-loai__the" key={l.maLoai}>
-            <div className="quan-ly-loai__the-noi-dung">
-              <span className="quan-ly-loai__the-ma">{l.maLoai}</span>
-              <div className="quan-ly-loai__the-ten">{l.tenLoaiSuCo}</div>
-            </div>
-            <div className="quan-ly-loai__the-hanh-dong">
-              <button className="quan-ly-loai__btn-sua" onClick={() => moSua(l)}>
-                <Pencil size={13} /> Sửa
-              </button>
-            </div>
-          </div>
-        ))}
+      <div className="quan-ly-loai__bang">
+        <table className="quan-ly-loai__bang-table">
+          <thead>
+            <tr>
+              <th>Tên loại sự cố</th>
+              <th style={{ width: "200px", textAlign: "center" }}>Hành động</th>
+            </tr>
+          </thead>
+          <tbody>
+            {loading && (
+              <tr>
+                <td colSpan={2} className="quan-ly-loai__trong">Đang tải...</td>
+              </tr>
+            )}
+            {!loading && danhSachHienThi.length === 0 && (
+              <tr>
+                <td colSpan={2} className="quan-ly-loai__trong">
+                  {danhSach.length === 0 ? "Chưa có loại sự cố nào. Hãy thêm mới!" : "Không tìm thấy loại sự cố nào phù hợp"}
+                </td>
+              </tr>
+            )}
+            {!loading && danhSachHienThi.map(l => (
+              <tr key={l.maLoai}>
+                <td>
+                  <strong style={{ fontSize: "15px", color: "#0f172a" }}>{l.tenLoaiSuCo}</strong>
+                </td>
+                <td>
+                  <div style={{ display: "flex", justifyContent: "center", gap: "8px" }}>
+                    <button className="quan-ly-loai__btn-sua" onClick={() => moSua(l)}>
+                      <Pencil size={13} /> Sửa
+                    </button>
+                    <button 
+                      className="quan-ly-loai__btn-xoa" 
+                      onClick={() => {
+                        if (window.confirm(`Bạn có chắc chắn muốn xóa loại sự cố "${l.tenLoaiSuCo}"?`)) {
+                          xoaLoai(l.maLoai);
+                        }
+                      }}
+                    >
+                      <Trash2 size={13} /> Xóa
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
       {moPanel && (

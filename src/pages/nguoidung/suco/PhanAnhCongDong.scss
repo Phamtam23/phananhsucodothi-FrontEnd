@@ -163,7 +163,10 @@
     @media (max-width: 768px) {
       width: 100%;
       overflow-x: auto;
-      &::-webkit-scrollbar { display: none; }
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
   }
 
@@ -213,6 +216,33 @@
     &:hover {
       border-color: $primary;
       background: $surface;
+    }
+  }
+
+  .pacd__select {
+    height: 38px !important;
+    padding: 0 36px 0 16px !important;
+    border-radius: $radius-full !important;
+    border: 1px solid rgba(15, 23, 42, 0.04) !important;
+    background-color: $surface-container !important;
+    font-size: 12.5px !important;
+    color: $on-surface !important;
+    font-weight: 600 !important;
+    outline: none !important;
+    cursor: pointer !important;
+    appearance: none !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23718096' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 14px center !important;
+    background-size: 14px !important;
+    transition: all 0.2s ease !important;
+    box-sizing: border-box !important;
+    flex: 1 !important;
+    min-width: 160px !important;
+
+    &:hover {
+      border-color: $primary !important;
+      background-color: $surface !important;
     }
   }
 
@@ -1004,6 +1034,7 @@
 
   &.widget--create {
     border-left: 3px solid $primary;
+
     .widget-icon-box {
       background: hsl(38, 100%, 93%);
       color: hsl(38, 90%, 40%);
@@ -1012,6 +1043,7 @@
 
   &.widget--map {
     border-left: 3px solid #3b82f6;
+
     .widget-icon-box {
       background: hsl(210, 100%, 93%);
       color: hsl(210, 90%, 40%);
@@ -1020,6 +1052,7 @@
 
   &.widget--guide {
     border-left: 3px solid #64748b;
+
     .widget-icon-box {
       background: #f1f5f9;
       color: #64748b;
@@ -1060,7 +1093,7 @@
 .pacd__footer {
   background: #0f172a;
   color: #94a3b8;
-  padding: 64px 40px 32px;
+  padding: 20px 10px 20px;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
 
   @media (max-width: 768px) {

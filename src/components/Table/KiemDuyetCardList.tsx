@@ -5,7 +5,7 @@ import { API_CONFIG } from "../../constants/app.constants";
 import { timeAgo } from "../../utils/Format";
 import { TrangThaiKiemDuyet } from "../../types/PhieuKiemDuyet";
 import "./KiemDuyetCardList.scss";
-
+import {getLabelDoUuTien} from "../../utils/StatusUtils"
 type Props = {
   data: SucoSumaryResponse[];
   onRowClick: (item: SucoSumaryResponse) => void;
@@ -93,7 +93,7 @@ const KiemDuyetCardList = ({ data, onRowClick, onKiemDuyet, loai }: Props) => {
           >
             {/* Top Image & Overlays */}
             <div className="card-img-wrap">
-              <div className="card-id-overlay">#{item.maSuCo}</div>
+              <div className={`${priority.className} card-id-overlay`}>{getLabelDoUuTien(item.doUuTien)}</div>
               <div className={`card-status-overlay ${status.className}`}>
                 {status.label}
               </div>
@@ -111,9 +111,7 @@ const KiemDuyetCardList = ({ data, onRowClick, onKiemDuyet, loai }: Props) => {
             <div className="card-info-container">
               {/* Priority & Time Ago */}
               <div className="card-meta-row">
-                <span className={`badge-priority ${priority.className}`}>
-                  {priority.label}
-                </span>
+              
                 <span className="time-elapsed">
                   <Clock size={14} />
                   {timeAgo(item.thoiGianTao)}
@@ -133,18 +131,25 @@ const KiemDuyetCardList = ({ data, onRowClick, onKiemDuyet, loai }: Props) => {
 
               {/* Reliability Progress Bar */}
               <div className="confidence-bar-section">
-                <span className="confidence-label">Độ tin cậy AI:</span>
+                <span className="confidence-label">Độ tin cậy:</span>
                 <div className="bar-bg">
                   <div
                     className={`bar-fill bg-${rel.colorClass}`}
                     style={{ width: `${rel.score}%` }}
                   />
+
+                  {rel.score < 50 && (
+                    <div className="bar-warning">
+                      <span className="warning-icon">⚠️</span>
+                      Lý do: {item.lyDoSpam}
+                    </div>
+                  )}
                 </div>
                 <span className={`bar-text text-${rel.colorClass}`}>{rel.score}%</span>
               </div>      
 
               <div className="card-actions">
-                {item.trangThai === "CHO_TIEP_NHAN" && loai === "KIEM_DUYET" && (
+                { (item.trangThai === "CHO_TIEP_NHAN"|| item.trangThai ==="BO_SUNG" )  && loai === "KIEM_DUYET" && (
                   <>
                     <div className="actions-primary-row">
                       <button
@@ -167,7 +172,9 @@ const KiemDuyetCardList = ({ data, onRowClick, onKiemDuyet, loai }: Props) => {
                         <XCircle size={16} /> Từ chối
                       </button>
                     </div>
-                    <button
+                    {item.trangThai === "CHO_TIEP_NHAN" && (
+                      
+                        <button
                       className="btn-detail-full"
                       onClick={(e) => {
                         e.stopPropagation();
@@ -176,6 +183,10 @@ const KiemDuyetCardList = ({ data, onRowClick, onKiemDuyet, loai }: Props) => {
                     >
                       Yêu cầu bổ sung
                     </button>
+                    )
+                    
+                    }
+                
 
                     {rejectTargetId === item.maSuCo && (
                       <div className="reject-reason-panel">

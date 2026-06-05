@@ -1,9 +1,11 @@
+@use '../../../styles/urban-tokens' as *;
+
 .danh-sach-su-co {
   max-width: 1200px;
   margin: 0 auto;
   padding: 40px 24px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  
+
   h2 {
     font-size: 36px;
     font-weight: 700;
@@ -12,11 +14,11 @@
     color: #111827;
     letter-spacing: -0.5px;
   }
-  
+
   h2 + h2 {
     display: none !important;
   }
-  
+
   .subtitle {
     font-size: 15px;
     color: #4b5563;
@@ -26,52 +28,77 @@
   }
 }
 
-// Advanced search and filter container
+// ─── Filter group ──────────────────────────────────────────────────────────────
 .filter-group {
   display: grid !important;
-  grid-template-columns: repeat(4, 1fr) !important;
-  gap: 20px 24px !important;
-  background-color: #f8f9fa !important; // light grey background like image
+  grid-template-columns: repeat(4, 1fr) auto !important;
+  align-items: end !important;
+  gap: 16px 20px !important;
+  background-color: #f8f9fa !important;
   border-radius: 24px !important;
-  padding: 32px !important;
+  padding: 24px 32px !important;
   margin-top: 24px !important;
   margin-bottom: 40px !important;
   border: 1px solid rgba(0, 0, 0, 0.02) !important;
-  position: relative;
   box-sizing: border-box;
 
-  // Labels for Select elements generated via pseudo-elements
-  &::before {
-    content: "TRẠNG THÁI";
-    grid-column: 3;
-    grid-row: 1;
-    font-size: 11px;
-    font-weight: 700;
-    color: #8a9099;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-    display: flex;
-    align-items: flex-end;
-    margin-bottom: -4px;
+  .filter-input-wrapper,
+  .filter-select-wrapper,
+  .filter-btn-wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    position: relative !important;
+    box-sizing: border-box;
+    width: 100% !important;
   }
 
-  &::after {
-    content: "LOẠI SỰ CỐ";
-    grid-column: 4;
-    grid-row: 1;
-    font-size: 11px;
-    font-weight: 700;
-    color: #8a9099;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-    display: flex;
-    align-items: flex-end;
-    margin-bottom: -4px;
+  .filter-label {
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    color: #8a9099 !important;
+    letter-spacing: 0.8px !important;
+    text-transform: uppercase !important;
+    display: block !important;
   }
 
-  // Select dropdowns styling
+  .filter-icon {
+    position: absolute !important;
+    left: 16px !important;
+    bottom: 16px !important;
+    font-size: 16px !important;
+    pointer-events: none !important;
+    z-index: 2 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  input {
+    width: 100% !important;
+    height: 48px !important;
+    padding: 12px 16px 12px 44px !important;
+    border-radius: 12px !important;
+    border: none !important;
+    background-color: #eef0f2 !important;
+    font-size: 14px !important;
+    color: #1a1a2e !important;
+    font-weight: 500 !important;
+    outline: none !important;
+    transition: background-color 0.2s !important;
+    box-sizing: border-box !important;
+
+    &::placeholder {
+      color: #a0aec0 !important;
+    }
+
+    &:hover,
+    &:focus {
+      background-color: #e2e5e8 !important;
+    }
+  }
+
   select {
-    grid-row: 2 !important;
     width: 100% !important;
     height: 48px !important;
     padding: 12px 36px 12px 16px !important;
@@ -94,110 +121,14 @@
     &:hover {
       background-color: #e2e5e8 !important;
     }
-
-    &:nth-of-type(1) {
-      grid-column: 3 !important;
-    }
-
-    &:nth-of-type(2) {
-      grid-column: 4 !important;
-    }
   }
 
-  // Makes the wrapper transparent for grid layout
-  .filter-row {
-    display: contents !important;
-  }
-
-  // Input wrapper styling
-  .filter-input-wrapper {
-    display: flex !important;
-    flex-direction: column !important;
-    position: relative !important;
-    box-sizing: border-box;
-
-    &::before {
-      font-size: 11px;
-      font-weight: 700;
-      color: #8a9099;
-      letter-spacing: 0.8px;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      display: block;
-    }
-
-    &:nth-child(1) {
-      grid-column: 1 !important;
-      grid-row: 1 / span 2 !important;
-      
-      &::before {
-        content: "TÌM THEO TÊN SỰ CỐ...";
-      }
-    }
-
-    &:nth-child(2) {
-      grid-column: 2 !important;
-      grid-row: 1 / span 2 !important;
-      
-      &::before {
-        content: "TÌM THEO ĐỊA ĐIỂM...";
-      }
-    }
-
-    // Centering the icons inside the 48px high inputs
-    .filter-icon {
-      position: absolute !important;
-      left: 16px !important;
-      bottom: 14px !important;
-      font-size: 16px !important;
-      pointer-events: none !important;
-      z-index: 2 !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      margin: 0 !important;
-      padding: 0 !important;
-    }
-
-    input {
-      width: 100% !important;
-      height: 48px !important;
-      padding: 12px 16px 12px 44px !important;
-      border-radius: 12px !important;
-      border: none !important;
-      background-color: #eef0f2 !important;
-      font-size: 14px !important;
-      color: #1a1a2e !important;
-      font-weight: 500 !important;
-      outline: none !important;
-      transition: background-color 0.2s !important;
-      box-sizing: border-box !important;
-
-      &::placeholder {
-        color: #a0aec0 !important;
-      }
-
-      &:hover {
-        background-color: #e2e5e8 !important;
-      }
-
-      &:focus {
-        background-color: #e2e5e8 !important;
-      }
-    }
-  }
-
-  // Yellow search button at bottom right
   .filter-search-btn {
-    grid-column: 4 !important;
-    grid-row: 3 !important;
-    justify-self: end !important;
-    margin-top: 8px !important;
-    height: 44px !important;
+    height: 48px !important;
     padding: 0 28px !important;
     border-radius: 12px !important;
     border: none !important;
-    background-color: #fcb900 !important; // yellow/amber brand color
+    background-color: #fcb900 !important;
     color: #1a1a1a !important;
     font-size: 15px !important;
     font-weight: 700 !important;
@@ -207,11 +138,7 @@
     justify-content: center !important;
     gap: 8px !important;
     transition: background-color 0.2s, transform 0.1s !important;
-
-    &::after {
-      content: "➔" !important;
-      font-size: 14px !important;
-    }
+    white-space: nowrap !important;
 
     &:hover {
       background-color: #e6a800 !important;
@@ -223,7 +150,7 @@
   }
 }
 
-// Grid of incident cards
+// ─── Card grid ────────────────────────────────────────────────────────────────
 .list-su-co {
   display: grid !important;
   grid-template-columns: repeat(3, 1fr) !important;
@@ -231,7 +158,7 @@
   padding: 16px 0 !important;
 }
 
-// Style overrides for SuCoCard components inside DanhSachSuCo page
+// ─── SuCo card ────────────────────────────────────────────────────────────────
 .suco-card {
   background: #ffffff !important;
   border: 1px solid rgba(0, 0, 0, 0.05) !important;
@@ -263,9 +190,8 @@
     display: block !important;
   }
 
-  // Styling the image placeholder as text card (like the 3rd card in mock image)
   &__img-placeholder {
-    background-color: #fcf9f2 !important; // warm beige
+    background-color: #fcf9f2 !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -273,9 +199,9 @@
     box-sizing: border-box !important;
     height: 100% !important;
     width: 100% !important;
-    
+
     &::before {
-      content: "“Kính gửi Quý lãnh đạo các cấp chính quyền địa phương... Đơn vị thi công có sử dụng tuyến đường Hoàng Sa để trung chuyển vật liệu...”" !important;
+      content: "Kính gửi Quý lãnh đạo các cấp chính quyền địa phương... Đơn vị thi công có sử dụng tuyến đường Hoàng Sa để trung chuyển vật liệu..." !important;
       font-size: 12px !important;
       line-height: 1.6 !important;
       color: #4b5563 !important;
@@ -297,7 +223,6 @@
     z-index: 2 !important;
   }
 
-  // Badges customization (upper case, bold, specific colors)
   .badge {
     text-transform: uppercase !important;
     font-size: 10px !important;
@@ -305,38 +230,24 @@
     letter-spacing: 0.6px !important;
     padding: 6px 12px !important;
     border-radius: 12px !important;
-    color: #ffffff !important; // white text on dark badge
+    color: #ffffff !important;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
-    
-    &--cho {
-      background-color: #fdbd74 !important; // dark amber
-    }
-    &--tiep {
-      background-color: #3d6f6b !important; // teal
-    }
-    &--xl {
-      background-color: #d0995a !important; // dark amber
-    }
-    &--hoan {
-      background-color: #579481 !important; // green
-    }
-    &--spam {
-      background-color: #e37070 !important; // red
-    }
+
+    &--cho  { background-color: #fdbd74 !important; }
+    &--tiep { background-color: #3d6f6b !important; }
+    &--xl   { background-color: #d0995a !important; }
+    &--hoan { background-color: #579481 !important; }
+    &--spam { background-color: #e37070 !important; }
   }
 
-  // Body content card
   &__body {
     padding: 24px 20px 48px 24px !important;
     position: relative !important;
     display: flex !important;
     flex-direction: column !important;
     gap: 12px !important;
-    border-left: 4px solid transparent !important;
-    transition: border-color 0.2s ease !important;
     flex-grow: 1 !important;
 
-    // "Xem chi tiết →" Link at the bottom of the card
     &::after {
       content: "Xem chi tiết ➔" !important;
       position: absolute !important;
@@ -348,41 +259,25 @@
     }
   }
 
-  // Left borders and text links representing status
-  &:has(.badge--xl) {
-    .suco-card__body {
-      border-left-color: #d97706 !important;
-      &::after {
-        color: #d97706 !important;
-      }
-    }
-  }
+  &:has(.badge--xl),
   &:has(.badge--cho) {
     .suco-card__body {
-      border-left-color: #d97706 !important;
-      &::after {
-        color: #d97706 !important;
-      }
-    }
-  }
-  &:has(.badge--tiep) {
-    .suco-card__body {
-      border-left-color: #0f766e !important;
-      &::after {
-        color: #0f766e !important;
-      }
-    }
-  }
-  &:has(.badge--hoan) {
-    .suco-card__body {
-      border-left-color: #059669 !important;
-      &::after {
-        color: #059669 !important;
-      }
+      &::after { color: #d97706 !important; }
     }
   }
 
-  // Header row in body containing time and icon
+  &:has(.badge--tiep) {
+    .suco-card__body {
+      &::after { color: #0f766e !important; }
+    }
+  }
+
+  &:has(.badge--hoan) {
+    .suco-card__body {
+      &::after { color: #059669 !important; }
+    }
+  }
+
   &__time {
     font-size: 11px !important;
     font-weight: 700 !important;
@@ -394,31 +289,13 @@
     align-items: center !important;
     width: 100% !important;
 
-    &::after {
-      font-size: 13px !important;
-    }
+    &::after { font-size: 13px !important; }
   }
 
-  // Specific status icons
-  &:has(.badge--xl) {
-    .suco-card__time::after {
-      content: "⚠️" !important; // warning triangle
-    }
-  }
-  &:has(.badge--tiep) {
-    .suco-card__time::after {
-      content: "🔵" !important; // teal circle
-    }
-  }
-  
-  // Custom case: if it is the 3rd card in grid, render 📄 (document) instead of ⚠️
-  &:nth-child(3n) {
-    &:has(.badge--xl) {
-      .suco-card__time::after {
-        content: "📄" !important;
-      }
-    }
-  }
+  &:has(.badge--xl) .suco-card__time::after  { content: "⚠️" !important; }
+  &:has(.badge--tiep) .suco-card__time::after { content: "🔵" !important; }
+
+  &:nth-child(3n):has(.badge--xl) .suco-card__time::after { content: "📄" !important; }
 
   &__title {
     font-size: 16px !important;
@@ -445,76 +322,30 @@
       flex-shrink: 0 !important;
       font-size: 13px !important;
       display: inline-block !important;
-      
-      &::before {
-        content: "📍" !important;
-      }
+
+      &::before { content: "📍" !important; }
     }
   }
 
   &:hover {
-    &:has(.badge--xl) {
-      .suco-card__body::after {
-        color: #b45309 !important;
-      }
-    }
-    &:has(.badge--tiep) {
-      .suco-card__body::after {
-        color: #0d9488 !important;
-      }
-    }
-    &:has(.badge--hoan) {
-      .suco-card__body::after {
-        color: #047857 !important;
-      }
-    }
+    &:has(.badge--xl)   .suco-card__body::after { color: #b45309 !important; }
+    &:has(.badge--tiep) .suco-card__body::after { color: #0d9488 !important; }
+    &:has(.badge--hoan) .suco-card__body::after { color: #047857 !important; }
   }
 }
 
-// RESPONSIVENESS
+// ─── Responsive ───────────────────────────────────────────────────────────────
 @media (max-width: 900px) {
   .filter-group {
     grid-template-columns: repeat(2, 1fr) !important;
-    gap: 20px !important;
     padding: 24px !important;
 
-    &::before {
-      grid-column: 1 !important;
-      grid-row: 3 !important;
-    }
-
-    &::after {
-      grid-column: 2 !important;
-      grid-row: 3 !important;
-    }
-
-    select {
-      grid-row: 4 !important;
-
-      &:nth-of-type(1) {
-        grid-column: 1 !important;
+    .filter-btn-wrapper {
+      grid-column: span 2 !important;
+      
+      .filter-search-btn {
+        width: 100% !important;
       }
-
-      &:nth-of-type(2) {
-        grid-column: 2 !important;
-      }
-    }
-
-    .filter-input-wrapper {
-      &:nth-child(1) {
-        grid-column: 1 !important;
-        grid-row: 1 / span 2 !important;
-      }
-
-      &:nth-child(2) {
-        grid-column: 2 !important;
-        grid-row: 1 / span 2 !important;
-      }
-    }
-
-    .filter-search-btn {
-      grid-column: 2 !important;
-      grid-row: 5 !important;
     }
   }
 
@@ -527,52 +358,14 @@
 @media (max-width: 600px) {
   .filter-group {
     grid-template-columns: 1fr !important;
-    gap: 16px !important;
     padding: 20px !important;
 
-    &::before {
-      grid-column: 1 !important;
-      grid-row: 5 !important;
-      margin-bottom: 2px !important;
-    }
-
-    &::after {
-      grid-column: 1 !important;
-      grid-row: 7 !important;
-      margin-bottom: 2px !important;
-    }
-
-    select {
-      grid-row: auto !important;
-
-      &:nth-of-type(1) {
-        grid-column: 1 !important;
-        grid-row: 6 !important;
+    .filter-btn-wrapper {
+      grid-column: span 1 !important;
+      
+      .filter-search-btn {
+        width: 100% !important;
       }
-
-      &:nth-of-type(2) {
-        grid-column: 1 !important;
-        grid-row: 8 !important;
-      }
-    }
-
-    .filter-input-wrapper {
-      &:nth-child(1) {
-        grid-column: 1 !important;
-        grid-row: 1 / span 2 !important;
-      }
-
-      &:nth-child(2) {
-        grid-column: 1 !important;
-        grid-row: 3 / span 2 !important;
-      }
-    }
-
-    .filter-search-btn {
-      grid-column: 1 !important;
-      grid-row: 9 !important;
-      width: 100% !important;
-      justify-self: stretch !important;
     }
   }
 

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import {  format } from "date-fns";
 import { MapPin, Image as ImageIcon, Map as MapIcon, ArrowLeft, RefreshCw, User, Calendar, MessageSquare } from "lucide-react";
 import "./PhanCongNhanSuPage.scss";
 import { usePhieuPhanCongDetail } from "../../hooks/phancong/usePhieuPhanCongDetail";
@@ -8,8 +7,7 @@ import { useNhanSuDonVi } from "../../hooks/nhansu/useNhanSuDonVi";
 import { useChiTietPhanCong } from "../../hooks/phancong/useChiTietPhanCong";
 import { usePhieuChiDao } from "../../hooks/phancong/usePhieuChiDao";
 import type { NhanVienDonViResponse } from "../../types/NhanVienDonVi";
-import { API_CONFIG} from "../../constants/app.constants";
-
+import DetailSuCo from "../../components/Suco/DetailSuCo";
 const PhanCongNhanSuPage = () => {
     const { id: maPhieuPhanCong } = useParams<{ id: string }>();
     const navigate = useNavigate();
@@ -103,20 +101,11 @@ const PhanCongNhanSuPage = () => {
     if (loadingPhanCong) return <div className="p-8">Đang tải thông tin...</div>;
     if (!phanCong) return <div className="p-8">Không tìm thấy thông tin phân công.</div>;
 
-    const suco = phanCong.suCoDetail;
+    
 
     return (
         <div className="pcns-page">
             <header className="pcns-header">
-                <div className="pcns-header-top">
-                    <button className="pcns-back-btn" onClick={() => navigate(-1)}>
-                        <ArrowLeft size={18} /> Quay lại
-                    </button>
-                    <div className="pcns-tags">
-                        <span className="pcns-status-tag">TRÌNH TRẠNG: {phanCong.trangThai}</span>
-                        <span className="pcns-id-tag">ID: #{phanCong.maSuCo}</span>
-                    </div>
-                </div>
                 
                 <div className="pcns-header-main">
                     <h1>Phân chia & Thay đổi Nhân sự</h1>
@@ -134,40 +123,11 @@ const PhanCongNhanSuPage = () => {
             </header>
 
             <div className="pcns-content">
-                {/* CỘT TRÁI: Chi tiết & Chỉ đạo */}
                 <div className="pcns-left-col">
-                    <div className="pcns-card">
-                        <div className="pcns-card-header">
-                            <span className="pcns-section-label">CHI TIẾT PHẢN ÁNH</span>
-                        </div>
-                        <h2 className="pcns-incident-title">{suco?.noiDung || "Chưa có tiêu đề"}</h2>
-                        <div className="pcns-incident-meta">
-                            <div className="pcns-meta-item">
-                                <MapPin size={14} />
-                                <span>{suco?.diaDiem || "Chưa có địa điểm"}</span>
-                            </div>
-                            <div className="pcns-meta-item">
-                                <Calendar size={14} />
-                                <span>{suco?.thoiGianTao ? format(new Date(suco.thoiGianTao), 'HH:mm - dd/MM/yyyy') : ""}</span>
-                            </div>
-                        </div>
-                        <p className="pcns-incident-desc">
-                            (Mô tả chi tiết sự cố) Sự cố này yêu cầu xử lý kịp thời để tránh nguy hiểm.
-                        </p>
-                        
-                        <div className="pcns-media-gallery">
-                            {suco?.medias && suco.medias.slice(0, 2).map((m, i) => (
-                                <div key={i} className="pcns-media-item">
-                                    <img src={API_CONFIG.BASE_URL + m.url} alt="Incident" />
-                                </div>
-                            ))}
-                            <div className="pcns-media-placeholder">
-                                <MapIcon size={24} className="text-gray-400" />
-                                <span>XEM BẢN ĐỒ</span>
-                            </div>
-                        </div>
-                    </div>
-
+                    {phanCong.suCoDetail && (
+                        <DetailSuCo maSuCo={phanCong?.suCoDetail?.maSuCo} />
+                    )    
+                    }
                     <div className="pcns-card pcns-chidao-card">
                         <div className="pcns-card-header">
                             <span className="pcns-section-label">NỘI DUNG THỰC HIỆN DỰ KIẾN</span>
@@ -212,8 +172,6 @@ const PhanCongNhanSuPage = () => {
                         )}
                     </div>
                 </div>
-
-                {/* CỘT PHẢI: Nhân sự & Ghi chú */}
                 <div className="pcns-right-col">
                     <div className="pcns-card pcns-current-staff">
                         <div className="pcns-card-header space-between">
@@ -275,29 +233,7 @@ const PhanCongNhanSuPage = () => {
                         <button className="pcns-view-all-btn">XEM TẤT CẢ NHÂN SỰ ({nhanSuList.length})</button>
                     </div>
 
-                    <div className="pcns-note-form">
-                        <div className="pcns-card-header">
-                            <span className="pcns-section-label text-white">THỜI HẠN & GHI CHÚ</span>
-                        </div>
-                        
-                        <div className="pcns-form-group">
-                            <label>THỜI HẠN XỬ LÝ DỰ KIẾN</label>
-                            <input 
-                                type="datetime-local" 
-                                value={thoiHan}
-                                onChange={e => setThoiHan(e.target.value)}
-                            />
-                        </div>
-                        
-                        <div className="pcns-form-group">
-                            <label>LỜI NHẮC CHO NHÂN SỰ</label>
-                            <textarea 
-                                placeholder="Nhập hướng dẫn cụ thể cho đội kỹ thuật..."
-                                value={loiNhac}
-                                onChange={e => setLoiNhac(e.target.value)}
-                            />
-                        </div>
-                    </div>
+                   
                 </div>
             </div>
         </div>

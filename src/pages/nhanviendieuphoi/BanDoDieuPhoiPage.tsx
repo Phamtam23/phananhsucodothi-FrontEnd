@@ -11,7 +11,6 @@ const BanDoDieuPhoiPage = () => {
   const [mapCenter, setMapCenter] = useState<[number, number]>([16.0544, 108.2022]); // Default center Da Nang
   const [mapZoom, setMapZoom] = useState(13);
 
-  // Filters for this page
   const [trangThaiFilter, setTrangThaiFilter] = useState<string>("tat_ca");
 
   useEffect(() => {

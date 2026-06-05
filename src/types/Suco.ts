@@ -95,4 +95,3 @@ export interface SuCoFilterRequest {
   diaDiem?: string;
 }
 
-

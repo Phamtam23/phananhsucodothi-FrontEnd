@@ -1,127 +1,168 @@
-.suco-detail-card {
-  background: white;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  border-radius: 14px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
-  padding: 24px;
-  margin-bottom: 24px;
+/* ── SLIDESHOW ── */
+.suco-slideshow {
   position: relative;
-  transition: all 0.3s ease;
-
-  &__header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
-
-    .title-border-left {
-      width: 4px;
-      height: 20px;
-      background: #f59e0b; // Yellow/orange vertical bar
-      border-radius: 4px;
-      display: inline-block;
-    }
-
-    h2 {
-      font-size: 17px;
-      font-weight: 700;
-      color: var(--color-text-primary, #1d2939);
-      margin: 0;
-    }
-  }
-
-  &__body {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .suco-description-text {
-    font-size: 14.5px;
-    line-height: 1.7;
-    color: #475569;
-    margin: 0 0 16px 0;
-    white-space: pre-line;
-  }
-}
-
-.suco-images-gallery {
   width: 100%;
-
-  .suco-images-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 16px;
-    width: 100%;
-  }
-
-  .suco-image-wrapper {
-    position: relative;
-    border-radius: 10px;
-    overflow: hidden;
-    height: 180px;
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    background: #f1f5f9;
-
-    .suco-gallery-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.4s ease;
-    }
-
-    .suco-image-overlay {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.1) 60%, transparent);
-      color: white;
-      padding: 12px;
-      font-size: 12.5px;
-      font-weight: 600;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-    }
-
-    &:hover {
-      .suco-gallery-image {
-        transform: scale(1.05);
-      }
-    }
-  }
-
-  .slideshow-placeholder {
-    width: 100%;
-    height: 140px;
-    background: #f8fafc;
-    border: 1px dashed #cbd5e1;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    color: #64748b;
-    font-size: 13.5px;
-
-    i {
-      font-size: 24px;
-      color: #94a3b8;
-    }
-  }
-}
-
-.suco-loading,
-.suco-error {
-  padding: 30px;
-  text-align: center;
-  background: white;
   border-radius: 12px;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  font-size: 14px;
-  font-weight: 500;
+  overflow: hidden;
+  background: #f0f0f0;
+  aspect-ratio: 16 / 9;
 }
 
-.suco-error {
-  color: #ef4444;
+.suco-slide {
+  width: 100%;
+  height: 100%;
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 8px 12px;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.55));
+    color: #fff;
+    font-size: 13px;
+  }
+
+  &__btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.4);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover { background: rgba(0, 0, 0, 0.65); }
+    &--prev { left: 10px; }
+    &--next { right: 10px; }
+  }
+
+  &__dots {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+  }
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &--active { background: #fff; }
+}
+
+/* ── LOẠI SỰ CỐ ── */
+.suco_loai {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 8px 0;
+}
+
+.loai-label {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  background: #e8f4fd;
+  color: #1a73e8;
+  border: 1px solid #bbd9f7;
+}
+
+/* ── TIÊU ĐỀ ── */
+.suco-tieude {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 8px 0;
+  text-align: center;
+}
+
+/* ── TRẠNG THÁI & NGÀY TẠO ── */
+.suco-trangthai-ngaytao {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px 0;
+
+  .ngaytao {
+    font-size: 13px;
+    color: #666;
+  }
+}
+
+/* ── TRẠNG THÁI BADGE ── */
+.trangthai {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+
+  &.status--received {
+    background: #e3f2fd;
+    color: #1565c0;
+    border: 1px solid #90caf9;
+  }
+
+  &.status--processing {
+    background: #fff3e0;
+    color: #e65100;
+    border: 1px solid #ffcc80;
+  }
+
+  &.status--done {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #a5d6a7;
+  }
+
+  &.status--default {
+    background: #f5f5f5;
+    color: #616161;
+    border: 1px solid #e0e0e0;
+  }
+}
+
+/* ── ĐỊA ĐIỂM ── */
+.suco-diadiem {
+  font-size: 13px;
+  color: #475569;
+  margin: 4px 0 8px;
+}
+
+/* ── NỘI DUNG ── */
+.suco-description-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #334155;
+}
+
+.suco-diadiem {
+  font-size: 14px;
+  font-weight: 600;   /* đậm nhưng nhẹ hơn tiêu đề (700) */
+  color: #475569;
+  margin: 4px 0 8px;
 }

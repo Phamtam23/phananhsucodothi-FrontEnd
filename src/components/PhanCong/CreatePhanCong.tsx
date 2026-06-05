@@ -23,7 +23,6 @@ const CreatePhanCong = ({ maSuCo }: Props) => {
     {error && <p className="error-msg">{error}</p>}
 
     <div>
-      <span className="section-label">Chọn đơn vị xử lý</span>
       <ListDonViXuLy selectedDonViList={donviList} onSelect={addDonVi} />
     </div>
 

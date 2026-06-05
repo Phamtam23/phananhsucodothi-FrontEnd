@@ -4,7 +4,7 @@ import { MapPin, Image as ImageIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { TrangThaiPhanCong } from "../../../types/PhieuPhanCong";
 import type { PhieuPhanCongWithSuCo } from "../../../hooks/phancong/usePhieuPhanCongDonVi";
-
+import "./ThePhieuPhanCong.scss";
 export interface PropsThePhieuPhanCong {
     phieu: PhieuPhanCongWithSuCo;
     onChapNhan: () => void;
@@ -71,10 +71,7 @@ export const ThePhieuPhanCong = ({
             </div>
 
             <h3 className="xac-minh-card-title">{suCo?.noiDung || "Không có tiêu đề"}</h3>
-
-            {!dangTuChoi && (
-                <>
-                    <div className="xac-minh-card-meta">
+               <div className="xac-minh-card-meta">
                         <div className="xac-minh-meta-box">
                             <MapPin size={16} className="text-cam" />
                             <span>{suCo?.diaDiem || "Không có địa chỉ"}</span>
@@ -84,6 +81,15 @@ export const ThePhieuPhanCong = ({
                             <span>{suCo?.medias?.length || 0} Ảnh đính kèm</span>
                         </div>
                     </div>
+                {phieu.trangThai !== TrangThaiPhanCong.CHO_XAC_NHAN && (
+                        <div className="xac-minh-card-status-wrapper">
+                            <span className="status-label">Trạng thái:</span>
+                            {nhanTrangThai(phieu.trangThai)}
+                        </div>
+                    )}
+            {!dangTuChoi && (
+                <>
+                   
 
                     {phieu.trangThai === TrangThaiPhanCong.CHO_XAC_NHAN && (
                         <div className="xac-minh-card-actions">
@@ -146,12 +152,7 @@ export const ThePhieuPhanCong = ({
                         </div>
                     )}
 
-                    {phieu.trangThai !== TrangThaiPhanCong.CHO_XAC_NHAN && (
-                        <div className="xac-minh-card-status-wrapper">
-                            <span className="status-label">Trạng thái:</span>
-                            {nhanTrangThai(phieu.trangThai)}
-                        </div>
-                    )}
+                  
                 </>
             )}
 
