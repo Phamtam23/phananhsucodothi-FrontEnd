@@ -7,36 +7,105 @@ export const API_CONFIG = {
             LOGOUT: "/auth/logout",
             REGISTER: "/auth/register",
             FORGOT_PASSWORD: "/auth-service/v1/forgot-password",
+            PROFILE: "/auth/profile",
+            UPDATE_PROFILE: "/auth/profile",
         },
         USER: {
-            PROFILE: "/user-service/v1/profile",
-            UPDATE_PROFILE: "/user-service/v1/profile/update",
+            PROFILE: "/auth/profile",
+            UPDATE_PROFILE: "/auth/profile",
         },
-        SUCO:{
-            GET_BY_ID: (id: number | string) => `/suco/${id}`, 
-            GET_ALL: "/suco",
+        SUCO: {
+            GET_BY_ID: (id: number | string) => `/suco/${id}`,
+            GET_ALL: () => `/suco`,
+            GET_ALL_BY_NGUOI_DAN: () => `/suco/nguoi-dan`,
             CREATE: "/suco",
+            GET_ALL_BY_TRANGTHAI: (trangThai: string) => `/suco/trang-thai/${trangThai}`,
         },
-        SHOWTIME:{
-            GET_BY_ID: (id: number | string) => `api/v1.0/showtime/${id}`, 
-            GET_BY_MOVIE: (id: number | string) => `api/v1.0/showtime/movie/${id}`,
-            GET_SEATS: (id: number | string) => `api/v1.0/showtime/${id}/seat`,
+        PHANCONG: {
+            GET_BY_ID: (id: number | string) => `/phancong/${id}`,
+            GET_BY_SUCO_ID: (id: number | string) => `/phancong/su-co/${id}`,
+            CREATE: "/phancong",
+            GET_BY_DONVI: (page: number = 0, size: number = 10) => `/phancong/don-vi?page=${page}&size=${size}`,
+            UPDATE: (id: number | string) => `/phancong/${id}`,
+            GET_BY_NHANVIEN:() => "/phancong/nhan-vien"
         },
-        FOOD:{
-            GET_ALL: "/api/v1.0/foods",
+        PHIEUKIEMDUYET: {
+            CREATE: "/phieu-kiem-duyet",
+            GET_BY_NHANVIEN : () =>"/phieu-kiem-duyet/nhan-vien",
+            GET_BY_SUCO_ID: (id: number | string) => `/phieu-kiem-duyet/su-co/${id}`,
+            GET_BY_ID: (id: number | string) => `/phieu-kiem-duyet/${id}`,
         },
-        VOUCHER:{
-            GET_ALL: "/api/v1.0/vouchers",
+        CHITIEPHANCONG: {
+            CREATE: "/chi-tiet-phan-cong",
+            UPDATE: "/chi-tiet-phan-cong",
+            GET_BY_PHANCONG_ID: (id: number | string) => `/chi-tiet-phan-cong/phan-cong/${id}`,
+            GET_BY_ID: (id: number | string) => `/chi-tiet-phan-cong/${id}`,
+            GET_BY_NHANVIEN_ID: () => `/chi-tiet-phan-cong/nhan-vien`,
         },
-        BOOKING :{
-            CREATE: "/api/v1.0/bookings",
-            CREATE_PAYMENT : (idbooking: number | string) => `/api/booking/${idbooking}/momo`,
-            GET_ALL: "/api/v1.0/bookings"
+        KETQUAXULY: {
+            CREATE: "/ket-qua-xu-ly",
+            GET_BY_ID: (id: number | string) => `/ket-qua-xu-ly/${id}`,
+            UPDATE: "/ket-qua-xu-ly",
+            GET_BY_CHITIETPHANCONG_ID: (id: number | string) => `/ket-qua-xu-ly/chi-tiet-phan-cong/${id}`,
+            DUYET: (id: number | string) => `/ket-qua-xu-ly/duyet/${id}`,
         },
-        FILE :{
-            UPLOAD: "/file/upload"
+        DANHGIA: {
+            CREATE: "/phieu-danh-gia",
+            GET_BY_KETQUAXULY_ID: (id: number | string) => `/phieu-danh-gia/ket-qua-xu-ly/${id}`,
+        },
+        PHIEUMOLAI: {
+            CREATE: "/phieu-mo-lai",
+            UPDATE: "/phieu-mo-lai",
+            GET_BY_PHANCONG_ID: (id: number | string) => `/phieu-mo-lai/phan-cong/${id}`,
+            GET_BY_CHITIETPHANCONG_ID: (id: number | string) => `/phieu-mo-lai/chi-tiet-phan-cong/${id}`,
+            GET_BY_ID: (id: number | string) => `/phieu-mo-lai/${id}`,
+            GET_ALL_BY_DONVI: (page: number = 0, size: number = 10) => `/phieu-mo-lai/don-vi?page=${page}&size=${size}`,
+            DUYET: (id: number | string) => `/phieu-mo-lai/duyet/${id}`,
+        },
+        DONVIXULY: {
+            CREATE: "/don-vi-xu-ly",
+            UPDATE: (id: number | string) => `/don-vi-xu-ly/${id}`,
+            GET_BY_ID: (id: number | string) => `/don-vi-xu-ly/${id}`,
+            GET_ALL: "/don-vi-xu-ly",
+        },
+        TAIKHOAN: {
+            GET_ALL: "/tai-khoan",
+            GET_BY_ID: (id: string) => `/tai-khoan/${id}`,
+            CREATE: "/tai-khoan",
+            UPDATE: (id: string) => `/tai-khoan/${id}`,
+            KHOA: (id: string) => `/tai-khoan/${id}/khoa`,
+            MO_KHOA: (id: string) => `/tai-khoan/${id}/mo-khoa`,
+        },
+        THONGKE: {
+            HE_THONG: "/thong-ke",
+            DONVI: () => `/thong-ke/don-vi`,
+        },
+        FILE: {
+            UPLOAD: "/files/upload",
+        },
+        NHANVIENDONVI: {
+            GET_ALL_BY_DONVI_PHANCONG: () => `/nhan-vien-don-vi/phan-cong`,
+            GET_ALL_BY_DONVI: (maDonVi: string) => `/nhan-vien-don-vi/don-vi/${maDonVi}`,
+        },
+        PHIEUPHANLOAI: {
+            CREATE: "/phieu-phan-loai",
+            GET_BY_SUCO_ID: (id: number | string) => `/phieu-phan-loai/su-co/${id}`,
+            DELETE: (maSuCo: string, maLoai: string) => `/phieu-phan-loai?maSuCo=${maSuCo}&maLoai=${maLoai}`,
+        },
+        LOAI: {
+            CREATE: "/loai",
+            UPDATE: "/loai",
+            GET_ALL: "/loai",
+            GET_BY_ID: (id: number | string) => `/loai/${id}`,
+        },
+        PHIEUCHIDAO: {
+            CREATE: "/phieu-chi-dao",
+            UPDATE: "/phieu-chi-dao",
+            GET_ALL_BY_CHITIETPHANCONG_ID: (id: number | string) => `/phieu-chi-dao/chi-tiet-phan-cong/${id}`,
+            GET_BY_ID: (id: number | string) => `/phieu-chi-dao/${id}`,
+            DELETE: (id: number | string) => `/phieu-chi-dao/${id}`
         }
-     
+
     },
 } as const;
 
@@ -132,9 +201,9 @@ export const APP_META = {
 } as const;
 
 export const NAV_ITEMS = [
-  { label: 'Trang chủ', path: '/' },
-  { label: 'Bản đồ', path: '/ban-do' },
-  { label: 'Danh sách phản ánh', path: '/danh-sach-phan-anh' },
-  { label: 'Lịch sử phản ánh', path: '/lich-su-phan-anh',requiresAuth: true }
-  
+    { label: 'Trang chủ', path: '/' },
+    { label: 'Bản đồ', path: '/ban-do' },
+    { label: 'Danh sách phản ánh', path: '/danh-sach-phan-anh' },
+    { label: 'Lịch sử phản ánh', path: '/suco/lich-su', requiresAuth: true }
+
 ];

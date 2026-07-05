@@ -1,0 +1,186 @@
+.dkq-molai-container {
+    background-color: #fafbfc;
+    min-height: 100vh;
+    padding-bottom: 40px;
+}
+
+.dkq-molai-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 32px;
+
+    .dkq-sidebar-card {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        border-left: 4px solid #3b82f6;
+
+        h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 0 0 24px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+    }
+
+    .dkq-molai-info {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+
+        .dkq-molai-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+
+            .dkq-molai-label {
+                font-weight: 600;
+                color: #64748b;
+                min-width: 140px;
+                font-size: 14px;
+                padding-top: 2px;
+            }
+
+            .dkq-molai-value {
+                margin: 0;
+                color: #0f172a;
+                font-size: 15px;
+                line-height: 1.6;
+                flex: 1;
+            }
+
+            .dkq-status-tag {
+                font-size: 11px;
+                font-weight: 700;
+                padding: 4px 12px;
+                border-radius: 9999px;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                
+                &.status-cho_phan_hoi { background-color: #fef3c7; color: #d97706; }
+                &.status-chap_nhan { background-color: #ecfdf5; color: #059669; }
+                &.status-tu_choi { background-color: #fef2f2; color: #dc2626; }
+            }
+        }
+
+        .dkq-molai-medias {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+
+            .dkq-molai-img {
+                width: 140px;
+                height: 96px;
+                object-fit: cover;
+                border-radius: 8px;
+                border: 1px solid #e2e8f0;
+                cursor: pointer;
+                transition: transform 0.2s, box-shadow 0.2s;
+
+                &:hover {
+                    transform: scale(1.02);
+                    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+                }
+            }
+        }
+    }
+
+    .xac-minh-reject-form {
+        margin-top: 32px;
+        padding-top: 24px;
+        border-top: 1px dashed #e2e8f0;
+
+        label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #64748b;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            padding: 16px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            resize: none;
+            font-family: inherit;
+            margin-bottom: 24px;
+            font-size: 14px;
+            background-color: #f8fafc;
+
+            &:focus {
+                outline: none;
+                border-color: #3b82f6;
+                background-color: #ffffff;
+                box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            }
+        }
+    }
+
+    .xac-minh-reject-actions, .xac-minh-card-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 16px;
+        margin-top: 24px;
+        padding-top: 24px;
+        border-top: 1px solid #f1f5f9;
+
+        button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+
+            &:disabled {
+                opacity: 0.6;
+                cursor: not-allowed;
+            }
+
+            .btn-icon {
+                font-weight: bold;
+                font-size: 16px;
+            }
+        }
+
+        .xac-minh-btn-huy, .btn-tu-choi {
+            background-color: #ffffff;
+            border: 1px solid #cbd5e1;
+            color: #475569;
+
+            &:hover:not(:disabled) {
+                background-color: #f8fafc;
+                border-color: #94a3b8;
+                color: #0f172a;
+            }
+        }
+
+        .xac-minh-btn-xac-nhan {
+            background-color: #dc2626;
+            color: white;
+
+            &:hover:not(:disabled) {
+                background-color: #b91c1c;
+            }
+        }
+
+        .btn-phan-cong {
+            background-color: #059669;
+            color: white;
+
+            &:hover:not(:disabled) {
+                background-color: #047857;
+            }
+        }
+    }
+}

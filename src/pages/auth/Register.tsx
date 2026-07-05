@@ -1,4 +1,5 @@
 import { useRegister } from "../../hooks/auth/useRegister";
+import "./Auth.scss";
 
 const Register = () => {
   const {

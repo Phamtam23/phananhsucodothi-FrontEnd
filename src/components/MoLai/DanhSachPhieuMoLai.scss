@@ -1,0 +1,131 @@
+.danh-sach-phieu-mo-lai {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 14px;
+  width: 100%;
+
+  .btn-tai-lai {
+    align-self: flex-start;
+    background: transparent;
+    border: 1px solid hsl(210, 80%, 85%);
+    color: hsl(210, 80%, 45%);
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover:not(:disabled) {
+      background: hsl(210, 80%, 97%);
+      border-color: hsl(210, 80%, 70%);
+      color: hsl(210, 80%, 40%);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  .loi-he-thong {
+    font-size: 13px;
+    color: hsl(0, 80%, 50%);
+    background: hsl(0, 100%, 97%);
+    padding: 8px 12px;
+    border-radius: 6px;
+    border-left: 3px solid hsl(0, 80%, 50%);
+  }
+
+  .danh-sach-noi-dung {
+    list-style: none;
+    padding: 0;
+    margin: 4px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .item-phieu-mo-lai {
+    background: hsl(210, 20%, 98%);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    padding: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: hsl(210, 20%, 96%);
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    &.dang-mo {
+      background: white;
+      border-color: hsl(210, 80%, 85%);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    }
+
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+
+      .ma-so {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--color-text-primary, #1d2939);
+      }
+
+      .trang-thai-pill {
+        font-size: 11px;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 12px;
+        text-transform: uppercase;
+
+        &.trang-thai--cho_phan_hoi {
+          background: hsl(38, 100%, 92%);
+          color: hsl(38, 90%, 35%);
+        }
+
+        &.trang-thai--da_duyet {
+          background: hsl(140, 100%, 92%);
+          color: hsl(140, 90%, 30%);
+        }
+
+        &.trang-thai--tu_choi {
+          background: hsl(0, 100%, 94%);
+          color: hsl(0, 90%, 40%);
+        }
+      }
+    }
+
+    .ngay-tao {
+      font-size: 12px;
+      color: var(--color-text-secondary, #667085);
+    }
+
+    .chi-tiet-ly-do {
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px dashed rgba(0, 0, 0, 0.08);
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--color-text-primary, #344054);
+
+      strong {
+        display: block;
+        color: hsl(210, 80%, 40%);
+        margin-bottom: 2px;
+      }
+
+      .noi-dung-ly-do {
+        margin: 0;
+        font-style: italic;
+      }
+    }
+  }
+}

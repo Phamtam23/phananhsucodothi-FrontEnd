@@ -1,0 +1,105 @@
+@use '../../styles/urban-tokens' as *;
+
+.quan-ly-loai {
+  animation: ui-fade-in 0.3s ease;
+
+  &__tieu-de {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+
+    h1 {
+      font-family: $font-display;
+      font-size: 22px;
+      font-weight: 800;
+      color: $on-surface;
+      letter-spacing: -0.4px;
+    }
+
+    p {
+      font-family: $font-body;
+      font-size: 13px;
+      color: $on-surface-variant;
+      margin-top: 2px;
+    }
+  }
+
+  &__btn-them {
+    @include btn-primary;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 20px;
+  }
+
+  &__luoi {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+
+  &__the {
+    @include card;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    transition: box-shadow 0.2s, transform 0.2s;
+
+    &:hover {
+      box-shadow: $shadow-elevated;
+      transform: translateY(-2px);
+    }
+  }
+
+  &__the-noi-dung {
+    flex: 1;
+  }
+
+  &__the-ma {
+    font-family: $font-body;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: $primary;
+    background: $primary-container;
+    padding: 2px 8px;
+    border-radius: $radius-full;
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+
+  &__the-ten {
+    font-family: $font-display;
+    font-size: 15px;
+    font-weight: 700;
+    color: $on-surface;
+    line-height: 1.4;
+  }
+
+  &__the-hanh-dong {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  &__btn-sua {
+    @include btn-secondary;
+    padding: 6px 12px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  &__trong {
+    @include card;
+    text-align: center;
+    padding: 64px 16px;
+    color: $on-surface-variant;
+    font-family: $font-body;
+    font-size: 14px;
+  }
+}

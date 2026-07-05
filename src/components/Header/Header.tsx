@@ -1,6 +1,7 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { NAV_ITEMS } from '../../constants/app.constants';
-import './Header.css';
+import NotificationDropdown from "../Notification/NotificationDropdown";
+import './Header.scss';
 
 const SearchIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -11,7 +12,9 @@ const SearchIcon = () => (
 
 const Header = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const isLoggedIn = !!localStorage.getItem('accessToken');
+
   return (
     <header className="header">
       <div className="header__inner">
@@ -52,14 +55,16 @@ const Header = () => {
             </>
           ) : (
             <>
+              <NotificationDropdown buttonClassName="header__btn-bell" badgeClassName="header__bell-badge" isInternal={false} />
               <Link to="/profile" className="header__btn-profile">
                 Tài khoản
               </Link>
               <button
                 className="header__btn-logout"
                 onClick={() => {
+                  localStorage.removeItem('user');
                   localStorage.removeItem('accessToken');
-                  window.location.href = '/';
+                  window.location.href = '/login';
                 }}
               >
                 Đăng xuất

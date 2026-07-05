@@ -1,0 +1,267 @@
+@use '../../styles/urban-tokens' as *;
+
+.quan-ly-tai-khoan {
+  animation: ui-fade-in 0.3s ease;
+
+  &__tieu-de {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+
+    h1 {
+      font-family: $font-display;
+      font-size: 22px;
+      font-weight: 800;
+      color: $on-surface;
+      letter-spacing: -0.4px;
+    }
+
+    p {
+      font-family: $font-body;
+      font-size: 13px;
+      color: $on-surface-variant;
+      margin-top: 2px;
+    }
+  }
+
+  &__btn-them {
+    @include btn-primary;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 20px;
+  }
+
+  &__bo-loc {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    align-items: center;
+
+    input {
+      @include input-field;
+      max-width: 280px;
+    }
+
+    select {
+      @include input-field;
+      max-width: 180px;
+      cursor: pointer;
+    }
+  }
+
+  &__bang {
+    @include card;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  &__bang-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th {
+      font-family: $font-body;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: $on-surface-variant;
+      background: $surface-container-low;
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid $outline-variant;
+    }
+
+    td {
+      font-family: $font-body;
+      font-size: 14px;
+      color: $on-surface;
+      padding: 14px 16px;
+      border-bottom: 1px solid $outline-variant;
+      vertical-align: middle;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: $surface-dim;
+    }
+  }
+
+  &__vai-tro {
+    @include status-chip($primary-container, $primary);
+    font-size: 11px;
+  }
+
+  &__trang-thai-hoat-dong {
+    @include status-chip(#dcfce7, #15803d);
+  }
+
+  &__trang-thai-bi-khoa {
+    @include status-chip(#fee2e2, #dc2626);
+  }
+
+  &__hanh-dong {
+    display: flex;
+    gap: 8px;
+  }
+
+  &__btn-sua {
+    @include btn-secondary;
+    padding: 6px 12px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  &__btn-khoa {
+    background: #fee2e2;
+    color: #dc2626;
+    border: none;
+    border-radius: $radius-md;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-family: $font-body;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    &:hover { background: #fecaca; }
+  }
+
+  &__btn-mo-khoa {
+    background: #dcfce7;
+    color: #15803d;
+    border: none;
+    border-radius: $radius-md;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-family: $font-body;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    &:hover { background: #bbf7d0; }
+  }
+
+  &__trong {
+    text-align: center;
+    padding: 48px 16px;
+    color: $on-surface-variant;
+    font-family: $font-body;
+    font-size: 14px;
+  }
+}
+
+/* Slide panel */
+.slide-panel-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.35);
+  z-index: 200;
+  animation: ui-fade-in 0.2s ease;
+}
+
+.slide-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 420px;
+  background: $surface;
+  box-shadow: -8px 0 40px rgba(0,0,0,0.1);
+  z-index: 201;
+  display: flex;
+  flex-direction: column;
+  animation: slide-in-right 0.28s cubic-bezier(.22,.68,0,1.2);
+
+  @keyframes slide-in-right {
+    from { transform: translateX(100%); }
+    to   { transform: translateX(0); }
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid $outline-variant;
+
+    h2 {
+      font-family: $font-display;
+      font-size: 17px;
+      font-weight: 700;
+      color: $on-surface;
+    }
+  }
+
+  &__btn-dong {
+    background: none;
+    border: none;
+    color: $on-surface-variant;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: $radius-sm;
+    display: flex;
+    align-items: center;
+
+    &:hover { background: $surface-container-low; }
+  }
+
+  &__body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  &__nhom {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    label {
+      font-family: $font-body;
+      font-size: 13px;
+      font-weight: 600;
+      color: $on-surface;
+    }
+
+    input, select {
+      @include input-field;
+    }
+  }
+
+  &__footer {
+    padding: 16px 24px;
+    border-top: 1px solid $outline-variant;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+
+    button {
+      padding: 10px 22px;
+    }
+  }
+
+  &__btn-luu {
+    @include btn-primary;
+  }
+
+  &__btn-huy {
+    @include btn-secondary;
+  }
+}

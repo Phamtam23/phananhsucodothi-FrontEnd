@@ -1,0 +1,183 @@
+// LichSuPage.scss
+
+.lich-su-page {
+    padding: 24px;
+    background: #f5f5f0;
+    min-height: 100vh;
+
+    // Tabs
+    .lich-su-tabs {
+        display: flex;
+        gap: 4px;
+        margin-bottom: 24px;
+        border-bottom: 2px solid #e0e0d8;
+
+        button {
+            padding: 10px 28px;
+            border: none;
+            background: transparent;
+            font-size: 14px;
+            font-weight: 500;
+            color: #888;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.2s;
+            border-radius: 6px 6px 0 0;
+
+            &:hover {
+                color: #1a1a1a;
+                background: #f0ede4;
+            }
+
+            &.active {
+                color: #1a1a1a;
+                font-weight: 600;
+                border-bottom-color: #f5a623;
+                background: transparent;
+            }
+        }
+    }
+
+    // Filter bar
+    .lich-su-filter {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 20px;
+        align-items: center;
+        flex-wrap: wrap;
+
+        input[type="date"],
+        .filter-select {
+            padding: 8px 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            background: #fff;
+            color: #333;
+            outline: none;
+            transition: border 0.2s, box-shadow 0.2s;
+            height: 38px;
+
+            &:focus {
+                border-color: #f5a623;
+                box-shadow: 0 0 0 3px rgba(245, 166, 35, 0.1);
+            }
+        }
+
+        .filter-select {
+            min-width: 180px;
+            cursor: pointer;
+        }
+
+        button {
+            padding: 8px 18px;
+            height: 38px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fff;
+            color: #555;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+
+            &:hover {
+                background: #f5a623;
+                color: #fff;
+                border-color: #f5a623;
+            }
+        }
+    }
+
+    // Table
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+
+        thead tr {
+            background: #fafaf7;
+            border-bottom: 2px solid #f0f0e8;
+
+            th {
+                padding: 14px 16px;
+                text-align: left;
+                font-size: 12px;
+                font-weight: 600;
+                color: #888;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                white-space: nowrap;
+            }
+        }
+
+        tbody {
+            tr {
+                border-bottom: 1px solid #f0f0e8;
+                transition: background 0.15s;
+
+                &:last-child {
+                    border-bottom: none;
+                }
+
+                &:hover {
+                    background: #fffbf2;
+                }
+            }
+
+            td {
+                padding: 14px 16px;
+                font-size: 14px;
+                color: #333;
+                vertical-align: middle;
+            }
+        }
+    }
+
+    // Loading & empty
+    .lich-su-loading {
+        text-align: center;
+        padding: 60px 0;
+        color: #aaa;
+        font-size: 14px;
+    }
+
+    // Pagination spacing
+    .pagination-container {
+        margin-top: 20px;
+    }
+}
+
+// Badge trạng thái
+.badge-lich-su {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+
+    &.xong {
+        background: #e6f9f0;
+        color: #1a9e5c;
+    }
+
+    &.dang {
+        background: #fff7e6;
+        color: #f5a623;
+    }
+
+    &.cho {
+        background: #f0f0f0;
+        color: #888;
+    }
+
+    &.tu-choi {
+        background: #fdecea;
+        color: #e53935;
+    }
+}
